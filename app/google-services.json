@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "16987843956",
+    "project_id": "bachelor-hub",
+    "storage_bucket": "bachelor-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16987843956:android:09bd116f9ab64e0fb21021",
+        "android_client_info": {
+          "package_name": "com.nurnobishanto.bachelorhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16987843956-6bnm3264m5sfmjf4c2ooroc3sbh7s2ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaW9pj5x6rDf2tD5rkl0cz5cjW24cBgbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16987843956-6bnm3264m5sfmjf4c2ooroc3sbh7s2ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
