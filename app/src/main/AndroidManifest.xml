@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:name=".Activity.AuthActivity"
             android:exported="false" />
         <activity
