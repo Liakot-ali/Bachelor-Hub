@@ -42,25 +42,17 @@ public class SplashActivity extends AppCompatActivity {
                 boolean isLogged =preferences1.getBoolean("isLogged",false);
                 if (isLogged){
                     startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                    finish();
                 }else {
                     SharedPreferences preferences = getApplication().getSharedPreferences("onBoard", Context.MODE_PRIVATE);
                     boolean isFirstTime = preferences.getBoolean("isFirstTime",true);
                     if(isFirstTime){
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("isFirstTime",false);
-                        editor.apply();
                         startActivity(new Intent(SplashActivity.this, onBoardAtivity.class));
-                        finish();
 
                     }else {
                         startActivity(new Intent(SplashActivity.this, AuthActivity.class));
-                        finish();
                     }
                 }
-
-
-
+                finish();
 
 
             }

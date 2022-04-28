@@ -14,6 +14,7 @@
             android:name=".Activity.AuthActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".Activity.onBoardAtivity"
             android:exported="false" />
         <activity
