@@ -3,13 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/drawable/navigation_bar_item_bg.xml" value="0.3172343670564311" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/activity_auth.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/activity_main.xml" value="0.3" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/activity_on_board_ativity.xml" value="0.3" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/activity_splash.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/app_bar_main.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/content_main.xml" value="0.4398826979472141" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/fragment_forgot.xml" value="0.22" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/fragment_sign_up.xml" value="0.3" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/fragment_signin.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/nav_header_main.xml" value="0.3" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/layout/view_paper.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/menu/activity_main_drawer.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/menu/bottom_navigation.xml" value="0.3" />
+        <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/menu/more_menu.xml" value="0.3" />
       </map>
     </option>
   </component>

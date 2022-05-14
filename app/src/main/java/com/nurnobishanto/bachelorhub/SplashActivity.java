@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(new Intent(SplashActivity.this, onBoardAtivity.class));
 
                     }else {
-                        startActivity(new Intent(SplashActivity.this, AuthActivity.class));
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     }
                 }
                 finish();
