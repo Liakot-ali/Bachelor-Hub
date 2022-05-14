@@ -88,7 +88,7 @@ public class ForgotFragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
                 {
-                    Toast.makeText(getContext(),"Plaese Check Email ",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Please Check Email ",Toast.LENGTH_LONG).show();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SigninFragment()).commit();
                 }
                 else {

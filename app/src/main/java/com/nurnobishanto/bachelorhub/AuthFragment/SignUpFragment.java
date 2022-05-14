@@ -1,7 +1,14 @@
 package com.nurnobishanto.bachelorhub.AuthFragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -11,11 +18,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -25,13 +42,14 @@ public class SignUpFragment extends Fragment {
     private Button signup;
     private TextView signin,forget;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-
+        mAuth =FirebaseAuth.getInstance();
         nameInputLayout=view.findViewById(R.id.nameInputLayout);
         emailInputLayout=view.findViewById(R.id.emailInputLayout);
         passInputLayout=view.findViewById(R.id.passlInputLayout);
@@ -182,6 +200,48 @@ public class SignUpFragment extends Fragment {
     }
 
     private void Register() {
+
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Please wait..");
+        pd.show();
+
+        mAuth.createUserWithEmailAndPassword(emailInput.getText().toString(),passInput.getText().toString()).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(!task.isSuccessful()){
+                    pd.dismiss();
+                    emailInput.setError(task.getException().getMessage().toString());
+                }else {
+                    String userId = mAuth.getCurrentUser().getUid();
+                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                    Map<String, Object> userInfo = new HashMap<>();
+
+
+                    userInfo.put("name",nameInput.getText().toString());
+                    userInfo.put("userId",userId);
+                    userInfo.put("email",emailInput.getText().toString());
+                    userInfo.put("userRole","User");
+
+
+                    dbRef.updateChildren(userInfo);
+                    pd.dismiss();
+                    Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
+
+                    SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("Users", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isLogged",true);
+                    editor.putString("UserId", mAuth.getCurrentUser().getUid());
+                    editor.putString("UserEmail", mAuth.getCurrentUser().getEmail());
+                    editor.apply();
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                    getActivity().finish();
+
+                }
+            }
+        });
+
+
+
     }
 
     private boolean Validate() {

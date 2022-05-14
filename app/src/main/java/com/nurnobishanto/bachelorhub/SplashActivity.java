@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
 
-                SharedPreferences preferences1 = getApplication().getSharedPreferences("user", Context.MODE_PRIVATE);
+                SharedPreferences preferences1 = getApplication().getSharedPreferences("Users", Context.MODE_PRIVATE);
                 boolean isLogged =preferences1.getBoolean("isLogged",false);
                 if (isLogged){
                     startActivity(new Intent(SplashActivity.this,MainActivity.class));
@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(new Intent(SplashActivity.this, onBoardAtivity.class));
 
                     }else {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, AuthActivity.class));
                     }
                 }
                 finish();

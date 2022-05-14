@@ -130,7 +130,7 @@ public class SigninFragment extends Fragment {
                 dialog.dismiss();
             }else {
                 dialog.dismiss();
-                SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
+                SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("Users",getContext().MODE_PRIVATE);
                 SharedPreferences.Editor editor = userPref.edit();
                 editor.putBoolean("isLogged",true);
                 editor.putString("UserId", mAuth.getCurrentUser().getUid());

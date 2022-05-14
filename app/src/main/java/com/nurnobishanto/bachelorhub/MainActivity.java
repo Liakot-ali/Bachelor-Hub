@@ -24,6 +24,11 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
+import com.nurnobishanto.bachelorhub.Additional.AboutFragment;
 import com.nurnobishanto.bachelorhub.Fragments.HomeFragment;
 import com.nurnobishanto.bachelorhub.Fragments.MessagesFragment;
 import com.nurnobishanto.bachelorhub.Fragments.ProfileFragment;
@@ -40,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
 
     ActionBarDrawerToggle toggle;
-    //BottomNavigationView bottomNavigationView;
+    BottomNavigationView bottomNavigationView;
     Fragment selectedFragment = null;
     FloatingActionButton floatingActionButton;
     CircleImageView profile_image;
@@ -56,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        //bottomNavigationView = findViewById(R.id.bottom_navigation);
-        //bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
@@ -75,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                         getSupportActionBar().setTitle("Home");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                                 new HomeFragment()).commit();
+                        break;
+                    case R.id.nav_about:
+                        drawer.closeDrawer(GravityCompat.START);
+                        getSupportActionBar().setTitle("About");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                                new AboutFragment()).commit();
                         break;
                     case  R.id.nav_logout:
                         logout();
@@ -99,7 +110,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void logout() {
-
+        SharedPreferences sharedPreference=getSharedPreferences("Users",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreference.edit();
+        editor.remove("isLogged");
+        editor.remove("UserId");
+        editor.remove("UserEmail");
+        editor.apply();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+        startActivity(intent);
+        Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
+        //deleteCache(SettingActivity.this);
+        // clearAppData();
+        finish();
 
     }
 
