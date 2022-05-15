@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
+import com.nurnobishanto.bachelorhub.Activity.PostAdActivity;
 import com.nurnobishanto.bachelorhub.Additional.AboutFragment;
 import com.nurnobishanto.bachelorhub.Fragments.HomeFragment;
 import com.nurnobishanto.bachelorhub.Fragments.MessagesFragment;
@@ -63,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PostAdActivity.class));
+            }
+        });
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);

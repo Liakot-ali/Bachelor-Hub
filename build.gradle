@@ -5,13 +5,9 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         jcenter()
-
+        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://jitpack.io' }
-        maven { url "https://chatsdk.jfrog.io/artifactory/release/chat-sdk-android" }
-        maven { url "https://chatsdk.jfrog.io/artifactory/release/chatkit" }
-        maven { url "https://chatsdk.jfrog.io/artifactory/release/matisse" }
-        maven { url "https://chatsdk.jfrog.io/artifactory/release/material-search-view" }
-        maven { url "https://chatsdk.jfrog.io/artifactory/release/android-image-cropper" }
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
