@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
+import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.Activity.PostAdActivity;
 import com.nurnobishanto.bachelorhub.Additional.AboutFragment;
 import com.nurnobishanto.bachelorhub.Fragments.HomeFragment;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                         getSupportActionBar().setTitle("Home");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                                 new HomeFragment()).commit();
+                        break;
+                    case R.id.nav_editprofile:
+                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                         break;
                     case R.id.nav_about:
                         drawer.closeDrawer(GravityCompat.START);

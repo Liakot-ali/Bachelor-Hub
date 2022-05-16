@@ -28,6 +28,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.R;
 
@@ -213,14 +214,13 @@ public class SignUpFragment extends Fragment {
                     emailInput.setError(task.getException().getMessage().toString());
                 }else {
                     String userId = mAuth.getCurrentUser().getUid();
-                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("tolet_users").child(userId);
                     Map<String, Object> userInfo = new HashMap<>();
 
 
-                    userInfo.put("name",nameInput.getText().toString());
-                    userInfo.put("userId",userId);
-                    userInfo.put("email",emailInput.getText().toString());
-                    userInfo.put("userRole","User");
+                    userInfo.put("userFullName",nameInput.getText().toString());
+                    userInfo.put("userAuthId",userId);
+                    userInfo.put("userEmail",emailInput.getText().toString());
 
 
                     dbRef.updateChildren(userInfo);
@@ -233,7 +233,7 @@ public class SignUpFragment extends Fragment {
                     editor.putString("UserId", mAuth.getCurrentUser().getUid());
                     editor.putString("UserEmail", mAuth.getCurrentUser().getEmail());
                     editor.apply();
-                    startActivity(new Intent(getContext(), MainActivity.class));
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                     getActivity().finish();
 
                 }
