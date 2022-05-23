@@ -105,7 +105,6 @@ public class EditProfileActivity extends AppCompatActivity {
         userOwner = (RadioButton) findViewById(R.id.userOwner);
 
         userFullName = (EditText) findViewById(R.id.userFullName);
-        //userFullName.addTextChangedListener(new MyTextWatcher(userFullName));
         layoutName = (TextInputLayout) findViewById(R.id.layoutUserFullName);
 
         userRelation = (Spinner) findViewById(R.id.userRelation);
@@ -113,7 +112,6 @@ public class EditProfileActivity extends AppCompatActivity {
         userRelation.setAdapter(adapter);
 
         userPhoneNumber = (EditText) findViewById(R.id.userPhoneNumber);
-        //userPhoneNumber.addTextChangedListener(new MyTextWatcher(userPhoneNumber));
         layoutPhone = (TextInputLayout) findViewById(R.id.layoutUserPhoneNumber);
 
         userOccupation = (EditText) findViewById(R.id.userOccupation);
@@ -132,8 +130,6 @@ public class EditProfileActivity extends AppCompatActivity {
             mAuthId = SharedPrefManager.getInstance(EditProfileActivity.this).getUserAuthId();
         }
         mPhone = SharedPrefManager.getInstance(EditProfileActivity.this).getPhoneNumber();
-       // mToken = SharedPrefManager.getInstance(EditProfileActivity.this).getDeviceToken();
-
         userPhoneNumber.setText(mPhone);
 
         //===============================================| Receive the data and observe the data from view model
@@ -214,8 +210,10 @@ public class EditProfileActivity extends AppCompatActivity {
                         Utility.alertDialog(EditProfileActivity.this, "Please change your marital status");
                     } */else {
                         if (Network.haveNetwork(EditProfileActivity.this)) {
+
                             mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
-                            storeToDatabase(mAuthId, name, relation, occupation, email, mPhone, birth, address, isUserOwner, mImageUrl, "mToken");
+                            SharedPrefManager.getInstance(EditProfileActivity.this).savePhoneAndLogInStatus(phone, true);
+                            storeToDatabase(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, "mToken");
                         } else {
                             Utility.alertDialog(EditProfileActivity.this, getString(R.string.network_unavailable));
                         }

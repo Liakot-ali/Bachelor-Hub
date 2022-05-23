@@ -16,7 +16,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +32,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
+import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.R;
+import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
+import com.nurnobishanto.bachelorhub.utils.ConstantKey;
+import com.nurnobishanto.bachelorhub.utils.Utility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +45,14 @@ import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {
-    private TextInputLayout nameInputLayout,emailInputLayout,passInputLayout,confirmPassInputLayout,reflInputLayout;
-    private TextInputEditText nameInput,emailInput,passInput,confirmPassInput,refInput;
+    private TextInputLayout nameInputLayout,emailInputLayout,passInputLayout,confirmPassInputLayout;
+    private TextInputEditText nameInput,emailInput,passInput,confirmPassInput;
     private Button signup;
     private TextView signin,forget;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseAuth mAuth;
+    private Spinner spinner;
+    private EditText editText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,15 +64,18 @@ public class SignUpFragment extends Fragment {
         emailInputLayout=view.findViewById(R.id.emailInputLayout);
         passInputLayout=view.findViewById(R.id.passlInputLayout);
         confirmPassInputLayout=view.findViewById(R.id.confirmPasslInputLayout);
-        reflInputLayout=view.findViewById(R.id.reflInputLayout);
+        spinner = (Spinner) view.findViewById(R.id.country_code_spinner);
+        editText = (EditText) view.findViewById(R.id.user_phone_number);
         nameInput=view.findViewById(R.id.name);
         emailInput=view.findViewById(R.id.email);
         passInput=view.findViewById(R.id.password);
         confirmPassInput=view.findViewById(R.id.confirmPassword);
-        refInput=view.findViewById(R.id.refInput);
         signin=view.findViewById(R.id.signin);
         signup=view.findViewById(R.id.signup);
         forget=view.findViewById(R.id.forget);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, ConstantKey.countryAreaCodes);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getPosition("+880")); //set item by default
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,28 +186,7 @@ public class SignUpFragment extends Fragment {
 
             }
         });
-        refInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (refInput.getText().toString().length()<6){
-                    reflInputLayout.setErrorEnabled(false);
-                }else {
-                    reflInputLayout.setErrorEnabled(true);
-                    reflInputLayout.setError("Invalid Referral Code!");
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         return  view;
     }
@@ -213,6 +204,8 @@ public class SignUpFragment extends Fragment {
                     pd.dismiss();
                     emailInput.setError(task.getException().getMessage().toString());
                 }else {
+                    String code = spinner.getSelectedItem().toString();
+                    String phone = editText.getText().toString().trim();
                     String userId = mAuth.getCurrentUser().getUid();
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("tolet_users").child(userId);
                     Map<String, Object> userInfo = new HashMap<>();
@@ -226,13 +219,9 @@ public class SignUpFragment extends Fragment {
                     dbRef.updateChildren(userInfo);
                     pd.dismiss();
                     Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
-
-                    SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("Users", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLogged",true);
-                    editor.putString("UserId", mAuth.getCurrentUser().getUid());
-                    editor.putString("UserEmail", mAuth.getCurrentUser().getEmail());
-                    editor.apply();
+                    SharedPrefManager.getInstance(getContext()).savePhoneAndLogInStatus(code+ Utility.removeZero(phone), true);
+                    SharedPrefManager.getInstance(getContext()).saveUserAuthId(userId);
+                    SharedPrefManager.getInstance(getContext()).saveUserEmail(emailInput.getText().toString());
                     startActivity(new Intent(getContext(), EditProfileActivity.class));
                     getActivity().finish();
 
@@ -279,18 +268,13 @@ public class SignUpFragment extends Fragment {
             confirmPassInputLayout.setError("Confirm Password Not Match!");
             return false;
         }
-        else if (refInput.getText().toString().length()>5){
-            reflInputLayout.setErrorEnabled(true);
-            confirmPassInputLayout.setErrorEnabled(false);
-            reflInputLayout.setError("Invalid Referral Code!");
-            return false;
-        }
+
         else {
             confirmPassInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(false);
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(false);
-            reflInputLayout.setErrorEnabled(false);
+
             return true;
         }
 

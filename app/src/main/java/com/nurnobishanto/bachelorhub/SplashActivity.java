@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
+import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -49,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(new Intent(SplashActivity.this, onBoardAtivity.class));
 
                     }else {
-                        startActivity(new Intent(SplashActivity.this, AuthActivity.class));
+                        startActivity(new Intent(SplashActivity.this, PhoneActivity.class));
                     }
                 }
                 finish();

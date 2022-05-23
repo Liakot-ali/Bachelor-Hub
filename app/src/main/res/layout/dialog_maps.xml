@@ -11,20 +11,20 @@
 
 
     <ImageView
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_marker_pick_point"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_marker_pick_point" />
 
     <Button
         android:id="@+id/pick_point_ok"
-        android:text="@string/done"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/mapView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
-        android:textColor="@color/gray"
         android:background="@drawable/selector_button_round"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content" />
+        android:text="@string/done"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

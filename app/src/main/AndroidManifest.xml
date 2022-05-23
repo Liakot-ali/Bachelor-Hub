@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nurnobishanto.bachelorhub">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -17,8 +25,22 @@
         android:name="android.hardware.camera"
         android:required="true" /> <!-- save to phone or sd card directory -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Caution: If your app targets Android 5.0 (API level 21) or higher and uses the ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION permission in order to receive location updates from the network or a GPS, respectively, you must also explicitly declare that your app uses the android.hardware.location.network or android.hardware.location.gps hardware features. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- access approximate location | Gets location from WiFi and cellular networks -->
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" /> <!-- API 20 or lower | ACCESS_COARSE_LOCATION | Gets location from WiFi and cellular networks -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- access precise location | Gets location from Global Positioning System (GPS) as well as WiFi and mobile cell data -->
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" /> <!-- API 20 or lower | ACCESS_FINE_LOCATION | Gets location from Global Positioning System (GPS) -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /> <!-- Google Services available on the device -->
+    <!--
+ Required only when requesting background location access on
+          Android 10 (API level 29) and higher.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -28,12 +50,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:name=".Activity.MessageActivity"
+            android:exported="false" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Activity.PhoneVerifyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.PhoneActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.NotificationActivity"
             android:exported="false" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <!-- Start: To configure the FileProvider for Camera capture -->
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- Start: To configure the FileProvider for Camera capture -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.zaaibo.tolet"
@@ -41,7 +84,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <service

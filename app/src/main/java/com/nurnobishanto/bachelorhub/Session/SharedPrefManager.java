@@ -21,6 +21,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "shared_pref";
     private static final String AUTH_ID = "authid_key";
     private static final String PHONE_NUMBER = "phone_key";
+    private static final String EMAIL = "email_key";
     private static final String IS_LOGGED = "login_key";
     private static final String LAT_KEY = "lat_key";
     private static final String LNG_KEY = "lng_key";
@@ -49,6 +50,13 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TAG_TOKEN, token);
+        editor.apply();
+        editor.commit();
+    }
+    public void saveUserEmail(String email){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_TOKEN, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EMAIL, email);
         editor.apply();
         editor.commit();
     }
@@ -83,6 +91,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit(); //for old version
     }
+
 
     public void saveCurrentLatLng(LatLng latLng){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -131,6 +140,10 @@ public class SharedPrefManager {
     public String getUserAuthId(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return  sharedPreferences.getString(AUTH_ID, null);
+    }
+    public String getUserEmail(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getString(EMAIL, null);
     }
 
     public LatLng getCurrentLatLng(){

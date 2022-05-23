@@ -1,66 +1,97 @@
 package com.nurnobishanto.bachelorhub.Fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.nurnobishanto.bachelorhub.Adapter.PostsAdapter;
+import com.nurnobishanto.bachelorhub.Models.Filter;
+import com.nurnobishanto.bachelorhub.Models.PostAd;
+import com.nurnobishanto.bachelorhub.Models.PostAdViewModel;
 import com.nurnobishanto.bachelorhub.R;
+import com.nurnobishanto.bachelorhub.Service.MyNetworkReceiver;
+import com.nurnobishanto.bachelorhub.utils.ConstantKey;
+import com.nurnobishanto.bachelorhub.utils.LocaleHelper;
+import com.nurnobishanto.bachelorhub.utils.Utility;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private static final String TAG = "PostsListActivity";
+    private MyNetworkReceiver mNetworkReceiver;
+    private ProgressDialog mProgress = null;
+    private RecyclerView mRecyclerView;
+    private PostsAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mNetworkReceiver = new MyNetworkReceiver(getContext());
+        mProgress = Utility.showProgressDialog(getActivity(), getResources().getString( R.string.progress), true);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        //Receive the data and observe the data from view model
+        PostAdViewModel mPostAdViewModel = ViewModelProviders.of(this).get(PostAdViewModel.class); //Initialize view model
+
+        if (getActivity().getIntent().getExtras() != null) {
+            Filter model = (Filter) getActivity().getIntent().getSerializableExtra(ConstantKey.FILTER_KEY);
+            mPostAdViewModel.getPostAdByFilter(model).observe(getActivity(), new Observer<ArrayList<PostAd>>() {
+                @Override
+                public void onChanged(ArrayList<PostAd> postAds) {
+                    getAllPostData(postAds);
+                }
+            });
+        } else {
+            mPostAdViewModel.getAllPostAd().observe(getActivity(), new Observer<ArrayList<PostAd>>() {
+                @Override
+                public void onChanged(ArrayList<PostAd> postAds) {
+                    getAllPostData(postAds);
+                }
+            });
+        }
+        return view;
     }
+    private void getAllPostData(ArrayList<PostAd> postAds) {
+        if (postAds != null) {
+            Log.d(TAG, new Gson().toJson(postAds));
+            //mArrayList.addAll(postAds);
+            initRecyclerView(postAds);
+            mAdapter.notifyDataSetChanged();
+            Utility.dismissProgressDialog(mProgress);
+        } else {
+            Utility.dismissProgressDialog(mProgress);
+            Utility.alertDialog(getContext(), getResources().getString(R.string.msg_no_data));
+        }
+    }
+
+    private void initRecyclerView(ArrayList<PostAd> mArrayList) {
+        mAdapter = new PostsAdapter(getContext(), mArrayList); //mUserViewModel.getUsers().getValue()
+        //mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
+        //mAdapter.notifyDataSetChanged();
+    }
+
+
+
 }

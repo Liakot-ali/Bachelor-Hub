@@ -34,7 +34,7 @@ public class SigninFragment extends Fragment {
     private TextInputLayout emailInputLayout,passInputLayout;
     private TextInputEditText emailInput,passInput;
     private Button signin;
-    private TextView signup,forget;
+    private TextView signup,forget,phone;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private FirebaseAuth mAuth;
@@ -130,12 +130,6 @@ public class SigninFragment extends Fragment {
                 dialog.dismiss();
             }else {
                 dialog.dismiss();
-                SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("Users",getContext().MODE_PRIVATE);
-                SharedPreferences.Editor editor = userPref.edit();
-                editor.putBoolean("isLogged",true);
-                editor.putString("UserId", mAuth.getCurrentUser().getUid());
-                editor.putString("UserEmail", mAuth.getCurrentUser().getEmail());
-                editor.apply();
                 startActivity(new Intent(getContext(),MainActivity.class));
                 getActivity().finish();
 

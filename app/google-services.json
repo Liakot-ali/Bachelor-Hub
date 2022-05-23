@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "359983574231",
+    "firebase_url": "https://bachelorhub-tolet-default-rtdb.firebaseio.com",
     "project_id": "bachelorhub-tolet",
     "storage_bucket": "bachelorhub-tolet.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "359983574231-ehfvgvf4cl9lcira99s98q4cgg9j21h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nurnobishanto.bachelorhub",
+            "certificate_hash": "13f49ebeaddea0394ba66464032ed1520128177c"
+          }
+        },
         {
           "client_id": "359983574231-cc8p4gprd8ur556ktq6tj5q33dvchhcv.apps.googleusercontent.com",
           "client_type": 3

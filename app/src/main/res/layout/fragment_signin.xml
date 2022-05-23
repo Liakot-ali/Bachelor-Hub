@@ -92,5 +92,13 @@
         android:text="Forgot My Password"
         android:textColor="@color/red"
         android:textStyle="bold"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone"
+        android:text="User Phone Number Instead"
+        android:textColor="@color/green"
+        android:textStyle="bold"/>
 
 </LinearLayout>
