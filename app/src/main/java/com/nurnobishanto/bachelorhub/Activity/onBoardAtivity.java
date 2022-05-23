@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.nurnobishanto.bachelorhub.Adapter.ViewPagerAdapter;
 import com.nurnobishanto.bachelorhub.AuthFragment.SigninFragment;
 import com.nurnobishanto.bachelorhub.R;
+import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 
 public class onBoardAtivity extends AppCompatActivity {
 
@@ -48,11 +49,8 @@ public class onBoardAtivity extends AppCompatActivity {
                     viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
 
                 }else {
+                    SharedPrefManager.getInstance(onBoardAtivity.this).setUserIsFirstTime(false);
                     startActivity(new Intent(onBoardAtivity.this,AuthActivity.class));
-                    SharedPreferences preferences = getApplication().getSharedPreferences("onBoard", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("isFirstTime",false);
-                    editor.apply();
                     finish();
                 }
             }

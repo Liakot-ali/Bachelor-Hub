@@ -22,19 +22,19 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.context = context;
     }
     private int image[]={
-            android.R.drawable.btn_star_big_on,
-            R.drawable.ic_launcher_background,
-            R.drawable.common_google_signin_btn_icon_light,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_deal,
+            R.mipmap.ic_communication,
     };
     private String titles[]={
-            "Hello 1",
-            "Hello 2",
-            "Hello 3",
+            "Welcome to The \nBachelor Hub",
+            "Rent Your Property",
+            "Capture and Upload Your Property"
     };
     private String desc[]={
-            "Description 1",
-            "Description 2",
-            "Description 3",
+            "Here you can find a property rent solution. We help you to make deal with directly to the owner/tenant easily. We don't charge the owner",
+            "We have more tenants community.\n You can rent your property easily by a single post.",
+            "Property photos are more effective for getting your tenant easily.",
 
     };
 

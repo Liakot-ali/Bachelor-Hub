@@ -7,33 +7,22 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".SplashActivity">
-    <TextView
+
+    <ImageView
         android:id="@+id/SpashtextId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:textColor="@color/black"
+       android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Developed By"
-        app:drawableBottomCompat="@mipmap/ic_launcher_round" />
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/dv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:textColor="@color/black"
-        android:text="Developed By Nurnobi Shanto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </RelativeLayout>

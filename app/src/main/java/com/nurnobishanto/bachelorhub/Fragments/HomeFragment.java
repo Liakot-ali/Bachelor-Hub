@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
 
         if (getActivity().getIntent().getExtras() != null) {
             Filter model = (Filter) getActivity().getIntent().getSerializableExtra(ConstantKey.FILTER_KEY);
+            String name = getActivity().getIntent().getStringExtra("name");
+
             mPostAdViewModel.getPostAdByFilter(model).observe(getActivity(), new Observer<ArrayList<PostAd>>() {
                 @Override
                 public void onChanged(ArrayList<PostAd> postAds) {

@@ -66,9 +66,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Activity.PhoneVerifyActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Activity.PhoneActivity"
             android:exported="false" />
         <activity

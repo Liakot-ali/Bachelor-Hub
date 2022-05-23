@@ -140,6 +140,13 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+        String name = getIntent().getStringExtra("name");
+        if (name!=null){
+            getSupportActionBar().setTitle(name);
+        }else {
+            getSupportActionBar().setTitle("Home");
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                 new HomeFragment()).commit();
 
@@ -186,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int i) {
                                         SharedPrefManager.getInstance(MainActivity.this).deleteCurrentSession();
                                         FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
+                                        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
                                         startActivity(intent);
                                         dialog.dismiss();
@@ -219,22 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void logout() {
-        SharedPreferences sharedPreference=getSharedPreferences("Users",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreference.edit();
-        editor.remove("isLogged");
-        editor.remove("UserId");
-        editor.remove("UserEmail");
-        editor.apply();
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-        startActivity(intent);
-        Toast.makeText(this,"Logout",Toast.LENGTH_SHORT).show();
-        //deleteCache(SettingActivity.this);
-        // clearAppData();
-        finish();
 
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
 
@@ -251,8 +243,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                         case R.id.nav_search:
-                            getSupportActionBar().setTitle("Search");
-                            selectedFragment = new SearchFragment();
+                            filterDialog();
+                           // getSupportActionBar().setTitle("Search");
+                          //  selectedFragment = new SearchFragment();
                             break;
 
                         case R.id.nav_message:
@@ -482,8 +475,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!filterLocation.getSelectedItem().toString().contains("Select Location")) {
                     if (bedRooms != null && bedRooms.equals("4+")) {
                         passFilterValues(filterLocation.getSelectedItem().toString(),min.getText().toString(),max.getText().toString(),propertyType,renterType,"Any");
+                         getSupportActionBar().setTitle("Search");
                     } else {
                         passFilterValues(filterLocation.getSelectedItem().toString(),min.getText().toString(),max.getText().toString(),propertyType,renterType,bedRooms);
+                         getSupportActionBar().setTitle("Search");
                     }
                 } else {
                     Utility.alertDialog(MainActivity.this, getResources().getString( R.string.msg_select_location));
@@ -510,7 +505,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //intent.putExtra(ConstantKey.FILTER_KEY, loc+","+min+","+max+","+pro+","+rent+","+bed);
         intent.putExtra(ConstantKey.FILTER_KEY, new Filter(loc, min, max, pro, rent, bed));
+        intent.putExtra("name","Search");
         startActivity(intent);
+        finish();
     }
     //====================================================| Property Button Action
     private class ActionHandlerProperty implements View.OnClickListener {

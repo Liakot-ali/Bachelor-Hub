@@ -33,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
+import com.nurnobishanto.bachelorhub.Activity.PhoneVerifyActivity;
+import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.R;
 import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
@@ -214,14 +216,15 @@ public class SignUpFragment extends Fragment {
                     userInfo.put("userFullName",nameInput.getText().toString());
                     userInfo.put("userAuthId",userId);
                     userInfo.put("userEmail",emailInput.getText().toString());
+                    userInfo.put("userPhoneNumber",code+ Utility.removeZero(phone));
+                    userInfo.put("isUserOwner","Renter");
 
 
                     dbRef.updateChildren(userInfo);
                     pd.dismiss();
                     Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
-                    SharedPrefManager.getInstance(getContext()).savePhoneAndLogInStatus(code+ Utility.removeZero(phone), true);
+                    SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
                     SharedPrefManager.getInstance(getContext()).saveUserAuthId(userId);
-                    SharedPrefManager.getInstance(getContext()).saveUserEmail(emailInput.getText().toString());
                     startActivity(new Intent(getContext(), EditProfileActivity.class));
                     getActivity().finish();
 

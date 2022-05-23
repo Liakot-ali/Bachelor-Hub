@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/post_filter_id"
     android:fillViewport="true"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <TextView
+                    android:textColor="@color/red"
                     android:id="@+id/filter_dialog_cancel"
                     android:textAlignment="center"
                     android:text="@string/filter_dialog_cancel"
@@ -34,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <TextView
+                    android:textColor="@color/black"
                     android:text="@string/filter_dialog_title"
                     android:textAlignment="center"
                     android:layout_width="match_parent"
@@ -44,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <TextView
+                    android:textColor="@color/blue"
                     android:id="@+id/filter_dialog_reset"
                     android:text="@string/filter_dialog_reset"
                     android:textAlignment="center"
@@ -69,17 +74,19 @@
             android:layout_height="wrap_content">
         </SearchView>-->
         <Spinner
+            android:theme="@style/Theme.AppCompat.Light"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
             android:id="@+id/filter_location"
             android:entries="@array/locations_array"
             android:background="@drawable/shape_edit_text_border"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="45dp"/>
 
 
         <!-- Price Range -->
         <TextView
+            android:textColor="@color/black"
             android:text="@string/filter_price_range"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
@@ -87,27 +94,31 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
                 android:id="@+id/filter_price_range"
-                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 app:absoluteMaxValue="1000"
-                app:absoluteMinValue="100000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                app:absoluteMinValue="100000" />
+
             <EditText
+
                 android:id="@+id/range_min"
-                android:hint="@string/hint_min"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
-                android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:hint="@string/hint_min"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
             <EditText
+                android:textColorHint="@color/gray"
                 android:id="@+id/range_max"
                 android:hint="@string/hint_max"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textColor="@color/black"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -132,16 +143,17 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <Button
                         android:id="@+id/propertyBtn0"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_button"
+                        android:gravity="center"
                         android:text="@string/filter_any"
                         android:textAllCaps="false"
-                        android:gravity="center"
-                        android:textSize="12sp"
                         android:textColor="@color/gray"
-                        android:background="@drawable/selector_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:textSize="12sp" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"

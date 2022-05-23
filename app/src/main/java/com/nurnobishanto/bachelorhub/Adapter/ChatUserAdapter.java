@@ -1,15 +1,23 @@
 package com.nurnobishanto.bachelorhub.Adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -53,7 +61,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         final ChatUserModels models  = modelsList.get(position);
-        getUsernmaeImage(models.getUserid(),holder.name,holder.image,holder.status);
+        getUsernmaeImage(models.getUserid(),holder.name,holder.image,holder.status,holder.call);
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +74,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
 
     }
 
-    private void getUsernmaeImage(String userid, TextView name, CircleImageView image, TextView status) {
+    private void getUsernmaeImage(String userid, TextView name, CircleImageView image, TextView status, ImageButton call) {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("tolet_users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,7 +91,38 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
                         if(snapshot.child("userImageUrl").getValue()!=null) {
                             Picasso.get()
                                     .load(snapshot.child("userImageUrl").getValue().toString())
+                                    .placeholder(R.mipmap.ic_launcher)
+                                    .error(R.mipmap.ic_launcher)
                                     .into(image);
+                        }
+                        if(snapshot.child("userPhoneNumber").getValue()!=null)
+                        {
+                            call.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final int REQUEST_PHONE_CALL = 1;
+                                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                            ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                                        }
+                                        else
+                                        {
+                                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                            callIntent.setData(Uri.parse("tel:"+snapshot.child("userPhoneNumber").getValue().toString()));
+                                            mContext.startActivity(callIntent);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                        callIntent.setData(Uri.parse("tel:"+snapshot.child("userPhoneNumber").getValue().toString()));
+                                        mContext.startActivity(callIntent);
+                                    }
+
+
+                                }
+                            });
+
                         }
 
 
@@ -110,6 +149,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
         TextView name,status;
         CircleImageView image;
         LinearLayout card;
+        ImageButton call;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,6 +158,7 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
             image = itemView.findViewById(R.id.img);
             card = itemView.findViewById(R.id.card);
             status = itemView.findViewById(R.id.status);
+            call = itemView.findViewById(R.id.call);
 
 
         }

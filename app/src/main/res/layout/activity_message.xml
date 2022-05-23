@@ -36,7 +36,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:text="username"
                         android:maxLines="1"
                         android:textSize="16sp"
                         android:layout_width="wrap_content"
@@ -47,7 +46,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="offline"
+                        android:maxLines="1"
                         android:textSize="12sp"
                         android:textColor="#E1E1E1"
                         android:id="@+id/status"/>

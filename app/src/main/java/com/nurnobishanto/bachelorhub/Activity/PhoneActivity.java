@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.Models.User;
@@ -31,6 +32,7 @@ public class PhoneActivity extends AppCompatActivity {
     private Spinner spinner;
     private EditText editText;
     private Button sentButton;
+    private TextView email;
 
     private ProgressDialog mProgress;
     private User mUser = null;
@@ -48,6 +50,14 @@ public class PhoneActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.country_code_spinner);
         editText = (EditText) findViewById(R.id.user_phone_number);
         sentButton = (Button) findViewById(R.id.sent_button);
+        email = (TextView) findViewById(R.id.email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PhoneActivity.this, AuthActivity.class));
+                finish();
+            }
+        });
         sentButton.setOnClickListener(new ActionHandler());
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ConstantKey.countryAreaCodes);
@@ -81,11 +91,7 @@ public class PhoneActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
             startActivity(intent);
         }
-        /*if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
-            startActivity(intent);
-        }*/
+
     }
 
     //===============================================| Click Events
@@ -101,7 +107,7 @@ public class PhoneActivity extends AppCompatActivity {
                     String phone = editText.getText().toString().trim();
                     if (!TextUtils.isEmpty(phone)) {
                         Utility.dismissProgressDialog(mProgress);
-                        SharedPrefManager.getInstance(PhoneActivity.this).savePhoneAndLogInStatus(code+ Utility.removeZero(phone), true);
+                        SharedPrefManager.getInstance(PhoneActivity.this).savePhoneAndLogInStatus(code+ Utility.removeZero(phone), false);
                         Intent intent = new Intent(PhoneActivity.this, PhoneVerifyActivity.class);
                         intent.putExtra(ConstantKey.USER_PHONE_KEY, code+Utility.removeZero(phone));
                         startActivity(intent);

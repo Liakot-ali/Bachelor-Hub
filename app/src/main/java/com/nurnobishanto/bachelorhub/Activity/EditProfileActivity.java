@@ -276,10 +276,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (result.equals("success")) {
                     startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
                     finish();
-                    Utility.dismissProgressDialog(mProgress);
-                } else {
-                    Utility.dismissProgressDialog(mProgress);
                 }
+                Utility.dismissProgressDialog(mProgress);
             }
         });
     }

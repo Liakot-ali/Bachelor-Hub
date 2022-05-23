@@ -4,17 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="15dp"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.PhoneVerifyActivity">
     <ImageView
         android:layout_centerInParent="true"
-        android:layout_above="@+id/layout_user_verify_code"
+        android:layout_above="@+id/phone"
         android:adjustViewBounds="true"
         android:src="@mipmap/ic_launcher"
         android:layout_marginBottom="25dp"
         android:layout_width="140dp"
         android:layout_height="140dp" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_user_verify_code"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
 
     <!-- Code -->
     <com.google.android.material.textfield.TextInputLayout
@@ -43,13 +54,13 @@
 
     <Button
         android:id="@+id/verify_button"
-        android:layout_below="@+id/verify_layout_message"
-        android:text="Verify Now"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_rectangle_corner_round_black"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/verify_layout_message"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_rectangle_corner_round_black"
+        android:text="Verify Now"
+        android:textColor="@color/white" />
     <Button
         android:visibility="gone"
         android:id="@+id/resend_button"

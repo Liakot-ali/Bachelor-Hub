@@ -25,8 +25,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
+import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.R;
+import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 
 
 public class SigninFragment extends Fragment {
@@ -54,6 +57,14 @@ public class SigninFragment extends Fragment {
         signin=view.findViewById(R.id.signin);
         signup=view.findViewById(R.id.signup);
         forget=view.findViewById(R.id.forget);
+        phone=view.findViewById(R.id.phone);
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PhoneActivity.class));
+                getActivity().finish();
+            }
+        });
 
 
         mAuth =FirebaseAuth.getInstance();
@@ -130,6 +141,7 @@ public class SigninFragment extends Fragment {
                 dialog.dismiss();
             }else {
                 dialog.dismiss();
+                SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
                 startActivity(new Intent(getContext(),MainActivity.class));
                 getActivity().finish();
 

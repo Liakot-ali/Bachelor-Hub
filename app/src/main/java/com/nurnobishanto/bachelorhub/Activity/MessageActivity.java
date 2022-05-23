@@ -163,6 +163,8 @@ public class MessageActivity extends AppCompatActivity {
                     }
                     Picasso.get()
                             .load(map.get("userImageUrl").toString())
+                            .placeholder(R.mipmap.ic_launcher)
+                            .error(R.mipmap.ic_launcher)
                             .into(profile_image);
 
 

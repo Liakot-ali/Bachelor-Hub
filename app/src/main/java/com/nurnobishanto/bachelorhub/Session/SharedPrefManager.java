@@ -23,6 +23,7 @@ public class SharedPrefManager {
     private static final String PHONE_NUMBER = "phone_key";
     private static final String EMAIL = "email_key";
     private static final String IS_LOGGED = "login_key";
+    private static final String IS_FIRST = "first_key";
     private static final String LAT_KEY = "lat_key";
     private static final String LNG_KEY = "lng_key";
     private static final String FAV_KEY = "favorite_key";
@@ -131,6 +132,25 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return  sharedPreferences.getBoolean(IS_LOGGED, false);
     }
+    public void setUserIsLoggedIn(boolean isLogged){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_LOGGED, isLogged);
+        editor.apply();
+        editor.commit();
+    }
+    public boolean getUserIsFirstTime(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getBoolean(IS_FIRST, true);
+    }
+    public void setUserIsFirstTime(boolean isFirstTime){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_FIRST, isFirstTime);
+        editor.apply();
+        editor.commit();
+    }
+
 
     public String getPhoneNumber(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

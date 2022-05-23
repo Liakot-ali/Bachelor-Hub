@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +43,8 @@ public class PhoneVerifyActivity extends AppCompatActivity {
 
     private String phoneNumber;
     private EditText editText;
+    private TextView phnNumber;
+    private Button resend;
 
     private ProgressDialog mProgress;
     private String mVerificationId;
@@ -57,11 +60,20 @@ public class PhoneVerifyActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         editText = (EditText) findViewById(R.id.user_verify_code);
+        phnNumber = (TextView) findViewById(R.id.phone);
         ((Button) findViewById(R.id.verify_button)).setOnClickListener(new ActionHandler());
-        ((Button) findViewById(R.id.resend_button)).setOnClickListener(new ActionHandler());
+        resend = ((Button) findViewById(R.id.resend_button));
+        resend.setOnClickListener(new ActionHandler());
 
         if (getIntent().getExtras() != null) {
             phoneNumber = getIntent().getStringExtra(ConstantKey.USER_PHONE_KEY);
+            phnNumber.setText(phoneNumber+"\n Change Number");
+            phnNumber.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
 
         initFireBaseCallbacks();
@@ -175,6 +187,10 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,       // Activity (for callback binding)
                 mCallBack);        // OnVerificationStateChangedCallbacks
+        Utility.dismissProgressDialog(mProgress);
+
+
+
     }
 
     private void verifyPhoneNumberWithCode(String code) {
@@ -194,6 +210,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                 this,           // Activity (for callback binding)
                 mCallBack,             // OnVerificationStateChangedCallbacks
                 token);                // ForceResendingToken from callbacks
+
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
@@ -204,6 +221,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = task.getResult().getUser();
                             Utility.dismissProgressDialog(mProgress);
+                            SharedPrefManager.getInstance(PhoneVerifyActivity.this).savePhoneAndLogInStatus(phoneNumber, true);
                             SharedPrefManager.getInstance(PhoneVerifyActivity.this).saveUserAuthId(user.getUid());
                             Intent intent = new Intent(PhoneVerifyActivity.this, EditProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
