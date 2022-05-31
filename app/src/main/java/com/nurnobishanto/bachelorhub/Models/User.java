@@ -15,12 +15,16 @@ public class User {
     private String isUserOwner;
     private String userImageUrl;
     private String userToken;
+    private String userVerify;
+    private String verifyMethod;
+    private String verifyKey;
     private String createdAt = String.valueOf(new Timestamp(System.currentTimeMillis()));
+
 
     public User() {
     }
 
-    public User(String userAuthId, String userFullName, String userRelation, String userOccupation, String userEmail, String userPhoneNumber, String userBirthDate, String userAddress, String isUserOwner, String userImageUrl, String userToken) {
+    public User(String userAuthId, String userFullName, String userRelation, String userOccupation, String userEmail, String userPhoneNumber, String userBirthDate, String userAddress, String isUserOwner, String userImageUrl, String userToken, String userVerify, String verifyMethod, String verifyKey) {
         this.userAuthId = userAuthId;
         this.userFullName = userFullName;
         this.userRelation = userRelation;
@@ -32,6 +36,33 @@ public class User {
         this.isUserOwner = isUserOwner;
         this.userImageUrl = userImageUrl;
         this.userToken = userToken;
+        this.userVerify = userVerify;
+        this.verifyMethod = verifyMethod;
+        this.verifyKey = verifyKey;
+    }
+
+    public String getUserVerify() {
+        return userVerify;
+    }
+
+    public void setUserVerify(String userVerify) {
+        this.userVerify = userVerify;
+    }
+
+    public String getVerifyMethod() {
+        return verifyMethod;
+    }
+
+    public void setVerifyMethod(String verifyMethod) {
+        this.verifyMethod = verifyMethod;
+    }
+
+    public String getVerifyKey() {
+        return verifyKey;
+    }
+
+    public void setVerifyKey(String verifyKey) {
+        this.verifyKey = verifyKey;
     }
 
     public String getUserAuthId() {

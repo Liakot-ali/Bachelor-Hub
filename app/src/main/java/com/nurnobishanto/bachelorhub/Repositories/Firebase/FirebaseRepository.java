@@ -123,8 +123,8 @@ public class FirebaseRepository {
         });
     }
 
-    public void getPostAdById(final PostAdCallback mCallback, String mAuthId) {
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(ConstantKey.USER_POST_NODE).child(mAuthId);
+    public void getPostAdById(final PostAdCallback mCallback, String propertyId) {
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(ConstantKey.USER_POST_NODE).child(propertyId);
         mDatabaseRef.keepSynced(true); //firebase load offline data
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -233,7 +233,7 @@ public class FirebaseRepository {
     public void storePostAd(final StorePostAdCallback mCallback, PostAd postAd) {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(ConstantKey.USER_POST_NODE);
         //String mDbId = mDatabaseRef.push().getKey() : Get database UUID after inserting data
-        mDatabaseRef.child(postAd.getOwnerAuthId()).setValue(postAd).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mDatabaseRef.child(postAd.getPropertyId()).setValue(postAd).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

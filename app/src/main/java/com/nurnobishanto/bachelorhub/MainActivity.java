@@ -22,9 +22,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,25 +39,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
 import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
+import com.nurnobishanto.bachelorhub.Activity.MessageActivity;
+import com.nurnobishanto.bachelorhub.Activity.NotificationsActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.PostAdActivity;
+import com.nurnobishanto.bachelorhub.Activity.ShowMapsActivity;
+import com.nurnobishanto.bachelorhub.Activity.VerificationActivity;
 import com.nurnobishanto.bachelorhub.Additional.AboutFragment;
+import com.nurnobishanto.bachelorhub.Admin.AdminHomeActivity;
 import com.nurnobishanto.bachelorhub.Fragments.FavoriteFragment;
 import com.nurnobishanto.bachelorhub.Fragments.HomeFragment;
 import com.nurnobishanto.bachelorhub.Fragments.MessagesFragment;
+import com.nurnobishanto.bachelorhub.Fragments.NotificationsFragment;
 import com.nurnobishanto.bachelorhub.Fragments.ProfileFragment;
 import com.nurnobishanto.bachelorhub.Fragments.SearchFragment;
+import com.nurnobishanto.bachelorhub.Fragments.SettingsFragment;
 import com.nurnobishanto.bachelorhub.Models.Filter;
 import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.Service.MyLocationReceiver;
@@ -64,12 +83,16 @@ import com.nurnobishanto.bachelorhub.utils.ConstantKey;
 import com.nurnobishanto.bachelorhub.utils.GpsUtility;
 import com.nurnobishanto.bachelorhub.utils.Network;
 import com.nurnobishanto.bachelorhub.utils.Utility;
+import com.squareup.picasso.Picasso;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +100,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 99;
+
     private int REQUEST_CHECK_SETTINGS = 0;
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -102,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private String renterType;
     private String bedRooms;
 
-  //  private ArrayList<PostAd> mArrayList = new ArrayList<>();
+    //  private ArrayList<PostAd> mArrayList = new ArrayList<>();
     private MyNetworkReceiver mNetworkReceiver;
     private MyLocationReceiver mLocationReceiver;
     private LocationManager manager;
@@ -113,12 +136,25 @@ public class MainActivity extends AppCompatActivity {
     Fragment selectedFragment = null;
     FloatingActionButton floatingActionButton;
     CircleImageView profile_image;
-    TextView nameTxt,emailTxt;
+    TextView nameTxt, emailTxt, verify, status;
+    private DatabaseReference reference;
+    private FirebaseUser fuser;
+    private String userid, userRole = "User";
+
+
+    private LocationManager locationManager;
+
+    int PERMISSION_ID = 44;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        userid = fuser.getUid();
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(userid);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -142,9 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         String name = getIntent().getStringExtra("name");
-        if (name!=null){
+        if (name != null) {
             getSupportActionBar().setTitle(name);
-        }else {
+        } else {
             getSupportActionBar().setTitle("Home");
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
@@ -169,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                                 new HomeFragment()).commit();
                         break;
                     case R.id.nav_editprofile:
+                        drawer.closeDrawer(GravityCompat.START);
                         startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                         break;
                     case R.id.nav_fav:
@@ -177,14 +214,26 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                                 new FavoriteFragment()).commit();
                         break;
+                    case R.id.nav_notification:
+                        drawer.closeDrawer(GravityCompat.START);
+                        getSupportActionBar().setTitle("Notifications");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                                new NotificationsFragment()).commit();
+                        break;
+                    case R.id.nav_verify:
+                        drawer.closeDrawer(GravityCompat.START);
+                        startActivity(new Intent(MainActivity.this, VerificationActivity.class));
+                        finish();
+                        break;
                     case R.id.nav_about:
                         drawer.closeDrawer(GravityCompat.START);
                         getSupportActionBar().setTitle("About");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                                 new AboutFragment()).commit();
                         break;
-                    case  R.id.nav_logout:
-                       // logout();
+                    case R.id.nav_logout:
+
+
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle(R.string.about_title)
                                 .setMessage(R.string.msg_sign_out)
@@ -213,16 +262,205 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences preferences = getApplication().getSharedPreferences("user", Context.MODE_PRIVATE);
-
-
         View headView = navigationView.getHeaderView(0);
         profile_image = headView.findViewById(R.id.profile_image);
         nameTxt = headView.findViewById(R.id.name);
         emailTxt = headView.findViewById(R.id.email);
+        verify = headView.findViewById(R.id.userVerify);
+        status = headView.findViewById(R.id.status);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+    }
+
+    private void getLastLocation() {
+        // check if permissions are given
+        if (checkPermissions()) {
+
+            // check if location is enabled
+            if (isLocationEnabled()) {
+
+                // getting last
+                // location from
+                // FusedLocationClient
+                // object
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        Location location = task.getResult();
+                        if (location == null) {
+                            requestNewLocationData();
+                        } else {
+                            LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
+                            // Utility.moveToLocation(mMap, new LatLng(origin.latitude, origin.longitude));
+                            if (Network.haveNetwork(MainActivity.this)) {
+                                String mAddress = Utility.getAddress(MainActivity.this, origin);
+                                SharedPrefManager.getInstance(MainActivity.this).saveCurrentLatLng(origin);
+                                //Utility.alertDialog(MainActivity.this,mAddress+"\nLa: "+location.getLatitude()+"\nLo:"+location.getLongitude());
+                            }
+
+
+                        }
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Please turn on" + " your location...", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            // if permissions aren't available,
+            // request for permissions
+            requestPermissions();
+        }
+    }
+
+    private void requestNewLocationData() {
+
+        // Initializing LocationRequest
+        // object with appropriate methods
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(5);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        // setting LocationRequest
+        // on FusedLocationClient
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+    private LocationCallback mLocationCallback = new LocationCallback() {
+
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location location = locationResult.getLastLocation();
+            if (location != null){
+                LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
+                // Utility.moveToLocation(mMap, new LatLng(origin.latitude, origin.longitude));
+                if (Network.haveNetwork(MainActivity.this)) {
+                    String mAddress = Utility.getAddress(MainActivity.this, origin);
+                    SharedPrefManager.getInstance(MainActivity.this).saveCurrentLatLng(origin);
+                    //Utility.alertDialog(MainActivity.this,mAddress+"\nLat: "+location.getLatitude()+"\nLon :"+location.getLongitude());
+                }
+
+            }
+
+        }
+    };
+    // method to check for permissions
+    private boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        // If we want background location
+        // on Android 10.0 and higher,
+        // use:
+        // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // method to request for permissions
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
+
+    // method to check
+    // if location is enabled
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    // If everything is alright then
+    @Override
+    public void
+    onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            }
+        }
     }
 
     private void getUserInformation() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0)
+                {
+
+                    Map<String,Object> map =(Map<String, Object>)dataSnapshot.getValue();
+
+
+                    if(map.get("userFullName")!=null)
+                    {
+                       nameTxt.setText(map.get("userFullName").toString());
+                    }
+                    if(map.get("userRole")!=null)
+                    {
+                        userRole = map.get("userRole").toString();
+                    }
+                    if(map.get("status")!=null)
+                    {
+                       status.setText(map.get("status").toString());
+                    }
+                    if(map.get("userEmail")!=null)
+                    {
+                        emailTxt.setText(map.get("userEmail").toString());
+
+                    }
+                    if(map.get("userImageUrl")!=null)
+                    {
+                        Picasso.get()
+                                .load(map.get("userImageUrl").toString())
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .into(profile_image);
+                    }
+                    if(map.get("userVerify")!=null)
+                    {
+                        verify.setText(map.get("userVerify").toString());
+
+                    }else {
+                        startActivity(new Intent(MainActivity.this,VerificationActivity.class));
+                        finish();
+                    }
+
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
@@ -279,6 +517,29 @@ public class MainActivity extends AppCompatActivity {
                 filterDialog();
                 // FeedFragment.searchInput.setVisibility(View.VISIBLE);
                // startActivity(new Intent(this, FeedPostActivity.class));
+                return true;
+            case R.id.action_settings:
+                getSupportActionBar().setTitle("Settings");
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new SettingsFragment()).commit();
+                return true;
+            case R.id.action_remove_fav:
+                SharedPrefManager.getInstance(MainActivity.this).deleteFavoriteItems();
+                return true;
+            case R.id.action_notifications:
+                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+                return true;
+            case R.id.action_showMap:
+                startActivity(new Intent(MainActivity.this, ShowMapsActivity.class));
+                return true;
+            case R.id.action_admin:
+                if (userRole.equals("Admin")){
+                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                }else {
+                    //Utility.alertDialog(MainActivity.this,"You are not Admin!");
+                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -341,60 +602,11 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    //====================================| Explain why the app needs the request permissions
-    //https://developers.google.com/maps/documentation/android-sdk/location
-    private void requestPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION); //if there is no permission allowed then, display permission request dialog
-        } else {
-          //  mMap.setMyLocationEnabled(true);
-           // Utility.changeCurrentLocationIcon(mapFragment);
-            getDeviceLocation();
-        }
-    }
 
-    //====================================| Handle the permissions request response
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_PERMISSION_ACCESS_FINE_LOCATION) {
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //For allow button
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    // mMap.setMyLocationEnabled(true);
-                    // Utility.changeCurrentLocationIcon(mapFragment);
-                    getDeviceLocation();
-                }
-            } else {
-                //For denied button
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-                requestPermissions();
-            }
-        }
-    }
 
-    //===============================================| Get Device Location/LatLng
-    private void getDeviceLocation() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        try {
-            mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null) {
-                        LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
-                       // Utility.moveToLocation(mMap, new LatLng(origin.latitude, origin.longitude));
-                        if (Network.haveNetwork(MainActivity.this)) {
-                            String mAddress = Utility.getAddress(MainActivity.this, origin);
-                            SharedPrefManager.getInstance(MainActivity.this).saveCurrentLatLng(origin);
-                        }
-                    }
-                }
-            });
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
 
     //===============================================| GPS/Location
     private void checkGpsEnabled(LocationManager manager) {
@@ -406,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, this);
         } else {
-           // checkPermissions();
+            checkPermissions();
         }
     }
 
@@ -627,5 +839,30 @@ public class MainActivity extends AppCompatActivity {
         this.bedBtn_unfocused = bedBtn_focus;
     }
 
+    private void status (String status)
+    {
+        reference=FirebaseDatabase.getInstance().getReference("tolet_users").child(fuser.getUid());
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("status",status);
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DateFormat df = new SimpleDateFormat("h:mm a, EEE, d MMM yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        status("Last Seen "+date);
+    }
+
+    //===============================================| Restart Activity
 
 }

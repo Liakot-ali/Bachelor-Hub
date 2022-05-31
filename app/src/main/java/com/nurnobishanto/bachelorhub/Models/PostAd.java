@@ -11,6 +11,7 @@ public class PostAd {
     private String ownerMobile;
     private String ownerMobileHide;
     private String propertyType;
+    private String propertyId;
     private String renterType;
     private String rentPrice;
     private String bedrooms;
@@ -31,7 +32,7 @@ public class PostAd {
     public PostAd() {
     }
 
-    public PostAd(String ownerAuthId, String ownerToken, String ownerName, String ownerEmail, String ownerMobile, String ownerMobileHide, String propertyType, String renterType, String rentPrice, String bedrooms, String bathrooms, String squareFootage, String amenities, String location, String address, String latitude, String longitude, String description, String imageUrl, String isEnable) {
+    public PostAd(String ownerAuthId, String ownerToken, String ownerName, String ownerEmail, String ownerMobile, String ownerMobileHide, String propertyType, String renterType, String rentPrice, String bedrooms, String bathrooms, String squareFootage, String amenities, String location, String address, String latitude, String longitude, String description, String imageUrl, String isEnable, String propertyId) {
         this.ownerAuthId = ownerAuthId;
         this.ownerToken = ownerToken;
         this.ownerName = ownerName;
@@ -52,6 +53,15 @@ public class PostAd {
         this.description = description;
         this.imageUrl = imageUrl;
         this.isEnable = isEnable;
+        this.propertyId = propertyId;
+    }
+
+    public String getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(String propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getOwnerAuthId() {

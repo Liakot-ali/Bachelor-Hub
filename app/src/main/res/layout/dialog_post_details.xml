@@ -12,13 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--<Button
-            android:id="@+id/close_post_details"
-            android:background="@drawable/button_close_selector"
-            android:layout_gravity="right"
-            android:layout_marginBottom="15dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />-->
+
 
         <!-- Images -->
         <RelativeLayout
@@ -242,43 +236,20 @@
 
         <!-- Google Maps Selection -->
         <LinearLayout
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/show_maps"
+                android:textSize="12sp"
+                android:drawableLeft="@drawable/ic_maps_google"
+                android:text="Show on Google Maps"
+                android:padding="15dp"
+                android:background="@drawable/shape_button_border"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
 
-            <!--<ImageView
-                android:id="@+id/static_google_maps"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />-->
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/static_google_maps"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </com.google.android.gms.maps.MapView>
-            <!--<fragment xmlns:map="http://schemas.android.com/apk/res-auto"
-                android:name="com.google.android.gms.maps.MapFragment"
-                android:id="@+id/post_details_google_map"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                map:cameraBearing="112.5"
-                map:cameraTargetLat="37.4220041"
-                map:cameraTargetLng="-122.0862515"
-                map:cameraTilt="30"
-                map:cameraZoom="13"
-                map:mapType="normal"
-                map:uiCompass="true"
-                map:uiRotateGestures="true"
-                map:uiScrollGestures="true"
-                map:uiTiltGestures="true"
-                map:uiZoomControls="false"
-                map:uiZoomGestures="true"
-                tools:ignore="MissingPrefix"/>-->
-            <!--<fragment
-                android:id="@+id/post_details_google_map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>-->
         </LinearLayout>
 
         <!-- Call and Email Button -->

@@ -168,7 +168,7 @@ public class SharedPrefManager {
 
     public LatLng getCurrentLatLng(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        LatLng latLng = null;
+
         double lat = 0.0, lng = 0.0;
         if (sharedPreferences.getString(LAT_KEY, null) != null) {
             lat = Double.parseDouble(Objects.requireNonNull(sharedPreferences.getString(LAT_KEY, null)));
@@ -176,10 +176,25 @@ public class SharedPrefManager {
         if (sharedPreferences.getString(LNG_KEY, null) != null) {
             lng = Double.parseDouble(Objects.requireNonNull(sharedPreferences.getString(LNG_KEY, null)));
         }
-        if (lat > 0.0 && lng > 0.0) {
-            latLng = new LatLng(lat, lng);
-        }
+
+        LatLng latLng = new LatLng(lat,lng);
         return latLng;
+    }
+    public String getCurrentLatitude(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String lat = "0.0";
+        if (sharedPreferences.getString(LAT_KEY, null) != null) {
+            lat = Objects.requireNonNull(sharedPreferences.getString(LAT_KEY, null));
+        }
+        return lat;
+    }
+    public String getCurrentLongitude(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String lng = "0.0";
+        if (sharedPreferences.getString(LNG_KEY, null) != null) {
+            lng = Objects.requireNonNull(sharedPreferences.getString(LAT_KEY, null));
+        }
+        return lng;
     }
 
     public ArrayList<String> getFavoriteItems(){

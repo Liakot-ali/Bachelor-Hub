@@ -1,8 +1,7 @@
 package com.nurnobishanto.bachelorhub.Activity;
 
 
-import android.Manifest;
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +14,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,20 +21,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableRow;
-import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.Models.PostAd;
 import com.nurnobishanto.bachelorhub.Models.PostAdViewModel;
@@ -80,7 +72,8 @@ public class PostAdActivity extends AppCompatActivity {
     private PostAdViewModel mPostAdViewModel;
     private User mUser;
     private LatLng mLatLng;
-
+    private DatabaseReference mDatabaseRef;
+    private String myAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +87,9 @@ public class PostAdActivity extends AppCompatActivity {
 
         mUser = SharedPrefManager.getInstance(PostAdActivity.this).getUser();
         mLatLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
+
+        myAddress = Utility.getAddress(this, mLatLng);
+       // Utility.alertDialog(PostAdActivity.this, myAddress);
 
         //====================================================| findViewById Initialing
         this.name = (EditText) findViewById(R.id.owner_name);
@@ -113,45 +109,8 @@ public class PostAdActivity extends AppCompatActivity {
         this.location = (Spinner) findViewById(R.id.location);
         this.addr = (EditText) findViewById(R.id.address);
         this.desc = (EditText) findViewById(R.id.description);
-
         this.imgGroup = (TableRow) findViewById(R.id.image_group);
-
-        ((TextView) findViewById(R.id.show_maps)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (ContextCompat.checkSelfPermission(PostAdActivity.this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-// Permission is not granted
-// Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(PostAdActivity.this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION)) {
-
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-
-                    } else {
-
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(PostAdActivity.this,
-                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-
-                        // MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                } else {
-// Permission has already been granted
-                }
-                showMapsDialog();
-            }
-        });
-
+        addr.setText(myAddress);
         ((Button) findViewById(R.id.add_post_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,10 +143,15 @@ public class PostAdActivity extends AppCompatActivity {
 
                 Log.d(TAG, "====" + String.valueOf(postImageUri.size()));
 
-                if(Network.haveNetwork(PostAdActivity.this)) {
+                if (Network.haveNetwork(PostAdActivity.this)) {
                     if (postImageUri.size() > 0 && !address.isEmpty() && mUser != null) {
                         if (mUser.getIsUserOwner().equals("Owner")) {
-                            PostAd post = new PostAd(mUser.getUserAuthId(), mUser.getUserToken(), ownerName, ownerEmail, ownerMobile, isOwnerMobileHide, propertyType, renterType, rentPrice, bedrooms, bathrooms, squareFootage, amenities, selectLocation, address, "23.793221549695087", "90.38458546254178", description, Arrays.toString(postImageUri.toArray()), "");
+                            mDatabaseRef = FirebaseDatabase.getInstance().getReference(ConstantKey.USER_POST_NODE);
+                            String key = mDatabaseRef.push().getKey();
+                            LatLng latLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
+                            String latitude = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatitude();
+                            String longitude = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLongitude();
+                            PostAd post = new PostAd(mUser.getUserAuthId(), mUser.getUserToken(), ownerName, ownerEmail, ownerMobile, isOwnerMobileHide, propertyType, renterType, rentPrice, bedrooms, bathrooms, squareFootage, amenities, selectLocation, address, latitude, longitude, description, Arrays.toString(postImageUri.toArray()), "", key);
                             mProgress = Utility.showProgressDialog(PostAdActivity.this, getResources().getString(R.string.progress), false);
                             storeToDatabase(post);
                         } else {
@@ -263,7 +227,7 @@ public class PostAdActivity extends AppCompatActivity {
                 //uploadImageToStorage(uri);
                 //userImageUrl.setImageURI(uri);
 
-                if (imageCounter>=0 && imageCounter<5){
+                if (imageCounter >= 0 && imageCounter < 5) {
                     //Dynamically ImageView set in TableLayout
                     ImageView img = new ImageView(this);
                     img.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -272,7 +236,7 @@ public class PostAdActivity extends AppCompatActivity {
                     imgGroup.addView(img);
                     img.setImageURI(uri);
                     try {
-                        mProgress = Utility.showProgressDialog(PostAdActivity.this, getResources().getString( R.string.progress), false);
+                        mProgress = Utility.showProgressDialog(PostAdActivity.this, getResources().getString(R.string.progress), false);
                         storeImage(uri, mUser.getUserAuthId());
                     } catch (ArrayIndexOutOfBoundsException e) {
                         Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_range));
@@ -280,88 +244,16 @@ public class PostAdActivity extends AppCompatActivity {
                 } else {
                     addPostImageBtn.setVisibility(View.GONE);
                 }
-                imageCounter ++;
+                imageCounter++;
             }
         }
     }
 
-    //====================================================| Google Maps Dialog
-    private void showMapsDialog() {
-        Dialog dialog = new Dialog(PostAdActivity.this); //new Dialog(PostAdActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND); //make map clear
-        dialog.setContentView(R.layout.dialog_maps);
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        //lp.gravity = Gravity.CENTER;
-        dialog.getWindow().setAttributes(lp);
-
-        dialog.setCancelable(true); //dismiss by clicking outside
-        dialog.show();
-
-        MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
-        MapsInitializer.initialize(PostAdActivity.this);
-        mMapView.onCreate(dialog.onSaveInstanceState());
-        mMapView.onResume();
-
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(final GoogleMap googleMap) {
-                if (ActivityCompat.checkSelfPermission(PostAdActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    googleMap.setMyLocationEnabled(true);
-                } else {
-                    googleMap.setMyLocationEnabled(true);
-                }
-                googleMap.getUiSettings().setZoomControlsEnabled(true);
-                googleMap.getUiSettings().setAllGesturesEnabled(true);
-                googleMap.getUiSettings().setZoomGesturesEnabled(true);
-
-                if (mLatLng != null) {
-                    Utility.moveToLocation(googleMap, mLatLng);
-                }
-
-                googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-                    @Override
-                    public void onCameraIdle() {
-                        LatLng latLng = googleMap.getCameraPosition().target; //float mZoom = mMap.getCameraPosition().zoom; //double lat =  mMap.getCameraPosition().target.latitude; //double lng =  mMap.getCameraPosition().target.longitude;
-                        String address = Utility.getAddress(PostAdActivity.this, latLng);
-                        addr.setText(address);
-                    }
-                });
-
-                ((Button) dialog.findViewById(R.id.pick_point_ok)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addr.setVisibility(View.VISIBLE);
-                        dialog.dismiss();
-                    }
-                });
-
-                /*if (mLatLng != null) {
-                    Utility.moveToLocation(googleMap, mLatLng);
-                    googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override
-                        public void onMapClick(LatLng latLng) {
-                            String address = Utility.getAddress(PostAdActivity.this, mLatLng);
-                            Log.d(TAG, "Address: "+address);
-                            Log.d(TAG, "LatLng: "+mLatLng);
-                            googleMap.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title(address)).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_house2));//position:(lat,lng).title(address).setIcon(drawable)
-
-                            addr.setVisibility(View.VISIBLE);
-                            addr.setText(address);
-                            dialog.dismiss();
-                        }
-                    });
-                }*/
-            }
-        });
-    }
 
     //===============================================| Insert into Firebase Database
     private void storeToDatabase(PostAd post) {
+
         mPostAdViewModel.storePostAd(post).observe(this, new Observer<String>() {
             @Override
             public void onChanged(String result) {

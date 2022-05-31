@@ -8,8 +8,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,13 +32,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.nurnobishanto.bachelorhub.Activity.MessageActivity;
+import com.nurnobishanto.bachelorhub.Fragments.MapsFragment;
 import com.nurnobishanto.bachelorhub.Models.Feedback;
 import com.nurnobishanto.bachelorhub.Models.PostAd;
 import com.nurnobishanto.bachelorhub.Models.User;
@@ -58,6 +57,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
@@ -91,15 +91,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         String[] arr = model.getImageUrl().replaceAll("[\\[\\]]", "").split(",");
         //Picasso.get().load(arr[0]).into((holder.imageUrl));
         //Glide.with(mContext).asBitmap().load(arr[0]).into(holder.imageUrl);
-        holder.rentPrice.setText("TK "+model.getRentPrice()+" /monthly");
+        holder.rentPrice.setText("TK " + model.getRentPrice() + " /monthly");
         holder.address.setText(model.getAddress());
-        holder.description.setText(model.getBedrooms()+" Beds, "+model.getBathrooms()+" Baths, "+model.getSquareFootage()+" (sq.ft)"); //4 Beds, 3 Baths, 1200 (sq.ft)
+        holder.description.setText(model.getBedrooms() + " Beds, " + model.getBathrooms() + " Baths, " + model.getSquareFootage() + " (sq.ft)"); //4 Beds, 3 Baths, 1200 (sq.ft)
 
         Picasso.get().load(arr[0]).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.mipmap.ic_launcher).into(holder.imageUrl, new com.squareup.picasso.Callback() {
             @Override
             public void onSuccess() {
 
             }
+
             @Override
             public void onError(Exception e) {
                 Picasso.get().load(arr[0]).placeholder(R.mipmap.ic_launcher).into((holder.imageUrl));
@@ -109,7 +110,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString( R.string.progress), false);
+                mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString(R.string.progress), false);
                 showListItem(model, arr);
             }
         });
@@ -117,34 +118,39 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "You clicked "+model.getOwnerName(), Toast.LENGTH_SHORT).show();
+                SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getPropertyId());
+                Toast.makeText(mContext, "You Saved " + model.getOwnerName() + "'s Property on Favorite", Toast.LENGTH_SHORT).show();
             }
         });
-        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+        String mAuthId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (model.getOwnerAuthId().equals(mAuthId)) {
+            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
 
-                new AlertDialog.Builder(mContext)
-                        .setTitle(R.string.about_title)
-                        .setMessage(R.string.msg_remove)
-                        .setPositiveButton(R.string.msg_yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                removePostAdData(model, position);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.msg_neg, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                    new AlertDialog.Builder(mContext)
+                            .setTitle(R.string.about_title)
+                            .setMessage(R.string.msg_remove)
+                            .setPositiveButton(R.string.msg_yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    removePostAdData(model, position);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setNegativeButton(R.string.msg_neg, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
 
-                return true;
-            }
-        });
+                    return true;
+                }
+            });
+        }
+
     }
 
     @Override
@@ -176,30 +182,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND); //make map clear
         dialog.setContentView(R.layout.dialog_post_details);
-
-        //WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        //lp.copyFrom(dialog.getWindow().getAttributes());
-        //lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        //lp.gravity = Gravity.CENTER;
-        //dialog.getWindow().setAttributes(lp);
-
         dialog.setCancelable(true); //dismiss by clicking outside
         dialog.show();
 
-        MapView mMapView = (MapView) dialog.findViewById(R.id.static_google_maps);
-        MapsInitializer.initialize(mContext);
-        mMapView.onCreate(dialog.onSaveInstanceState());
-        mMapView.onResume();
-////////need complete
-//        mMapView.getMapAsync(new OnMapReadyCallback() {
-//            @Override
-//            public void onMapReady(final GoogleMap googleMap) {
-//                LatLng latLng = new LatLng(Double.parseDouble(model.getLatitude()), Double.parseDouble(model.getLongitude()));
-//                googleMap.addMarker(new MarkerOptions().position(latLng).title(model.getAddress()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); //23.793772, 90.388070
-//                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-//            }
-//        });
+        Button showMaps = (Button) dialog.findViewById(R.id.show_maps);
+        showMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String latitude = model.getLatitude();
+                String longitude = model.getLongitude();
+                String address = model.getAddress();
+                String geoUri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + address + ")";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
+                intent.setPackage("com.google.android.apps.maps");
+                mContext.startActivity(intent);
+            }
+        });
+
 
         final ImageView img = (ImageView) dialog.findViewById(R.id.image1);
         Picasso.get().load(arr[0]).into((img));
@@ -228,7 +228,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         ((ImageButton) dialog.findViewById(R.id.post_favorite)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getOwnerAuthId());
+               SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getPropertyId());
+               Toast.makeText(mContext, "You Saved "+model.getOwnerName()+"'s Property on Favorite", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -51,7 +51,7 @@ public class PostAdRepository {
         return data;
     }
 
-    public MutableLiveData<PostAd> getPostAdById(String mAuthId) {
+    public MutableLiveData<PostAd> getPostAdById(String propertyId) {
         MutableLiveData<PostAd> data = new MutableLiveData<>();
         new FirebaseRepository().getPostAdById(new FirebaseRepository.PostAdCallback() {
             @Override
@@ -59,7 +59,7 @@ public class PostAdRepository {
                 //Log.d(TAG, ""+new Gson().toJson(model));
                 data.setValue(model);
             }
-        }, mAuthId);
+        }, propertyId);
         return data;
     }
 

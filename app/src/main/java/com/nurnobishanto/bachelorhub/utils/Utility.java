@@ -52,7 +52,7 @@ public class Utility {
         String address = null;
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
-            List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+             List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             if (addressList != null && addressList.size() > 0) {
                 address = addressList.get(0).getAddressLine(0);
             }

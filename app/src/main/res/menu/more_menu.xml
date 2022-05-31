@@ -10,9 +10,29 @@
         android:title="Search"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_notifications"
+        android:orderInCategory="100"
+        android:title="Notifications"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_remove_fav"
+        android:orderInCategory="100"
+        android:title="Clear Favorite"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="Settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_showMap"
+        android:orderInCategory="100"
+        android:title="Show Maps"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_admin"
+        android:orderInCategory="100"
+        android:title="Admin"
         app:showAsAction="never" />
 
 </menu>

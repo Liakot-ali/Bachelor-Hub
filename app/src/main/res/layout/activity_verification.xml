@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Activity.VerificationActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verification Centre"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textStyle="bold"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/gray"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/status"
+            android:textSize="20sp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/method"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/key"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:text="key"/>
+        <Button
+            android:visibility="gone"
+            android:layout_margin="20dp"
+            android:id="@+id/goHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_layout_message"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_button_round"
+            android:text="Go back To home"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:theme="@style/Theme.AppCompat.Light"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:id="@+id/method_spinner"
+            android:entries="@array/verify_type_array"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:id="@+id/method_key_layout"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:inputType="number"
+                android:layout_margin="15dp"
+                android:id="@+id/method_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Method Number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:layout_margin="15dp"
+            android:id="@+id/sent_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_layout_message"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_button_round"
+            android:text="Verify"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</ScrollView>

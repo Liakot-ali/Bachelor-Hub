@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+
+    android:orientation="vertical"
+    tools:context=".Admin.AdminHomeActivity">
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:orientation="vertical">
+        <Button
+            android:layout_weight="1"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Pending Verifications"
+            android:onClick="Pending"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:textAllCaps="false"/>
+        <Button
+            android:layout_weight="1"
+            android:onClick="verified"
+            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Verified User"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:layout_marginRight="10dp"
+            android:textAllCaps="false"/>
+        <Button
+            android:layout_weight="1"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Rejected"
+            android:onClick="rejected"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:textAllCaps="false"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -67,7 +67,7 @@ public class MessagesFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(true);
         modelsList =new ArrayList<>();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("tolet_users").child(myId).child("ConnectWith");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users_connection").child(myId).child("ConnectWith");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -72,6 +72,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private ProgressDialog mProgress = null;
 
     private String currentPhotoPath;
+    private String userVerify=null;
+    private String verifyMethod=null;
+    private String verifyKey=null;
 
     private String mImageUrl = null;
     private String mPhone = null;
@@ -253,6 +256,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     userPhoneNumber.setText(user.getUserPhoneNumber());
                     userBirthDate.setText(user.getUserBirthDate());
                     userAddress.setText(user.getUserAddress());
+                    userVerify = user.getUserVerify();
+                    verifyMethod = user.getVerifyMethod();
+                    verifyKey = user.getVerifyKey();
                     if (user.getIsUserOwner().equals("Renter")) {
                         userRender.setChecked(true);
                     } else {
@@ -268,8 +274,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     //===============================================| Insert into Firebase Database
     private void storeToDatabase(String mAuthId, String name, String relation, String occupation, String email, String phone, String birth, String address, String isUserOwner, String mImageUrl, String mToken) {
-        User obj = new User(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, mToken);
+        User obj = new User(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, mToken,userVerify,verifyMethod,verifyKey);
         SharedPrefManager.getInstance(EditProfileActivity.this).saveUser(obj);
+        mUserViewModel.storeUser(obj);
         mUserViewModel.storeUser(obj).observe(this, new Observer<String>() {
             @Override
             public void onChanged(String result) {

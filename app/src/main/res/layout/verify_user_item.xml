@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    android:layout_height="wrap_content">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/profile_image"/>
+            <LinearLayout
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userFullName"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userId"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:textStyle="normal|italic"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date of Birth: "
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:id="@+id/dob"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify Method: "
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:id="@+id/method"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify Key: "
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:id="@+id/method_key"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone: "
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:id="@+id/phone"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address: "
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:id="@+id/address"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/pending"
+                android:textSize="12sp"
+                android:layout_margin="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pending"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/blue"/>
+            <Button
+                android:id="@+id/approve"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:layout_margin="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Approve"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/green"/>
+            <Button
+                android:id="@+id/reject"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:layout_margin="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Reject"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

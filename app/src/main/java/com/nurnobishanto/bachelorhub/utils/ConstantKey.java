@@ -13,7 +13,7 @@ public class ConstantKey {
     public static final String FEEDBACK_POST_NODE = "tolet_feedback";
 
     public final static String SERVER_KEY = "HERE_YOUR_SERVER_KEY";
-
+    public final static String[] verifyMethodAre = {"National ID", "Birth Certificate", "Passport"};
     public final static String[] countryAreaCodes = {"+93", "+355", "+213",
             "+376", "+244", "+672", "+54", "+374", "+297", "+61", "+43", "+994", "+973",
             "+880", "+375", "+32", "+501", "+229", "+975", "+591", "+387", "+267", "+55",

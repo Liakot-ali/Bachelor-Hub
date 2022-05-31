@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
@@ -142,7 +143,7 @@ public class SigninFragment extends Fragment {
             }else {
                 dialog.dismiss();
                 SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
-                startActivity(new Intent(getContext(),MainActivity.class));
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
                 getActivity().finish();
 
             }

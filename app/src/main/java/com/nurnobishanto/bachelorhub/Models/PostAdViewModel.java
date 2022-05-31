@@ -25,8 +25,8 @@ public class PostAdViewModel extends ViewModel {
         return postAds;
     }
 
-    public LiveData<PostAd> getPostAdById(String mAuthId) {
-        return mPostAdRepository.getPostAdById(mAuthId);
+    public LiveData<PostAd> getPostAdById(String propertyId) {
+        return mPostAdRepository.getPostAdById(propertyId);
     }
 
     public LiveData<ArrayList<PostAd>> getPostAdByFilter(Filter model) {

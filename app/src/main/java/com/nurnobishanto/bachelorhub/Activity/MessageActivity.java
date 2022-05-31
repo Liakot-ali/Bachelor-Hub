@@ -152,11 +152,6 @@ public class MessageActivity extends AppCompatActivity {
                                     startActivity(callIntent);
                                 }
 
-
-
-
-
-
                             }
                         });
 
@@ -218,31 +213,36 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("isseen",false);
         reference.child("Chats").push().setValue(hashMap);
 
-        final String userid=intent.getStringExtra("userAuthId");
-        final DatabaseReference chatRef = FirebaseDatabase.getInstance()
-                .getReference("tolet_users").child(fuser.getUid())
-                .child("ConnectWith").child(userid);
-        final DatabaseReference chatRef1 = FirebaseDatabase.getInstance()
-                .getReference("tolet_users").child(userid)
-                .child("ConnectWith").child(fuser.getUid());
-        chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists())
-                {
-                    chatRef.child("userAuthId").setValue(userid);
-                    chatRef1.child("userAuthId").setValue(fuser.getUid().toString());
+        final String userid = intent.getStringExtra("userAuthId");
+        final DatabaseReference conRef = FirebaseDatabase.getInstance()
+                .getReference("users_connection");
+        conRef.child(fuser.getUid()).child("ConnectWith").child(userid).child("userAuthId").setValue(userid);
+        conRef.child(userid).child("ConnectWith").child(fuser.getUid()).child("userAuthId").setValue(fuser.getUid());
 
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        final DatabaseReference chatRef = FirebaseDatabase.getInstance()
+//                .getReference("tolet_users").child(fuser.getUid())
+//                .child("ConnectWith").child(userid);
+//        final DatabaseReference chatRef1 = FirebaseDatabase.getInstance()
+//                .getReference("tolet_users").child(userid)
+//                .child("ConnectWith").child(fuser.getUid());
+//        chatRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(!dataSnapshot.exists())
+//                {
+//                    chatRef.child("userAuthId").setValue(userid);
+//                    chatRef1.child("userAuthId").setValue(fuser.getUid().toString());
+//
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 

@@ -18,6 +18,14 @@
             android:icon="@drawable/ic_favorite"
             android:title="Favourite" />
         <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_notifications"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/nav_verify"
+            android:icon="@drawable/ic_check"
+            android:title="Verification" />
+        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info"
             android:title="About" />

@@ -3,7 +3,6 @@ package com.nurnobishanto.bachelorhub.Service;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -12,7 +11,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,7 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.nurnobishanto.bachelorhub.Activity.NotificationActivity;
+import com.nurnobishanto.bachelorhub.Activity.NotificationsActivity;
 import com.nurnobishanto.bachelorhub.R;
 import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 
@@ -79,7 +77,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     //===============================================| Show Notification for All Data
     private void sendNotification(String title, String body, Bundle bundle) {
 
-        Intent intent = new Intent(this, NotificationActivity.class);
+        Intent intent = new Intent(this, NotificationsActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);

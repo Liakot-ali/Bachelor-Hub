@@ -12,6 +12,10 @@
         \nbachelorhub.info@gmail.com
     </string>
 
+    <!-- Settings -->
+    <string name="settings_english">English</string>
+    <string name="settings_bangla">Bangla</string>
+    <string name="settings_language_change">Language Change</string>
     <!-- Add Post -->
     <string name="add_photo_text">Add at least one photo (max 5):</string>
     <string name="post_owner_name">Owner Name</string>
@@ -80,6 +84,12 @@
         <item>Rooms</item>
         <item>Garages</item>
         <item>Commercial</item>
+    </string-array>
+    <string-array name="verify_type_array">
+        <item>National ID</item>
+        <item>Passport</item>
+        <item>Birth Certificate</item>
+        <item>Driving Licence</item>
     </string-array>
 
     <string-array name="renter_type_array">
