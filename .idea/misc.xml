@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_admin.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_admin_home.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_auth.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_edit_profile.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_message.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_phone.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_favorite.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/drawable/background_left.xml" value="0.325" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/drawable/background_right.xml" value="0.325" />
         <entry key="..\:/Users/mdnur/AndroidStudioProjects/BachelorHub/app/src/main/res/drawable/ic_log_mk.xml" value="0.325" />

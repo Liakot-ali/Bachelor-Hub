@@ -29,6 +29,7 @@ public class RejectedActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private List<VerifyUserModels> modelsList;
     private VerifyUserAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +37,13 @@ public class RejectedActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_rejected);
 
-        reference= FirebaseDatabase.getInstance().getReference("tolet_users");
-        recyclerView= findViewById(R.id.recycler_view) ;
-        swipeRefreshLayout= findViewById(R.id.swipe) ;
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users");
+        recyclerView = findViewById(R.id.recycler_view);
+        swipeRefreshLayout = findViewById(R.id.swipe);
 
         swipeRefreshLayout.setRefreshing(false);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -59,23 +60,38 @@ public class RejectedActivity extends AppCompatActivity {
 
     private void getUserData() {
         swipeRefreshLayout.setRefreshing(true);
-        modelsList =new ArrayList<>();
+        modelsList = new ArrayList<>();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 modelsList.clear();
-                for(DataSnapshot snapshot:dataSnapshot.getChildren())
-                {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VerifyUserModels obj = new VerifyUserModels();
-                    if(snapshot.child("userAuthId").getValue()!=null) { obj.setUserId(snapshot.child("userAuthId").getValue().toString());}
-                    if(snapshot.child("userImageUrl").getValue()!=null) { obj.setImageUrl(snapshot.child("userImageUrl").getValue().toString());}
-                    if(snapshot.child("userFullName").getValue()!=null) { obj.setFullName(snapshot.child("userFullName").getValue().toString());}
-                    if(snapshot.child("userBirthDate").getValue()!=null) { obj.setBirthDate(snapshot.child("userBirthDate").getValue().toString());}
-                    if(snapshot.child("verifyMethod").getValue()!=null) { obj.setVerifyMethod(snapshot.child("verifyMethod").getValue().toString());}
-                    if(snapshot.child("verifyKey").getValue()!=null) { obj.setVerifyKey(snapshot.child("verifyKey").getValue().toString());}
-                    if(snapshot.child("userPhoneNumber").getValue()!=null) { obj.setPhoneNumber(snapshot.child("userPhoneNumber").getValue().toString());}
-                    if(snapshot.child("userAddress").getValue()!=null) { obj.setAddress(snapshot.child("userAddress").getValue().toString());}
-                    if(snapshot.child("userVerify").getValue()!=null) {
+                    if (snapshot.child("userAuthId").getValue() != null) {
+                        obj.setUserId(snapshot.child("userAuthId").getValue().toString());
+                    }
+                    if (snapshot.child("userImageUrl").getValue() != null) {
+                        obj.setImageUrl(snapshot.child("userImageUrl").getValue().toString());
+                    }
+                    if (snapshot.child("userFullName").getValue() != null) {
+                        obj.setFullName(snapshot.child("userFullName").getValue().toString());
+                    }
+                    if (snapshot.child("userBirthDate").getValue() != null) {
+                        obj.setBirthDate(snapshot.child("userBirthDate").getValue().toString());
+                    }
+                    if (snapshot.child("verifyMethod").getValue() != null) {
+                        obj.setVerifyMethod(snapshot.child("verifyMethod").getValue().toString());
+                    }
+                    if (snapshot.child("verifyKey").getValue() != null) {
+                        obj.setVerifyKey(snapshot.child("verifyKey").getValue().toString());
+                    }
+                    if (snapshot.child("userPhoneNumber").getValue() != null) {
+                        obj.setPhoneNumber(snapshot.child("userPhoneNumber").getValue().toString());
+                    }
+                    if (snapshot.child("userAddress").getValue() != null) {
+                        obj.setAddress(snapshot.child("userAddress").getValue().toString());
+                    }
+                    if (snapshot.child("userVerify").getValue() != null) {
                         String userVerify = snapshot.child("userVerify").getValue().toString();
                         obj.setUserVerify(userVerify);
                         if (userVerify.equals("Rejected"))
@@ -85,11 +101,11 @@ public class RejectedActivity extends AppCompatActivity {
 
                 }
 
-                adapter = new VerifyUserAdapter(RejectedActivity.this,modelsList);
+                adapter = new VerifyUserAdapter(RejectedActivity.this, modelsList);
                 recyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
-                if (modelsList.isEmpty()){
-                    Utility.alertDialog(RejectedActivity.this,"No Data Found!");
+                if (modelsList.isEmpty()) {
+                    Utility.alertDialog(RejectedActivity.this, "No Data Found!");
                 }
             }
 
