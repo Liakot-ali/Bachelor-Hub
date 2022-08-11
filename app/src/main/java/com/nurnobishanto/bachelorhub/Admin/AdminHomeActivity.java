@@ -12,8 +12,6 @@ import com.nurnobishanto.bachelorhub.R;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +19,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_admin_home);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         finish();
@@ -35,15 +32,15 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     public void Pending(View view) {
-        startActivity(new Intent(AdminHomeActivity.this,PendingVerifyActivity.class));
+        startActivity(new Intent(AdminHomeActivity.this, PendingVerifyActivity.class));
 
     }
 
     public void verified(View view) {
-        startActivity(new Intent(AdminHomeActivity.this,VerifiedActivity.class));
+        startActivity(new Intent(AdminHomeActivity.this, VerifiedActivity.class));
     }
 
     public void rejected(View view) {
-        startActivity(new Intent(AdminHomeActivity.this,RejectedActivity.class));
+        startActivity(new Intent(AdminHomeActivity.this, RejectedActivity.class));
     }
 }
