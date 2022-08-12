@@ -581,15 +581,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        getSupportActionBar().setTitle("Home");
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                new HomeFragment()).commit();
+        if(!getSupportActionBar().getTitle().equals("Home")){
+            getSupportActionBar().setTitle("Home");
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                    new HomeFragment()).commit();
+        }
         if (doubleBackToExitPressedOnce) {
-
             super.onBackPressed();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
