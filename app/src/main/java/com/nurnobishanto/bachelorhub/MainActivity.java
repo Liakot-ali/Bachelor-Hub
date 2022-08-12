@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
+                            LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
                             // Utility.moveToLocation(mMap, new LatLng(origin.latitude, origin.longitude));
                             if (Network.haveNetwork(MainActivity.this)) {
                                 String mAddress = Utility.getAddress(MainActivity.this, origin);
@@ -350,13 +350,14 @@ public class MainActivity extends AppCompatActivity {
         }
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
+
     private LocationCallback mLocationCallback = new LocationCallback() {
 
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location location = locationResult.getLastLocation();
-            if (location != null){
-                LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
+            if (location != null) {
+                LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
                 // Utility.moveToLocation(mMap, new LatLng(origin.latitude, origin.longitude));
                 if (Network.haveNetwork(MainActivity.this)) {
                     String mAddress = Utility.getAddress(MainActivity.this, origin);
@@ -368,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
     // method to check for permissions
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -409,48 +411,38 @@ public class MainActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0)
-                {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
 
-                    Map<String,Object> map =(Map<String, Object>)dataSnapshot.getValue();
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
 
 
-                    if(map.get("userFullName")!=null)
-                    {
-                       nameTxt.setText(map.get("userFullName").toString());
+                    if (map.get("userFullName") != null) {
+                        nameTxt.setText(map.get("userFullName").toString());
                     }
-                    if(map.get("userRole")!=null)
-                    {
+                    if (map.get("userRole") != null) {
                         userRole = map.get("userRole").toString();
                     }
-                    if(map.get("status")!=null)
-                    {
-                       status.setText(map.get("status").toString());
+                    if (map.get("status") != null) {
+                        status.setText(map.get("status").toString());
                     }
-                    if(map.get("userEmail")!=null)
-                    {
+                    if (map.get("userEmail") != null) {
                         emailTxt.setText(map.get("userEmail").toString());
 
                     }
-                    if(map.get("userImageUrl")!=null)
-                    {
+                    if (map.get("userImageUrl") != null) {
                         Picasso.get()
                                 .load(map.get("userImageUrl").toString())
                                 .placeholder(R.mipmap.ic_launcher)
                                 .error(R.mipmap.ic_launcher)
                                 .into(profile_image);
                     }
-                    if(map.get("userVerify")!=null)
-                    {
+                    if (map.get("userVerify") != null) {
                         verify.setText(map.get("userVerify").toString());
 
-                    }else {
-                        startActivity(new Intent(MainActivity.this,VerificationActivity.class));
+                    } else {
+                        startActivity(new Intent(MainActivity.this, VerificationActivity.class));
                         finish();
                     }
-
-
-
 
 
                 }
@@ -482,8 +474,8 @@ public class MainActivity extends AppCompatActivity {
 
                         case R.id.nav_search:
                             filterDialog();
-                           // getSupportActionBar().setTitle("Search");
-                          //  selectedFragment = new SearchFragment();
+                            // getSupportActionBar().setTitle("Search");
+                            //  selectedFragment = new SearchFragment();
                             break;
 
                         case R.id.nav_message:
@@ -496,8 +488,6 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
 
                             break;
-
-
                     }
                     if (selectedFragment != null) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
@@ -516,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 filterDialog();
                 // FeedFragment.searchInput.setVisibility(View.VISIBLE);
-               // startActivity(new Intent(this, FeedPostActivity.class));
+                // startActivity(new Intent(this, FeedPostActivity.class));
                 return true;
             case R.id.action_settings:
                 getSupportActionBar().setTitle("Settings");
@@ -533,9 +523,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ShowMapsActivity.class));
                 return true;
             case R.id.action_admin:
-                if (userRole.equals("Admin")){
+                if (userRole.equals("Admin")) {
                     startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-                }else {
+                } else {
                     //Utility.alertDialog(MainActivity.this,"You are not Admin!");
                     startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
                 }
@@ -581,7 +571,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!getSupportActionBar().getTitle().equals("Home")){
+        if (!getSupportActionBar().getTitle().equals("Home")) {
             getSupportActionBar().setTitle("Home");
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
@@ -597,15 +587,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
-
-
-
-
-
 
 
     //===============================================| GPS/Location
@@ -656,7 +641,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //---------------------------------------------| Property Button
-        for(int i = 0; i < propertyBtn.length; i++){
+        for (int i = 0; i < propertyBtn.length; i++) {
             propertyBtn[i] = (Button) view.findViewById(propertyBtn_id[i]);
             propertyBtn[i].setBackground(getResources().getDrawable(R.drawable.shape_button_border));
             propertyBtn[i].setOnClickListener(new ActionHandlerProperty());
@@ -664,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
         propertyBtn_unfocused = propertyBtn[0];
 
         //---------------------------------------------| Renter Button
-        for(int i = 0; i < renterBtn.length; i++){
+        for (int i = 0; i < renterBtn.length; i++) {
             renterBtn[i] = (Button) view.findViewById(renterBtn_id[i]);
             renterBtn[i].setBackground(getResources().getDrawable(R.drawable.shape_button_border));
             renterBtn[i].setOnClickListener(new ActionHandlerRenter());
@@ -672,7 +657,7 @@ public class MainActivity extends AppCompatActivity {
         renterBtn_unfocused = renterBtn[0];
 
         //---------------------------------------------| Bedrooms Button
-        for(int i = 0; i < bedBtn.length; i++){
+        for (int i = 0; i < bedBtn.length; i++) {
             bedBtn[i] = (Button) view.findViewById(bedBtn_id[i]);
             bedBtn[i].setBackground(getResources().getDrawable(R.drawable.shape_button_border));
             bedBtn[i].setOnClickListener(new ActionHandlerBedrooms());
@@ -686,14 +671,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!filterLocation.getSelectedItem().toString().contains("Select Location")) {
                     if (bedRooms != null && bedRooms.equals("4+")) {
-                        passFilterValues(filterLocation.getSelectedItem().toString(),min.getText().toString(),max.getText().toString(),propertyType,renterType,"Any");
-                         getSupportActionBar().setTitle("Search");
+                        passFilterValues(filterLocation.getSelectedItem().toString(), min.getText().toString(), max.getText().toString(), propertyType, renterType, "Any");
+                        getSupportActionBar().setTitle("Search");
                     } else {
-                        passFilterValues(filterLocation.getSelectedItem().toString(),min.getText().toString(),max.getText().toString(),propertyType,renterType,bedRooms);
-                         getSupportActionBar().setTitle("Search");
+                        passFilterValues(filterLocation.getSelectedItem().toString(), min.getText().toString(), max.getText().toString(), propertyType, renterType, bedRooms);
+                        getSupportActionBar().setTitle("Search");
                     }
                 } else {
-                    Utility.alertDialog(MainActivity.this, getResources().getString( R.string.msg_select_location));
+                    Utility.alertDialog(MainActivity.this, getResources().getString(R.string.msg_select_location));
                 }
             }
         });
@@ -713,47 +698,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //====================================================| Filter values pass into intent
-    private void passFilterValues(String loc,String min,String max,String pro,String rent,String bed) {
+    private void passFilterValues(String loc, String min, String max, String pro, String rent, String bed) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //intent.putExtra(ConstantKey.FILTER_KEY, loc+","+min+","+max+","+pro+","+rent+","+bed);
         intent.putExtra(ConstantKey.FILTER_KEY, new Filter(loc, min, max, pro, rent, bed));
-        intent.putExtra("name","Search");
+        intent.putExtra("name", "Search");
         startActivity(intent);
         finish();
     }
+
     //====================================================| Property Button Action
     private class ActionHandlerProperty implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.propertyBtn0 :
+            switch (view.getId()) {
+                case R.id.propertyBtn0:
                     propertyType = propertyBtn[0].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[0]);
                     break;
-                case R.id.propertyBtn1 :
+                case R.id.propertyBtn1:
                     propertyType = propertyBtn[1].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[1]);
                     break;
-                case R.id.propertyBtn2 :
+                case R.id.propertyBtn2:
                     propertyType = propertyBtn[2].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[2]);
                     break;
-                case R.id.propertyBtn3 :
+                case R.id.propertyBtn3:
                     propertyType = propertyBtn[3].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[3]);
                     break;
-                case R.id.propertyBtn4 :
+                case R.id.propertyBtn4:
                     propertyType = propertyBtn[4].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[4]);
                     break;
-                case R.id.propertyBtn5 :
+                case R.id.propertyBtn5:
                     propertyType = propertyBtn[5].getText().toString();
                     setFocusProperty(propertyBtn_unfocused, propertyBtn[5]);
                     break;
             }
         }
     }
-    private void setFocusProperty(Button propertyBtn_unfocused, Button propertyBtn_focus){
+
+    private void setFocusProperty(Button propertyBtn_unfocused, Button propertyBtn_focus) {
         propertyBtn_unfocused.setTextColor(Color.rgb(49, 50, 51));
         propertyBtn_unfocused.setBackground(getResources().getDrawable(R.drawable.shape_button_border));
         propertyBtn_focus.setTextColor(Color.rgb(255, 255, 255));
@@ -765,28 +752,28 @@ public class MainActivity extends AppCompatActivity {
     private class ActionHandlerRenter implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.renterBtn0 :
+            switch (view.getId()) {
+                case R.id.renterBtn0:
                     renterType = renterBtn[0].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[0]);
                     break;
-                case R.id.renterBtn1 :
+                case R.id.renterBtn1:
                     renterType = renterBtn[1].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[1]);
                     break;
-                case R.id.renterBtn2 :
+                case R.id.renterBtn2:
                     renterType = renterBtn[2].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[2]);
                     break;
-                case R.id.renterBtn3 :
+                case R.id.renterBtn3:
                     renterType = renterBtn[3].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[3]);
                     break;
-                case R.id.renterBtn4 :
+                case R.id.renterBtn4:
                     renterType = renterBtn[4].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[4]);
                     break;
-                case R.id.renterBtn5 :
+                case R.id.renterBtn5:
                     renterType = renterBtn[5].getText().toString();
                     setFocusRenter(renterBtn_unfocused, renterBtn[5]);
                     break;
@@ -794,7 +781,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setFocusRenter(Button btn_unfocused, Button btn_focus){
+    private void setFocusRenter(Button btn_unfocused, Button btn_focus) {
         btn_unfocused.setTextColor(Color.rgb(49, 50, 51));
         btn_unfocused.setBackground(getResources().getDrawable(R.drawable.shape_button_border));
         btn_focus.setTextColor(Color.rgb(255, 255, 255));
@@ -806,24 +793,24 @@ public class MainActivity extends AppCompatActivity {
     private class ActionHandlerBedrooms implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.bedBtn0 :
+            switch (view.getId()) {
+                case R.id.bedBtn0:
                     bedRooms = bedBtn[0].getText().toString();
                     setFocusBed(bedBtn_unfocused, bedBtn[0]);
                     break;
-                case R.id.bedBtn1 :
+                case R.id.bedBtn1:
                     bedRooms = bedBtn[1].getText().toString();
                     setFocusBed(bedBtn_unfocused, bedBtn[1]);
                     break;
-                case R.id.bedBtn2 :
+                case R.id.bedBtn2:
                     bedRooms = bedBtn[2].getText().toString();
                     setFocusBed(bedBtn_unfocused, bedBtn[2]);
                     break;
-                case R.id.bedBtn3 :
+                case R.id.bedBtn3:
                     bedRooms = bedBtn[3].getText().toString();
                     setFocusBed(bedBtn_unfocused, bedBtn[3]);
                     break;
-                case R.id.bedBtn4 :
+                case R.id.bedBtn4:
                     bedRooms = bedBtn[4].getText().toString();
                     setFocusBed(bedBtn_unfocused, bedBtn[4]);
                     break;
@@ -831,7 +818,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setFocusBed(Button bedBtn_unfocused, Button bedBtn_focus){
+    private void setFocusBed(Button bedBtn_unfocused, Button bedBtn_focus) {
         bedBtn_unfocused.setTextColor(Color.rgb(49, 50, 51));
         bedBtn_unfocused.setBackground(getResources().getDrawable(R.drawable.shape_button_border));
         bedBtn_focus.setTextColor(Color.rgb(255, 255, 255));
@@ -839,11 +826,10 @@ public class MainActivity extends AppCompatActivity {
         this.bedBtn_unfocused = bedBtn_focus;
     }
 
-    private void status (String status)
-    {
-        reference=FirebaseDatabase.getInstance().getReference("tolet_users").child(fuser.getUid());
-        HashMap<String,Object>hashMap=new HashMap<>();
-        hashMap.put("status",status);
+    private void status(String status) {
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(fuser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
         reference.updateChildren(hashMap);
     }
 
@@ -854,13 +840,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
         DateFormat df = new SimpleDateFormat("h:mm a, EEE, d MMM yyyy");
         String date = df.format(Calendar.getInstance().getTime());
-        status("Last Seen "+date);
+        status("Last Seen " + date);
     }
 
     //===============================================| Restart Activity
