@@ -13,6 +13,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.nurnobishanto.bachelorhub.Adapter.NotificationAdapter;
 import com.nurnobishanto.bachelorhub.Models.NotificationViewModel;
@@ -31,6 +33,7 @@ public class NotificationsActivity extends AppCompatActivity {
     private ProgressDialog mProgress = null;
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
+    TextView emptyText;
     //private ArrayList<User> mArrayList = new ArrayList<>();
 
     @Override
@@ -45,6 +48,8 @@ public class NotificationsActivity extends AppCompatActivity {
         mProgress = Utility.showProgressDialog(NotificationsActivity.this, getResources().getString( R.string.progress), true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.notification_recycler_view);
+        emptyText = (TextView) findViewById(R.id.notification_empty_Text);
+        emptyText.setVisibility(View.GONE);
 
         //Receive the data and observe the data from view model
         NotificationViewModel mViewModel = ViewModelProviders.of(this).get(NotificationViewModel.class); //Initialize view model
@@ -55,10 +60,12 @@ public class NotificationsActivity extends AppCompatActivity {
                     //mArrayList.addAll(users);
                     initRecyclerView(users);
                     mAdapter.notifyDataSetChanged();
+                    emptyText.setVisibility(View.GONE);
                     Utility.dismissProgressDialog(mProgress);
                 } else {
                     Utility.dismissProgressDialog(mProgress);
-                    Utility.alertDialog(NotificationsActivity.this, getResources().getString(R.string.msg_no_data));
+                    emptyText.setVisibility(View.VISIBLE);
+//                    Utility.alertDialog(NotificationsActivity.this, getResources().getString(R.string.msg_no_data));
                 }
             }
         });
