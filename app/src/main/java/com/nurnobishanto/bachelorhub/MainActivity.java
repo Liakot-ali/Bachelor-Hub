@@ -568,6 +568,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean doubleBackToExitPressedOnce = false;
+    long currentTime = System.currentTimeMillis();
 
     @Override
     public void onBackPressed() {
@@ -576,20 +577,26 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
         }
-        if (doubleBackToExitPressedOnce) {
+        else if(System.currentTimeMillis() - currentTime < 1000){
             super.onBackPressed();
-            return;
+        }else{
+            currentTime = System.currentTimeMillis();
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
         }
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+//        if (doubleBackToExitPressedOnce) {
+//            super.onBackPressed();
+//            return;
+//        }
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce = false;
+//            }
+//        }, 2000);
     }
 
 
