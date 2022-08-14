@@ -216,9 +216,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_notification:
                         drawer.closeDrawer(GravityCompat.START);
-                        getSupportActionBar().setTitle("Notifications");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                new NotificationsFragment()).commit();
+//                        getSupportActionBar().setTitle("Notifications");
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                new NotificationsFragment()).commit();
+                        startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
                         break;
                     case R.id.nav_verify:
                         drawer.closeDrawer(GravityCompat.START);
