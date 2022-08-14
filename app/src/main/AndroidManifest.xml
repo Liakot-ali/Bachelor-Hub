@@ -60,6 +60,9 @@
             android:name=".Activity.AdminActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.ProfileDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.VerificationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

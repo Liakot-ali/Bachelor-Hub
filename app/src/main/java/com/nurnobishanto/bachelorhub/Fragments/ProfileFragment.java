@@ -1,8 +1,10 @@
 package com.nurnobishanto.bachelorhub.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,17 +12,15 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
+import com.google.firebase.auth.FirebaseUser;
+import com.nurnobishanto.bachelorhub.Activity.ProfileDetailsActivity;
 import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.Models.UserViewModel;
 import com.nurnobishanto.bachelorhub.R;
@@ -30,35 +30,27 @@ import com.nurnobishanto.bachelorhub.utils.PermissionUtility;
 import com.nurnobishanto.bachelorhub.utils.Utility;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment {
 
 
 
-    //Runtime Permissions
-    private String[] PERMISSIONS = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA };
-    private PermissionUtility mPermissions;
-
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
-
-
-
-    private String mImageUrl = null;
-    private String mPhone = null;
-    private String mAuthId = null;
-    //private String mToken = null;
-
-
-    private ImageView userImageUrl;
-    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress;
-    private TextInputLayout layoutName, layoutPhone;
-    private EditText userGroup;
-    private RadioButton userRender, userOwner;
-    private EditText userRelation;
-
     private UserViewModel mUserViewModel;
 
+
+    String mAuthId;
+
+
+    TextView userName, userRating;
+    ImageView verifiedIcon;
+    CircleImageView userPicture;
+    CardView archive, favourite, applied;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,47 +59,39 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         mProgress = new ProgressDialog(getContext());
-        mNetworkReceiver = new MyNetworkReceiver(getContext());
-        mPermissions = new PermissionUtility(getContext(), PERMISSIONS); //Runtime permissions
+        mNetworkReceiver = new MyNetworkReceiver(requireContext());
 
-        //===============================================| findViewById
-        userImageUrl = (ImageView) view.findViewById(R.id.userImageUrl);
+        userName = view.findViewById(R.id.proDetailsName);
+        userRating = view.findViewById(R.id.proDetailsRating);
+        verifiedIcon = view.findViewById(R.id.proDetailsVerified);
+        userPicture = view.findViewById(R.id.proDetailsPicture);
+        archive = view.findViewById(R.id.proDetailsArchive);
+        favourite = view.findViewById(R.id.proDetailsFavourite);
+        applied = view.findViewById(R.id.proDetailsApplied);
 
-        userGroup = (EditText) view.findViewById(R.id.userGroup);
-        userRender = (RadioButton) view.findViewById(R.id.userRender);
-        userOwner = (RadioButton) view.findViewById(R.id.userOwner);
-
-        userFullName = (EditText) view.findViewById(R.id.userFullName);
-        layoutName = (TextInputLayout) view.findViewById(R.id.layoutUserFullName);
-
-        userRelation = (EditText) view.findViewById(R.id.userRelation);
-
-
-        userPhoneNumber = (EditText) view.findViewById(R.id.userPhoneNumber);
-        layoutPhone = (TextInputLayout) view.findViewById(R.id.layoutUserPhoneNumber);
-
-        userOccupation = (EditText) view.findViewById(R.id.userOccupation);
-        userEmail = (EditText) view.findViewById(R.id.userEmail);
-        userBirthDate = (EditText) view.findViewById(R.id.userBirthDate);
-        userAddress = (EditText) view.findViewById(R.id.userAddress);
-
-
-
-        //===============================================| Getting SharedPreferences
-        mAuthId = FirebaseAuth.getInstance().getCurrentUser().getUid(); //Get UUID from FirebaseAuth
-        if (SharedPrefManager.getInstance(getContext()).getUserAuthId() != null) {
-            mAuthId = SharedPrefManager.getInstance(getContext()).getUserAuthId();
-        }
-        mPhone = SharedPrefManager.getInstance(getContext()).getPhoneNumber();
-        userPhoneNumber.setText(mPhone);
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+            }
+        });
+        userPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ProfileDetailsActivity.class));
+            }
+        });
 
         //===============================================| Receive the data and observe the data from view model
         mUserViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class); //Initialize view model
 
-        if (mAuthId != null) {
+        mAuthId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(); //Get UUID from FirebaseAuth
+        if (SharedPrefManager.getInstance(getContext()).getUserAuthId() != null) {
+            mAuthId = SharedPrefManager.getInstance(getContext()).getUserAuthId();
+        }
+        if(mAuthId != null){
             getUserData(mAuthId);
         }
-
         return view;
     }
     //===============================================| Fetch/Get from Firebase Database
@@ -118,22 +102,28 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
-                    mImageUrl = user.getUserImageUrl();
-                    Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
+                    if(userPicture != null) {
+                        Picasso.get().load(user.getUserImageUrl()).into(userPicture);
+                    }else{
+                        Picasso.get().load(R.mipmap.ic_launcher).into(userPicture);
+                    }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
-                    userFullName.setText(user.getUserFullName());
-
-                    userRelation.setText(user.getUserRelation());
-                    userOccupation.setText(user.getUserOccupation());
-                    userEmail.setText(user.getUserEmail());
-                    userPhoneNumber.setText(user.getUserPhoneNumber());
-                    userBirthDate.setText(user.getUserBirthDate());
-                    userAddress.setText(user.getUserAddress());
-                    userGroup.setText(user.getIsUserOwner());
-                    Utility.dismissProgressDialog(mProgress);
-                } else {
-                    Utility.dismissProgressDialog(mProgress);
+                    userName.setText(user.getUserFullName());
+                    //userRating.setText(user.getUserRating()); TODO--Work later
+                    if(user.getUserVerify().equals("Verified")){
+                        verifiedIcon.setVisibility(View.VISIBLE);
+                    }else{
+                        verifiedIcon.setVisibility(View.GONE);
+                    }
+//                    userRelation.setText(user.getUserRelation());
+//                    userOccupation.setText(user.getUserOccupation());
+//                    userEmail.setText(user.getUserEmail());
+//                    userPhoneNumber.setText(user.getUserPhoneNumber());
+//                    userBirthDate.setText(user.getUserBirthDate());
+//                    userAddress.setText(user.getUserAddress());
+//                    userGroup.setText(user.getIsUserOwner());
                 }
+                Utility.dismissProgressDialog(mProgress);
             }
         });
     }

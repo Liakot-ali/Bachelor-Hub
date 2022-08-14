@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat.Light"
+    tools:context=".Fragments.ProfileFragment">
+
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+
+            android:id="@+id/userImageUrl"
+            android:clickable="true"
+            android:background="@drawable/shape_image_border"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="left"
+            android:layout_width="140dp"
+            android:layout_height="140dp" />
+
+
+        <!-- Render and Owner -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userGroup"
+                android:hint="User Role"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- Full Name -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userFullName"
+                android:hint="@string/reg_full_name"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Relation -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userRelation"
+                android:hint="Marital Status"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Occupation -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserOccupation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userOccupation"
+                android:hint="@string/reg_occupation"
+                android:inputType="textWebEmailAddress"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userEmail"
+                android:hint="@string/reg_email"
+                android:inputType="textWebEmailAddress"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Phone -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userPhoneNumber"
+                android:hint="@string/reg_phone_number"
+                android:inputType="phone"
+                android:maxLength="15"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- NID | Passport | Birth Certificate -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userBirthDate"
+                android:hint="Birth Date"
+                android:inputType="date"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Address -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutUserAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userAddress"
+                android:hint="@string/post_address"
+                android:gravity="top"
+                android:layout_marginBottom="10dp"
+                android:inputType="textCapSentences|textAutoCorrect|text|textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

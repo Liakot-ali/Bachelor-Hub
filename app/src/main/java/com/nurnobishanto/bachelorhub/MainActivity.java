@@ -150,21 +150,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.app_bar_main);
+        InitializeAll();
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        userid = fuser.getUid();
-        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(userid);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+//        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
-        floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,11 +167,108 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        mNetworkReceiver = new MyNetworkReceiver(this);
+//        mLocationReceiver = new MyLocationReceiver(this);
+//        mUser = SharedPrefManager.getInstance(MainActivity.this).getUser();
+//
+//        //-----------------------------------------------| GPS/Location
+//        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        checkGpsEnabled(manager);
 
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.nav_home:
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        getSupportActionBar().setTitle("Home");
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                new HomeFragment()).commit();
+//                        break;
+//                    case R.id.nav_editprofile:
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+//                        break;
+//                    case R.id.nav_fav:
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        getSupportActionBar().setTitle("Favorite");
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                new FavoriteFragment()).commit();
+//                        break;
+//                    case R.id.nav_notification:
+//                        drawer.closeDrawer(GravityCompat.START);
+////                        getSupportActionBar().setTitle("Notifications");
+////                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+////                                new NotificationsFragment()).commit();
+//                        startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+//                        break;
+//                    case R.id.nav_verify:
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        startActivity(new Intent(MainActivity.this, VerificationActivity.class));
+//                        finish();
+//                        break;
+//                    case R.id.nav_about:
+//                        drawer.closeDrawer(GravityCompat.START);
+//                        getSupportActionBar().setTitle("About");
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                new AboutFragment()).commit();
+//                        break;
+//                    case R.id.nav_logout:
+//
+//
+//                        new AlertDialog.Builder(MainActivity.this)
+//                                .setTitle(R.string.about_title)
+//                                .setMessage(R.string.msg_sign_out)
+//                                .setPositiveButton(R.string.sign_out, new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int i) {
+//                                        SharedPrefManager.getInstance(MainActivity.this).deleteCurrentSession();
+//                                        FirebaseAuth.getInstance().signOut();
+//                                        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
+//                                        startActivity(intent);
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .setNegativeButton(R.string.msg_neg, new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int i) {
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .show();
+//                        break;
+//
+//                }
+//                return true;
+//            }
+//        });
 
+//        View headView = navigationView.getHeaderView(0);
+//        profile_image = headView.findViewById(R.id.profile_image);
+//        nameTxt = headView.findViewById(R.id.name);
+//        emailTxt = headView.findViewById(R.id.email);
+//        verify = headView.findViewById(R.id.userVerify);
+//        status = headView.findViewById(R.id.status);
+
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        getLastLocation();
+    }
+
+    private void InitializeAll() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        floatingActionButton = findViewById(R.id.fab);
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        assert fuser != null;
+        userid = fuser.getUid();
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(userid);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        ///------Default fragment for first time-------
         String name = getIntent().getStringExtra("name");
         if (name != null) {
             getSupportActionBar().setTitle(name);
@@ -185,93 +277,6 @@ public class MainActivity extends AppCompatActivity {
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                 new HomeFragment()).commit();
-
-        mNetworkReceiver = new MyNetworkReceiver(this);
-        mLocationReceiver = new MyLocationReceiver(this);
-        mUser = SharedPrefManager.getInstance(MainActivity.this).getUser();
-
-        //-----------------------------------------------| GPS/Location
-        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        checkGpsEnabled(manager);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        drawer.closeDrawer(GravityCompat.START);
-                        getSupportActionBar().setTitle("Home");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                new HomeFragment()).commit();
-                        break;
-                    case R.id.nav_editprofile:
-                        drawer.closeDrawer(GravityCompat.START);
-                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
-                        break;
-                    case R.id.nav_fav:
-                        drawer.closeDrawer(GravityCompat.START);
-                        getSupportActionBar().setTitle("Favorite");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                new FavoriteFragment()).commit();
-                        break;
-                    case R.id.nav_notification:
-                        drawer.closeDrawer(GravityCompat.START);
-//                        getSupportActionBar().setTitle("Notifications");
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-//                                new NotificationsFragment()).commit();
-                        startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
-                        break;
-                    case R.id.nav_verify:
-                        drawer.closeDrawer(GravityCompat.START);
-                        startActivity(new Intent(MainActivity.this, VerificationActivity.class));
-                        finish();
-                        break;
-                    case R.id.nav_about:
-                        drawer.closeDrawer(GravityCompat.START);
-                        getSupportActionBar().setTitle("About");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                new AboutFragment()).commit();
-                        break;
-                    case R.id.nav_logout:
-
-
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(R.string.about_title)
-                                .setMessage(R.string.msg_sign_out)
-                                .setPositiveButton(R.string.sign_out, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int i) {
-                                        SharedPrefManager.getInstance(MainActivity.this).deleteCurrentSession();
-                                        FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
-                                        startActivity(intent);
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setNegativeButton(R.string.msg_neg, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int i) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-                        break;
-
-                }
-                return true;
-            }
-        });
-
-        View headView = navigationView.getHeaderView(0);
-        profile_image = headView.findViewById(R.id.profile_image);
-        nameTxt = headView.findViewById(R.id.name);
-        emailTxt = headView.findViewById(R.id.email);
-        verify = headView.findViewById(R.id.userVerify);
-        status = headView.findViewById(R.id.status);
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastLocation();
     }
 
     private void getLastLocation() {
@@ -466,7 +471,6 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
 
-
                         case R.id.nav_home:
                             getSupportActionBar().setTitle("Home");
                             selectedFragment = new HomeFragment();
@@ -530,7 +534,6 @@ public class MainActivity extends AppCompatActivity {
                     //Utility.alertDialog(MainActivity.this,"You are not Admin!");
                     startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
                 }
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -565,11 +568,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getUserInformation();
+//        getUserInformation();
     }
 
+    //---For double back press to exit------
     long currentTime = System.currentTimeMillis();
-
     @Override
     public void onBackPressed() {
         if (!getSupportActionBar().getTitle().equals("Home")) {
@@ -577,7 +580,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
         }
-        else if(System.currentTimeMillis() - currentTime < 1000){
+        else if(System.currentTimeMillis() - currentTime < 2000){
             super.onBackPressed();
         }else{
             currentTime = System.currentTimeMillis();
@@ -829,16 +832,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        status("online");
+//        status("online");
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        DateFormat df = new SimpleDateFormat("h:mm a, EEE, d MMM yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
-        status("Last Seen " + date);
+//        DateFormat df = new SimpleDateFormat("h:mm a, EEE, d MMM yyyy");
+//        String date = df.format(Calendar.getInstance().getTime());
+//        status("Last Seen " + date);
     }
 
     //===============================================| Restart Activity
