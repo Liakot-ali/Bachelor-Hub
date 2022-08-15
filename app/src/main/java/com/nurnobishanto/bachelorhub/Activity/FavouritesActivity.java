@@ -1,5 +1,6 @@
 package com.nurnobishanto.bachelorhub.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,13 +33,14 @@ public class FavouritesActivity extends AppCompatActivity {
     private ArrayList<PostAd> mArrayList = new ArrayList<>();
 
     TextView emptyText;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
+        getSupportActionBar().setTitle("Favourites");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         emptyText = findViewById(R.id.favouriteEmptyText);
         emptyText.setVisibility(View.GONE);
 
@@ -86,5 +89,14 @@ public class FavouritesActivity extends AppCompatActivity {
         //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         //mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

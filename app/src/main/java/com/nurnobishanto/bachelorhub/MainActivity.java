@@ -48,6 +48,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nurnobishanto.bachelorhub.Activity.NotificationsActivity;
 import com.nurnobishanto.bachelorhub.Activity.PostAdActivity;
+import com.nurnobishanto.bachelorhub.Activity.SettingsActivity;
 import com.nurnobishanto.bachelorhub.Activity.ShowMapsActivity;
 import com.nurnobishanto.bachelorhub.Activity.VerificationActivity;
 import com.nurnobishanto.bachelorhub.Admin.AdminHomeActivity;
@@ -424,7 +425,6 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
 
-
                 }
             }
 
@@ -488,9 +488,7 @@ public class MainActivity extends AppCompatActivity {
                 // startActivity(new Intent(this, FeedPostActivity.class));
                 return true;
             case R.id.action_settings:
-                getSupportActionBar().setTitle("Settings");
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new SettingsFragment()).commit();
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
             case R.id.action_remove_fav:
                 SharedPrefManager.getInstance(MainActivity.this).deleteFavoriteItems();
@@ -501,14 +499,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_showMap:
                 startActivity(new Intent(MainActivity.this, ShowMapsActivity.class));
                 return true;
-            case R.id.action_admin:
-                if (userRole.equals("Admin")) {
-                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-                } else {
-                    //Utility.alertDialog(MainActivity.this,"You are not Admin!");
-                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-                }
-                return true;
+//            case R.id.action_admin:
+//                if (userRole.equals("Admin")) {
+//                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+//                } else {
+//                    //Utility.alertDialog(MainActivity.this,"You are not Admin!");
+//                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+//                }
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -547,16 +545,16 @@ public class MainActivity extends AppCompatActivity {
 
     //---For double back press to exit------
     long currentTime = System.currentTimeMillis();
+
     @Override
     public void onBackPressed() {
         if (!getSupportActionBar().getTitle().equals("Home")) {
             getSupportActionBar().setTitle("Home");
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
-        }
-        else if(System.currentTimeMillis() - currentTime < 2000){
+        } else if (System.currentTimeMillis() - currentTime < 2000) {
             super.onBackPressed();
-        }else{
+        } else {
             currentTime = System.currentTimeMillis();
             Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
         }

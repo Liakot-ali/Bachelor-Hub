@@ -31,6 +31,7 @@ import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 import com.nurnobishanto.bachelorhub.Admin.AdminHomeActivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
+import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.R;
 import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 
@@ -124,7 +125,6 @@ public class SigninFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -142,11 +142,14 @@ public class SigninFragment extends Fragment {
                 dialog.dismiss();
             } else {
                 dialog.dismiss();
+                User obj = new User(mAuth.getUid(), "", "", "", emailInput.getText().toString(), "", "", "", "Owner", "", "","","","");
+                SharedPrefManager.getInstance(getActivity()).saveUser(obj);
                 SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
+
                 if (emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
                     startActivity(new Intent(getContext(), AdminHomeActivity.class));
                 } else {
-                    startActivity(new Intent(getContext(), EditProfileActivity.class));
+                    startActivity(new Intent(getContext(), MainActivity.class));
                 }
                 getActivity().finish();
             }

@@ -82,10 +82,10 @@ public class AuthActivity extends AppCompatActivity {
         //====================================================| To Check Firebase Authentication
         if (mLoggedIn && mUser != null) {
             Intent intent;//For login to clear this screen for that did not back this screen
-            if(mUser.getUserEmail().equals("bachelorhub.info@gmail.com")){
+            if (mUser.getUserEmail().equals("bachelorhub.info@gmail.com")) {
                 intent = new Intent(this, AdminHomeActivity.class);
-            }else {
-                intent = new Intent(this, EditProfileActivity.class);
+            } else {
+                intent = new Intent(this, MainActivity.class);
             }
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
             startActivity(intent);

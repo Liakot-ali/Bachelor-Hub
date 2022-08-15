@@ -50,10 +50,10 @@ import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {
-    private TextInputLayout nameInputLayout,emailInputLayout,passInputLayout,confirmPassInputLayout;
-    private TextInputEditText nameInput,emailInput,passInput,confirmPassInput;
+    private TextInputLayout nameInputLayout, emailInputLayout, passInputLayout, confirmPassInputLayout;
+    private TextInputEditText nameInput, emailInput, passInput, confirmPassInput;
     private Button signup;
-    private TextView signin,forget;
+    private TextView signin, forget;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseAuth mAuth;
     private Spinner spinner;
@@ -64,27 +64,27 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        mAuth =FirebaseAuth.getInstance();
-        nameInputLayout=view.findViewById(R.id.nameInputLayout);
-        emailInputLayout=view.findViewById(R.id.emailInputLayout);
-        passInputLayout=view.findViewById(R.id.passlInputLayout);
-        confirmPassInputLayout=view.findViewById(R.id.confirmPasslInputLayout);
+        mAuth = FirebaseAuth.getInstance();
+        nameInputLayout = view.findViewById(R.id.nameInputLayout);
+        emailInputLayout = view.findViewById(R.id.emailInputLayout);
+        passInputLayout = view.findViewById(R.id.passlInputLayout);
+        confirmPassInputLayout = view.findViewById(R.id.confirmPasslInputLayout);
         spinner = (Spinner) view.findViewById(R.id.country_code_spinner);
         editText = (EditText) view.findViewById(R.id.user_phone_number);
-        nameInput=view.findViewById(R.id.name);
-        emailInput=view.findViewById(R.id.email);
-        passInput=view.findViewById(R.id.password);
-        confirmPassInput=view.findViewById(R.id.confirmPassword);
-        signin=view.findViewById(R.id.signin);
-        signup=view.findViewById(R.id.signup);
-        forget=view.findViewById(R.id.forget);
+        nameInput = view.findViewById(R.id.name);
+        emailInput = view.findViewById(R.id.email);
+        passInput = view.findViewById(R.id.password);
+        confirmPassInput = view.findViewById(R.id.confirmPassword);
+        signin = view.findViewById(R.id.signin);
+        signup = view.findViewById(R.id.signup);
+        forget = view.findViewById(R.id.forget);
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, ConstantKey.countryAreaCodes);
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getPosition("+880")); //set item by default
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Validate()){
+                if (Validate()) {
 
                     Register();
                 }
@@ -94,13 +94,13 @@ public class SignUpFragment extends Fragment {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SigninFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SigninFragment()).commit();
             }
         });
         forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new ForgotFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new ForgotFragment()).commit();
             }
         });
         nameInput.addTextChangedListener(new TextWatcher() {
@@ -111,10 +111,10 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (nameInput.getText().toString().isEmpty()){
+                if (nameInput.getText().toString().isEmpty()) {
                     nameInputLayout.setErrorEnabled(true);
                     nameInputLayout.setError("Name is required!");
-                }else {
+                } else {
                     nameInputLayout.setErrorEnabled(false);
                 }
 
@@ -133,10 +133,10 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!emailInput.getText().toString().trim().matches(emailPattern)){
+                if (!emailInput.getText().toString().trim().matches(emailPattern)) {
                     emailInputLayout.setErrorEnabled(true);
                     emailInputLayout.setError("Valid email is required!");
-                }else {
+                } else {
                     emailInputLayout.setErrorEnabled(false);
                 }
 
@@ -155,10 +155,10 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (passInput.getText().toString().length()<8){
+                if (passInput.getText().toString().length() < 8) {
                     passInputLayout.setErrorEnabled(true);
                     passInputLayout.setError("Password must be at least 8 Character!");
-                }else {
+                } else {
                     passInputLayout.setErrorEnabled(false);
                 }
 
@@ -177,9 +177,9 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Objects.requireNonNull(passInput.getText()).toString().equals(confirmPassInput.getText().toString())){
+                if (Objects.requireNonNull(passInput.getText()).toString().equals(confirmPassInput.getText().toString())) {
                     confirmPassInputLayout.setErrorEnabled(false);
-                }else {
+                } else {
                     confirmPassInputLayout.setErrorEnabled(true);
                     confirmPassInputLayout.setError("Confirm Password Not Match Yet!");
                 }
@@ -192,7 +192,7 @@ public class SignUpFragment extends Fragment {
         });
 
 
-        return  view;
+        return view;
     }
 
     private void Register() {
@@ -201,20 +201,20 @@ public class SignUpFragment extends Fragment {
         pd.setMessage("Please wait..");
         pd.show();
 
-        mAuth.createUserWithEmailAndPassword(emailInput.getText().toString(),passInput.getText().toString()).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(emailInput.getText().toString(), passInput.getText().toString()).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
+                if (!task.isSuccessful()) {
                     pd.dismiss();
                     emailInput.setError(task.getException().getMessage().toString());
-                }else {
+                } else {
                     String code = spinner.getSelectedItem().toString();
                     String phone = editText.getText().toString().trim();
                     String userId = mAuth.getCurrentUser().getUid();
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("tolet_users").child(userId);
                     Map<String, Object> userInfo = new HashMap<>();
 
-                    User obj = new User(userId, nameInput.getText().toString(), "", "", emailInput.getText().toString(), code+ Utility.removeZero(phone), "", "", "Renter", "", "","","","");
+                    User obj = new User(userId, nameInput.getText().toString(), "", "", emailInput.getText().toString(), code + Utility.removeZero(phone), "", "", "Renter", "", "", "", "", "");
 //                    SharedPrefManager.getInstance(EditProfileActivity.this).saveUser(obj);
 //                    mUserViewModel.storeUser(obj);
 //                    mUserViewModel.storeUser(obj).observe(this, new Observer<String>() {
@@ -228,80 +228,69 @@ public class SignUpFragment extends Fragment {
 //                        }
 //                    });
 
-
-                    userInfo.put("userFullName",nameInput.getText().toString());
-                    userInfo.put("userAuthId",userId);
-                    userInfo.put("userEmail",emailInput.getText().toString());
-                    userInfo.put("userPhoneNumber",code+ Utility.removeZero(phone));
-                    userInfo.put("isUserOwner","Renter");
+                    userInfo.put("userFullName", nameInput.getText().toString());
+                    userInfo.put("userAuthId", userId);
+                    userInfo.put("userEmail", emailInput.getText().toString());
+                    userInfo.put("userPhoneNumber", code + Utility.removeZero(phone));
+                    userInfo.put("isUserOwner", "Renter");
 
 
                     dbRef.setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 pd.dismiss();
-                                Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Registration Completed", Toast.LENGTH_LONG).show();
                                 SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
                                 SharedPrefManager.getInstance(getContext()).saveUserAuthId(userId);
-                                if(emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
+                                SharedPrefManager.getInstance(getContext()).saveUser(obj);
+                                if (emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
                                     startActivity(new Intent(getContext(), AdminHomeActivity.class));
-                                }else {
-                                    startActivity(new Intent(getContext(), EditProfileActivity.class));
+                                } else {
+                                    startActivity(new Intent(getContext(), MainActivity.class));
                                 }
                                 getActivity().finish();
-                            }else{
+                            } else {
                                 Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-
-
                 }
             }
         });
-
-
-
     }
 
     private boolean Validate() {
-        if (nameInput.getText().toString().isEmpty()){
+        if (nameInput.getText().toString().isEmpty()) {
             nameInputLayout.setErrorEnabled(true);
             nameInputLayout.setError("Name is required!");
             return false;
-        }
-        else if (emailInput.getText().toString().isEmpty()){
+        } else if (emailInput.getText().toString().isEmpty()) {
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Email is required!");
             return false;
-        }else if(!emailInput.getText().toString().trim().matches(emailPattern)){
+        } else if (!emailInput.getText().toString().trim().matches(emailPattern)) {
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Valid email is required!");
             return false;
-        }
-        else if (passInput.getText().toString().isEmpty()){
+        } else if (passInput.getText().toString().isEmpty()) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password is required!");
             return false;
-        }
-        else if (passInput.getText().toString().length()<8){
+        } else if (passInput.getText().toString().length() < 8) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password must be at least 8 Character!");
             return false;
-        }
-        else if (!Objects.requireNonNull(passInput.getText()).toString().equals(confirmPassInput.getText().toString())){
+        } else if (!Objects.requireNonNull(passInput.getText()).toString().equals(confirmPassInput.getText().toString())) {
             passInputLayout.setErrorEnabled(false);
             confirmPassInputLayout.setErrorEnabled(true);
             confirmPassInputLayout.setError("Confirm Password Not Match!");
             return false;
-        }
-
-        else {
+        } else {
             confirmPassInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(false);
             nameInputLayout.setErrorEnabled(false);

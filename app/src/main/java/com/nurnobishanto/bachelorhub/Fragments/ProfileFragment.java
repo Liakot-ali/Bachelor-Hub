@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
 import com.nurnobishanto.bachelorhub.Activity.FavouritesActivity;
 import com.nurnobishanto.bachelorhub.Activity.ProfileDetailsActivity;
+import com.nurnobishanto.bachelorhub.Activity.SettingsActivity;
 import com.nurnobishanto.bachelorhub.Activity.VerificationActivity;
 import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.Models.UserViewModel;
@@ -121,19 +122,25 @@ public class ProfileFragment extends Fragment {
         Faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Under Construction", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "FAQ Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Help Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Under Construction", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "About us Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO-convert setting fragment to activity
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

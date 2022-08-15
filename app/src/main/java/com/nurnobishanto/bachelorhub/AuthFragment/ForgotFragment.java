@@ -31,26 +31,27 @@ public class ForgotFragment extends Fragment {
     private TextView signin;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private FirebaseAuth fauth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_forgot, container, false);
-        emailInputLayout=view.findViewById(R.id.emailInputLayout);
-        emailInput=view.findViewById(R.id.email);
-        signin=view.findViewById(R.id.signin);
-        forget=view.findViewById(R.id.forgot);
-        fauth =FirebaseAuth.getInstance();
+        emailInputLayout = view.findViewById(R.id.emailInputLayout);
+        emailInput = view.findViewById(R.id.email);
+        signin = view.findViewById(R.id.signin);
+        forget = view.findViewById(R.id.forgot);
+        fauth = FirebaseAuth.getInstance();
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SigninFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SigninFragment()).commit();
             }
         });
         forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Validate()){
+                if (Validate()) {
                     ForgetPassword();
                 }
 
@@ -65,10 +66,10 @@ public class ForgotFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!emailInput.getText().toString().trim().matches(emailPattern)){
+                if (!emailInput.getText().toString().trim().matches(emailPattern)) {
                     emailInputLayout.setErrorEnabled(true);
                     emailInputLayout.setError("Valid email is required!");
-                }else {
+                } else {
                     emailInputLayout.setErrorEnabled(false);
                 }
 
@@ -86,12 +87,10 @@ public class ForgotFragment extends Fragment {
         fauth.sendPasswordResetEmail(emailInput.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(getContext(),"Please Check Email ",Toast.LENGTH_LONG).show();
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SigninFragment()).commit();
-                }
-                else {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Please Check Email ", Toast.LENGTH_LONG).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SigninFragment()).commit();
+                } else {
                     emailInput.setError(task.getException().getMessage());
                     emailInput.requestFocus();
                 }
@@ -101,16 +100,15 @@ public class ForgotFragment extends Fragment {
     }
 
     private boolean Validate() {
-        if (emailInput.getText().toString().isEmpty()){
+        if (emailInput.getText().toString().isEmpty()) {
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Email is required!");
             return false;
-        }else if(!emailInput.getText().toString().trim().matches(emailPattern)){
+        } else if (!emailInput.getText().toString().trim().matches(emailPattern)) {
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Valid email is required!");
             return false;
-        }
-        else {
+        } else {
             emailInputLayout.setErrorEnabled(false);
             return true;
         }

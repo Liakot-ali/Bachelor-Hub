@@ -31,10 +31,5 @@
         android:orderInCategory="100"
         android:title="Show Maps"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_admin"
-        android:orderInCategory="100"
-        android:title="Admin"
-        app:showAsAction="never" />
 
 </menu>

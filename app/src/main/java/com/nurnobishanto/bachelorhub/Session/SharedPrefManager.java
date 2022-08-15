@@ -47,14 +47,15 @@ public class SharedPrefManager {
     }
 
     //===============================================| Token
-    public void saveDeviceToken(String token){
+    public void saveDeviceToken(String token) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TAG_TOKEN, token);
         editor.apply();
         editor.commit();
     }
-    public void saveUserEmail(String email){
+
+    public void saveUserEmail(String email) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL, email);
@@ -62,13 +63,13 @@ public class SharedPrefManager {
         editor.commit();
     }
 
-    public String getDeviceToken(){
+    public String getDeviceToken() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_TOKEN, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(TAG_TOKEN, null);
+        return sharedPreferences.getString(TAG_TOKEN, null);
     }
 
     //===============================================| Save
-    public void saveUser(User model){
+    public void saveUser(User model) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("UserModel", new Gson().toJson(model));
@@ -76,7 +77,7 @@ public class SharedPrefManager {
         editor.commit(); //for old version
     }
 
-    public void savePhoneAndLogInStatus(String phone, boolean isLogged){
+    public void savePhoneAndLogInStatus(String phone, boolean isLogged) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PHONE_NUMBER, phone);
@@ -85,7 +86,7 @@ public class SharedPrefManager {
         editor.commit(); //for old version
     }
 
-    public void saveUserAuthId(String authId){
+    public void saveUserAuthId(String authId) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(AUTH_ID, authId);
@@ -94,7 +95,7 @@ public class SharedPrefManager {
     }
 
 
-    public void saveCurrentLatLng(LatLng latLng){
+    public void saveCurrentLatLng(LatLng latLng) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(LAT_KEY, String.valueOf(latLng.latitude));
@@ -103,7 +104,7 @@ public class SharedPrefManager {
         editor.commit(); //for old version
     }
 
-    public void saveFavoriteItem(String mAuthId){
+    public void saveFavoriteItem(String mAuthId) {
         SharedPreferences ref = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = ref.edit();
 
@@ -123,27 +124,30 @@ public class SharedPrefManager {
     }
 
     //===============================================| Fetch/Get
-    public User getUser(){
+    public User getUser() {
         SharedPreferences pref = mCtx.getSharedPreferences(USER_PREF, Context.MODE_PRIVATE);
         return new Gson().fromJson(pref.getString("UserModel", null), User.class);
     }
 
-    public boolean getUserIsLoggedIn(){
+    public boolean getUserIsLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getBoolean(IS_LOGGED, false);
+        return sharedPreferences.getBoolean(IS_LOGGED, false);
     }
-    public void setUserIsLoggedIn(boolean isLogged){
+
+    public void setUserIsLoggedIn(boolean isLogged) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_LOGGED, isLogged);
         editor.apply();
         editor.commit();
     }
-    public boolean getUserIsFirstTime(){
+
+    public boolean getUserIsFirstTime() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getBoolean(IS_FIRST, true);
+        return sharedPreferences.getBoolean(IS_FIRST, true);
     }
-    public void setUserIsFirstTime(boolean isFirstTime){
+
+    public void setUserIsFirstTime(boolean isFirstTime) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_FIRST, isFirstTime);
@@ -152,21 +156,22 @@ public class SharedPrefManager {
     }
 
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(PHONE_NUMBER, null);
+        return sharedPreferences.getString(PHONE_NUMBER, null);
     }
 
-    public String getUserAuthId(){
+    public String getUserAuthId() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(AUTH_ID, null);
-    }
-    public String getUserEmail(){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(EMAIL, null);
+        return sharedPreferences.getString(AUTH_ID, null);
     }
 
-    public LatLng getCurrentLatLng(){
+    public String getUserEmail() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(EMAIL, null);
+    }
+
+    public LatLng getCurrentLatLng() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         double lat = 0.0, lng = 0.0;
@@ -177,10 +182,11 @@ public class SharedPrefManager {
             lng = Double.parseDouble(Objects.requireNonNull(sharedPreferences.getString(LNG_KEY, null)));
         }
 
-        LatLng latLng = new LatLng(lat,lng);
+        LatLng latLng = new LatLng(lat, lng);
         return latLng;
     }
-    public String getCurrentLatitude(){
+
+    public String getCurrentLatitude() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String lat = "0.0";
         if (sharedPreferences.getString(LAT_KEY, null) != null) {
@@ -188,7 +194,8 @@ public class SharedPrefManager {
         }
         return lat;
     }
-    public String getCurrentLongitude(){
+
+    public String getCurrentLongitude() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String lng = "0.0";
         if (sharedPreferences.getString(LNG_KEY, null) != null) {
@@ -197,13 +204,14 @@ public class SharedPrefManager {
         return lng;
     }
 
-    public ArrayList<String> getFavoriteItems(){
+    public ArrayList<String> getFavoriteItems() {
         SharedPreferences ref = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new Gson().fromJson(ref.getString(FAV_KEY, null), new TypeToken<ArrayList<String>>(){}.getType());
+        return new Gson().fromJson(ref.getString(FAV_KEY, null), new TypeToken<ArrayList<String>>() {
+        }.getType());
     }
 
     //===============================================| Delete
-    public void deleteCurrentSession(){
+    public void deleteCurrentSession() {
         SharedPreferences pre = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         editor.putBoolean(IS_LOGGED, false);
@@ -212,7 +220,7 @@ public class SharedPrefManager {
         editor.commit(); //for old version
     }
 
-    public void deleteFavoriteItems(){
+    public void deleteFavoriteItems() {
         SharedPreferences pre = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         editor.remove(FAV_KEY);
