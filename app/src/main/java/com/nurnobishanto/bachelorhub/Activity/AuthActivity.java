@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.nurnobishanto.bachelorhub.Admin.AdminHomeActivity;
 import com.nurnobishanto.bachelorhub.AuthFragment.SigninFragment;
 import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.Models.User;
@@ -22,6 +23,7 @@ public class AuthActivity extends AppCompatActivity {
     private User mUser = null;
     private boolean mLoggedIn = false;
     private MyNetworkReceiver mNetworkReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class AuthActivity extends AppCompatActivity {
         mNetworkReceiver = new MyNetworkReceiver(this);
         mUser = SharedPrefManager.getInstance(this).getUser();
         mLoggedIn = SharedPrefManager.getInstance(this).getUserIsLoggedIn();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SigninFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SigninFragment()).commit();
     }
 
     boolean doubleBackToExitPressedOnce = false;
@@ -52,7 +54,7 @@ public class AuthActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
@@ -79,7 +81,12 @@ public class AuthActivity extends AppCompatActivity {
         super.onStart();
         //====================================================| To Check Firebase Authentication
         if (mLoggedIn && mUser != null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent;//For login to clear this screen for that did not back this screen
+            if(mUser.getUserEmail().equals("bachelorhub.info@gmail.com")){
+                intent = new Intent(this, AdminHomeActivity.class);
+            }else {
+                intent = new Intent(this, EditProfileActivity.class);
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
             startActivity(intent);
         }

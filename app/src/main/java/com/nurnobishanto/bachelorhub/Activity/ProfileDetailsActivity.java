@@ -105,7 +105,9 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     mImageUrl = user.getUserImageUrl();
-                    Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
+                    if(!mImageUrl.equals("")) {
+                        Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
+                    }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userFullName.setText(user.getUserFullName());
 
@@ -116,10 +118,8 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                     userBirthDate.setText(user.getUserBirthDate());
                     userAddress.setText(user.getUserAddress());
                     userGroup.setText(user.getIsUserOwner());
-                    Utility.dismissProgressDialog(mProgress);
-                } else {
-                    Utility.dismissProgressDialog(mProgress);
                 }
+                Utility.dismissProgressDialog(mProgress);
             }
         });
     }

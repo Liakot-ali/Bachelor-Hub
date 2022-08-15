@@ -247,7 +247,9 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     mImageUrl = user.getUserImageUrl();
-                    Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
+                    if(!mImageUrl.equals("")) {
+                        Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
+                    }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userFullName.setText(user.getUserFullName());
                     userRelation.setSelection(adapter.getPosition(user.getUserRelation()));

@@ -48,6 +48,7 @@ public class FirebaseRepository {
                     //String singleValue = (String) snapshot.child("userFullName").getValue(); //Get single child data
 
                     User model = snapshot.getValue(User.class);
+                    Log.i(TAG, "onDataChange: "+ model.getUserFullName());
                     String key = snapshot.getKey();
                     mCallback.onCallback(model);
                 } else {

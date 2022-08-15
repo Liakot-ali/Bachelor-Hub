@@ -25,10 +25,11 @@ import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 public class onBoardAtivity extends AppCompatActivity {
 
     private ViewPager viewPager;
-    private Button skip,next;
+    private Button skip, next;
     private ViewPagerAdapter adapter;
     private LinearLayout dotLayout;
     private TextView[] dots;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class onBoardAtivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_paper);
         skip = findViewById(R.id.skip);
         next = findViewById(R.id.next);
-        dotLayout =findViewById(R.id.dots);
+        dotLayout = findViewById(R.id.dots);
         adapter = new ViewPagerAdapter(this);
         addDots(0);
         viewPager.addOnPageChangeListener(listener);
@@ -45,12 +46,11 @@ public class onBoardAtivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(next.getText().equals("Next")){
-                    viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-
-                }else {
+                if (next.getText().equals("Next")) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                } else {
                     SharedPrefManager.getInstance(onBoardAtivity.this).setUserIsFirstTime(false);
-                    startActivity(new Intent(onBoardAtivity.this,AuthActivity.class));
+                    startActivity(new Intent(onBoardAtivity.this, AuthActivity.class));
                     finish();
                 }
             }
@@ -59,16 +59,17 @@ public class onBoardAtivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem()+2);
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 2);
             }
         });
     }
+
     @SuppressLint({"ResourceAsColor", "ResourceType"})
-    private void addDots(int position){
+    private void addDots(int position) {
         dotLayout.removeAllViews();
         dots = new TextView[3];
 
-        for (int i = 0;i<dots.length;i++){
+        for (int i = 0; i < dots.length; i++) {
 
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226"));
@@ -76,10 +77,11 @@ public class onBoardAtivity extends AppCompatActivity {
             dots[i].setTextColor(getResources().getColor(R.color.blue));
             dotLayout.addView(dots[i]);
         }
-        if (dots.length>0){
+        if (dots.length > 0) {
             dots[position].setTextColor(getResources().getColor(R.color.black));
         }
     }
+
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -89,16 +91,16 @@ public class onBoardAtivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addDots(position);
-            if(position ==0){
+            if (position == 0) {
                 skip.setVisibility(View.VISIBLE);
                 skip.setEnabled(true);
                 next.setText("Next");
 
-            }else if(position==1){
+            } else if (position == 1) {
                 skip.setVisibility(View.GONE);
                 skip.setEnabled(false);
                 next.setText("Next");
-            }else {
+            } else {
                 skip.setVisibility(View.GONE);
                 skip.setEnabled(false);
                 next.setText("Finish");
@@ -132,7 +134,7 @@ public class onBoardAtivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

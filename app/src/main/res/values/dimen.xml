@@ -6,6 +6,6 @@
     <dimen name="lay_pad">10sp</dimen>
     <dimen name="item_picture">50sp</dimen>
     <dimen name="profile_picture">110sp</dimen>
-    <dimen name="small_icon">20sp</dimen>
+    <dimen name="small_icon">25sp</dimen>
     <dimen name="medium_icon">35sp</dimen>
 </resources>

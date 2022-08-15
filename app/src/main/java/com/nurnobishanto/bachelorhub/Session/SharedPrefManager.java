@@ -206,7 +206,8 @@ public class SharedPrefManager {
     public void deleteCurrentSession(){
         SharedPreferences pre = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
-        editor.clear(); //Remove from login.xml file
+        editor.putBoolean(IS_LOGGED, false);
+//        editor.clear(); //Remove from login.xml file
         editor.apply();
         editor.commit(); //for old version
     }

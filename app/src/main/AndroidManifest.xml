@@ -42,6 +42,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
+            android:name=".Activity.FavouritesActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.RejectedActivity"
             android:exported="false" />
         <activity

@@ -28,8 +28,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/lay_pad"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/lay_pad">
 
                     <TextView
                         android:id="@+id/proDetailsName"
@@ -37,28 +37,30 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Md. Munied Hossain"
                         android:maxLines="1"
+                        android:text="Md. Munied Hossain"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/headline_text" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="@dimen/small_icon"
                             android:layout_height="@dimen/small_icon"
                             android:layout_marginRight="@dimen/inner_pad"
-                            android:src="@drawable/ic_rating"/>
+                            android:src="@drawable/ic_rating" />
+
                         <TextView
-                            android:layout_gravity="center"
                             android:id="@+id/proDetailsRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
-                            android:text="Rating" />
+                            android:layout_gravity="center"
+                            android:text="Rating"
+                            android:textColor="@color/red" />
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -67,19 +69,19 @@
                     android:layout_width="@dimen/small_icon"
                     android:layout_height="@dimen/small_icon"
                     android:layout_marginLeft="@dimen/inner_pad"
-                    android:src="@drawable/ic_verified" />
+                    android:src="@drawable/ic_verified"
+                    android:visibility="gone" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/proDetailsPicture"
                     android:layout_width="@dimen/item_picture"
                     android:layout_height="@dimen/item_picture"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/lay_pad"
-                    android:layout_marginTop="@dimen/inner_pad"
                     android:layout_marginStart="@dimen/inner_pad"
+                    android:layout_marginTop="@dimen/inner_pad"
+                    android:layout_marginEnd="@dimen/lay_pad"
                     android:layout_marginBottom="@dimen/inner_pad"
-                    android:src="@mipmap/ic_launcher"
-                    />
+                    android:src="@mipmap/ic_launcher" />
 
             </LinearLayout>
 
@@ -95,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
-                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardBackgroundColor="@color/while_light_grey"
+                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardElevation="@dimen/inner_pad">
 
                     <LinearLayout
@@ -127,8 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
-                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardBackgroundColor="@color/while_light_grey"
+                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardElevation="@dimen/inner_pad">
 
                     <LinearLayout
@@ -159,8 +161,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
-                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardBackgroundColor="@color/while_light_grey"
+                    app:cardCornerRadius="@dimen/inner_pad"
                     app:cardElevation="@dimen/inner_pad">
 
                     <LinearLayout
@@ -192,32 +194,160 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/lay_pad"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:layout_marginLeft="@dimen/inner_pad"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="@dimen/inner_pad"
-                    android:text="Verify Profile" />
+                    android:layout_margin="@dimen/inner_pad"
+                    android:layout_marginLeft="@dimen/lay_pad"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_baseline_check_box_24" />
+
+                    <TextView
+                        android:id="@+id/profileVerify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="Verify Profile"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/inner_pad"
-                    android:layout_weight="1"
-                    android:text="Settings" />
+                    android:layout_margin="@dimen/inner_pad"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_faq" />
+
+                    <TextView
+                        android:id="@+id/profileFAQ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="FAQ"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_pad"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_help" />
+
+                    <TextView
+                        android:id="@+id/profileHelp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="Help"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_pad"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_about_us" />
+
+                    <TextView
+                        android:id="@+id/profileAboutUs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="About Us"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_pad"                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_settings" />
+
+                    <TextView
+                        android:id="@+id/profileSettings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="Settings"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_pad"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/small_icon"
+                        android:layout_height="@dimen/small_icon"
+                        android:layout_marginRight="@dimen/lay_pad"
+                        app:srcCompat="@drawable/ic_logout" />
+
+                    <TextView
+                        android:id="@+id/profileLogOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150sp"
+                        android:padding="@dimen/inner_pad"
+                        android:text="Log out"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Log Out" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

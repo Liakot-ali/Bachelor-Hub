@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,7 +36,9 @@ import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneVerifyActivity;
 import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
+import com.nurnobishanto.bachelorhub.Admin.AdminHomeActivity;
 import com.nurnobishanto.bachelorhub.MainActivity;
+import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.R;
 import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
 import com.nurnobishanto.bachelorhub.utils.ConstantKey;
@@ -180,7 +183,6 @@ public class SignUpFragment extends Fragment {
                     confirmPassInputLayout.setErrorEnabled(true);
                     confirmPassInputLayout.setError("Confirm Password Not Match Yet!");
                 }
-
             }
 
             @Override
@@ -212,6 +214,20 @@ public class SignUpFragment extends Fragment {
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("tolet_users").child(userId);
                     Map<String, Object> userInfo = new HashMap<>();
 
+                    User obj = new User(userId, nameInput.getText().toString(), "", "", emailInput.getText().toString(), code+ Utility.removeZero(phone), "", "", "Renter", "", "","","","");
+//                    SharedPrefManager.getInstance(EditProfileActivity.this).saveUser(obj);
+//                    mUserViewModel.storeUser(obj);
+//                    mUserViewModel.storeUser(obj).observe(this, new Observer<String>() {
+//                        @Override
+//                        public void onChanged(String result) {
+//                            if (result.equals("success")) {
+//                                startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+//                                finish();
+//                            }
+//                            Utility.dismissProgressDialog(mProgress);
+//                        }
+//                    });
+
 
                     userInfo.put("userFullName",nameInput.getText().toString());
                     userInfo.put("userAuthId",userId);
@@ -220,13 +236,26 @@ public class SignUpFragment extends Fragment {
                     userInfo.put("isUserOwner","Renter");
 
 
-                    dbRef.updateChildren(userInfo);
-                    pd.dismiss();
-                    Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
-                    SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
-                    SharedPrefManager.getInstance(getContext()).saveUserAuthId(userId);
-                    startActivity(new Intent(getContext(), EditProfileActivity.class));
-                    getActivity().finish();
+                    dbRef.setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                pd.dismiss();
+                                Toast.makeText(getContext(),"Registration Completed",Toast.LENGTH_LONG).show();
+                                SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
+                                SharedPrefManager.getInstance(getContext()).saveUserAuthId(userId);
+                                if(emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
+                                    startActivity(new Intent(getContext(), AdminHomeActivity.class));
+                                }else {
+                                    startActivity(new Intent(getContext(), EditProfileActivity.class));
+                                }
+                                getActivity().finish();
+                            }else{
+                                Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
 
                 }
             }

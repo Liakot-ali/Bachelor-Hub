@@ -1,9 +1,11 @@
 package com.nurnobishanto.bachelorhub.Repositories.Remote;
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
 import com.nurnobishanto.bachelorhub.Models.User;
 import com.nurnobishanto.bachelorhub.Repositories.Firebase.FirebaseRepository;
 
@@ -26,7 +28,7 @@ public class UserRepository {
         new FirebaseRepository().getUserData(new FirebaseRepository.UserCallback() {
             @Override
             public void onCallback(User model) {
-                //Log.d(TAG, ""+new Gson().toJson(model));
+                Log.d("UserRepository", "getUser : " + new Gson().toJson(model));
                 data.setValue(model);
             }
         }, mAuthId);

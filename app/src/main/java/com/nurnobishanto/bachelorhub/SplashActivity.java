@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nurnobishanto.bachelorhub.Activity.AuthActivity;
+import com.nurnobishanto.bachelorhub.Activity.EditProfileActivity;
 import com.nurnobishanto.bachelorhub.Activity.PhoneActivity;
 import com.nurnobishanto.bachelorhub.Activity.onBoardAtivity;
 import com.nurnobishanto.bachelorhub.Session.SharedPrefManager;
@@ -45,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
                 if (isLogged){
-                    startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                    startActivity(new Intent(SplashActivity.this, EditProfileActivity.class));
                 }else {
                     if(isFirstTime){
                         startActivity(new Intent(SplashActivity.this, onBoardAtivity.class));
