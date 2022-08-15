@@ -43,7 +43,6 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class ProfileFragment extends Fragment {
 
     private MyNetworkReceiver mNetworkReceiver;
@@ -98,6 +97,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO
+                Toast.makeText(getActivity(), "Under Construction", Toast.LENGTH_SHORT).show();
+            }
+        });
+        applied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Toast.makeText(getActivity(), "Nothing know about this yet", Toast.LENGTH_SHORT).show();
             }
         });
         favourite.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +113,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(getActivity(), FavouritesActivity.class));
             }
         });
-        applied.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-            }
-        });
-
         profileVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

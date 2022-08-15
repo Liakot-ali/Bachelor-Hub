@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="headline_text">25sp</dimen>
-    <dimen name="normal_text">18sp</dimen>
+    <dimen name="headline_text">23sp</dimen>
+    <dimen name="normal_text">17sp</dimen>
     <dimen name="inner_pad">5sp</dimen>
     <dimen name="lay_pad">10sp</dimen>
-    <dimen name="item_picture">50sp</dimen>
+    <dimen name="item_picture">60sp</dimen>
     <dimen name="profile_picture">110sp</dimen>
     <dimen name="small_icon">25sp</dimen>
     <dimen name="medium_icon">35sp</dimen>

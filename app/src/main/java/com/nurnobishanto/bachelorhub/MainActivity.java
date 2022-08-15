@@ -23,8 +23,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -142,8 +145,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        mNetworkReceiver = new MyNetworkReceiver(this);
-//        mLocationReceiver = new MyLocationReceiver(this);
+
+        mNetworkReceiver = new MyNetworkReceiver(this);
+        mLocationReceiver = new MyLocationReceiver(this);
 //        mUser = SharedPrefManager.getInstance(MainActivity.this).getUser();
 //
 //        //-----------------------------------------------| GPS/Location
@@ -244,12 +248,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         ///------Default fragment for first time-------
-        String name = getIntent().getStringExtra("name");
-        if (name != null) {
-            getSupportActionBar().setTitle(name);
-        } else {
-            getSupportActionBar().setTitle("Home");
-        }
+//        String name = getIntent().getStringExtra("name");
+//        if (name != null) {
+//            getSupportActionBar().setTitle(name);
+//        } else {
+//            getSupportActionBar().setTitle("Home");
+//        }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                 new HomeFragment()).commit();
     }
@@ -347,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-
         }
     };
 
@@ -446,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
 
                         case R.id.nav_home:
-                            getSupportActionBar().setTitle("Home");
+//                            getSupportActionBar().setTitle("Home");
                             selectedFragment = new HomeFragment();
                             break;
 
@@ -458,12 +461,13 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_message:
-                            getSupportActionBar().setTitle("Messages");
+//                            getSupportActionBar().setTitle("Messages");
                             selectedFragment = new MessagesFragment();
                             break;
 
                         case R.id.nav_profile:
-                            getSupportActionBar().setTitle("Profile");
+//                            getSupportActionBar().hide();
+//                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                             selectedFragment = new ProfileFragment();
 
                             break;
@@ -477,65 +481,65 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-
-            case R.id.action_search:
-                filterDialog();
-                // FeedFragment.searchInput.setVisibility(View.VISIBLE);
-                // startActivity(new Intent(this, FeedPostActivity.class));
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;
-            case R.id.action_remove_fav:
-                SharedPrefManager.getInstance(MainActivity.this).deleteFavoriteItems();
-                return true;
-            case R.id.action_notifications:
-                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
-                return true;
-            case R.id.action_showMap:
-                startActivity(new Intent(MainActivity.this, ShowMapsActivity.class));
-                return true;
-//            case R.id.action_admin:
-//                if (userRole.equals("Admin")) {
-//                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-//                } else {
-//                    //Utility.alertDialog(MainActivity.this,"You are not Admin!");
-//                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-//                }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        int id = item.getItemId();
+//        switch (id) {
+//
+//            case R.id.action_search:
+//                filterDialog();
+//                // FeedFragment.searchInput.setVisibility(View.VISIBLE);
+//                // startActivity(new Intent(this, FeedPostActivity.class));
 //                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.more_menu, menu);
-        //MenuItem item = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) item1.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
+//            case R.id.action_settings:
+//                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+//                return true;
+//            case R.id.action_remove_fav:
+//                SharedPrefManager.getInstance(MainActivity.this).deleteFavoriteItems();
+//                return true;
+//            case R.id.action_notifications:
+//                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+//                return true;
+//            case R.id.action_showMap:
+//                startActivity(new Intent(MainActivity.this, ShowMapsActivity.class));
+//                return true;
+////            case R.id.action_admin:
+////                if (userRole.equals("Admin")) {
+////                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+////                } else {
+////                    //Utility.alertDialog(MainActivity.this,"You are not Admin!");
+////                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+////                }
+////                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
 //
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                FeedFragment.postAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
+//    }
 
-        return true;
-    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.more_menu, menu);
+//        //MenuItem item = menu.findItem(R.id.action_search);
+////        SearchView searchView = (SearchView) item1.getActionView();
+////        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+////            @Override
+////            public boolean onQueryTextSubmit(String query) {
+////
+////                return false;
+////            }
+////
+////            @Override
+////            public boolean onQueryTextChange(String newText) {
+////                FeedFragment.postAdapter.getFilter().filter(newText);
+////                return false;
+////            }
+////        });
+//
+//        return true;
+//    }
 
     @Override
     protected void onStart() {
@@ -548,8 +552,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!getSupportActionBar().getTitle().equals("Home")) {
-            getSupportActionBar().setTitle("Home");
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        assert fragment != null;
+        if(!(fragment instanceof HomeFragment)){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
         } else if (System.currentTimeMillis() - currentTime < 2000) {

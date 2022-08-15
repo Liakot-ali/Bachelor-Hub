@@ -8,29 +8,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:theme="@style/ThemeOverlay.AppCompat">
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="top"-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat">-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat" />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="?attr/colorPrimary"-->
+<!--            app:popupTheme="@style/ThemeOverlay.AppCompat" />-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
 
     <FrameLayout
-        android:background="@color/white"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:background="@color/white" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bottom"

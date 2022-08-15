@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/button_ripple_effect.xml" value="0.278" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_message.xml" value="0.279" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_notifications.xml" value="0.279" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_search.xml" value="0.279" />
@@ -28,10 +29,12 @@
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/dialog_post_details.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/dialog_post_image_viewer.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_favorite.xml" value="0.27447916666666666" />
-        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_profile.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_messages.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/fragment_settings.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/nav_header_main.xml" value="0.27447916666666666" />
-        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/recycler_item_post_layout.xml" value="0.25555555555555554" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/recycler_item_notification_layout.xml" value="0.264" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/recycler_item_post_layout.xml" value="0.264" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/admin_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/bottom_navigation.xml" value="0.27447916666666666" />

@@ -21,11 +21,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No User Found"
+        android:text="No message to show"
         android:id="@+id/check"
-        android:textSize="20sp"
-        android:textColor="@color/red"
-        android:textStyle="bold"
+        android:textSize="@dimen/normal_text"
+        android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone"/>

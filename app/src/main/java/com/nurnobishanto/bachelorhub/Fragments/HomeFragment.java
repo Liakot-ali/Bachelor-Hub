@@ -2,6 +2,7 @@ package com.nurnobishanto.bachelorhub.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.nurnobishanto.bachelorhub.Activity.NotificationsActivity;
 import com.nurnobishanto.bachelorhub.Adapter.PostsAdapter;
+import com.nurnobishanto.bachelorhub.MainActivity;
 import com.nurnobishanto.bachelorhub.Models.Filter;
 import com.nurnobishanto.bachelorhub.Models.PostAd;
 import com.nurnobishanto.bachelorhub.Models.PostAdViewModel;
@@ -36,6 +40,7 @@ public class HomeFragment extends Fragment {
     private ProgressDialog mProgress = null;
     private RecyclerView mRecyclerView;
     private PostsAdapter mAdapter;
+    private ImageView notification;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +52,14 @@ public class HomeFragment extends Fragment {
         mProgress = Utility.showProgressDialog(getActivity(), getResources().getString( R.string.progress), true);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        notification = (ImageView) view.findViewById(R.id.homeNotification);
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NotificationsActivity.class));
+            }
+        });
 
         //Receive the data and observe the data from view model
         PostAdViewModel mPostAdViewModel = ViewModelProviders.of(this).get(PostAdViewModel.class); //Initialize view model

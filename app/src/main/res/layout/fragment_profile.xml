@@ -95,11 +95,11 @@
                     android:id="@+id/proDetailsArchive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_ripple_effect"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/while_light_grey"
-                    app:cardCornerRadius="@dimen/inner_pad"
-                    app:cardElevation="@dimen/inner_pad">
+                    app:cardCornerRadius="@dimen/inner_pad">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -127,11 +127,11 @@
                     android:id="@+id/proDetailsFavourite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_ripple_effect"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/while_light_grey"
-                    app:cardCornerRadius="@dimen/inner_pad"
-                    app:cardElevation="@dimen/inner_pad">
+                    app:cardCornerRadius="@dimen/inner_pad">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -149,6 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Favourites"
+                            android:gravity="center"
                             android:textColor="@color/black"
                             android:textSize="@dimen/normal_text" />
                     </LinearLayout>
@@ -159,11 +160,11 @@
                     android:id="@+id/proDetailsApplied"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_ripple_effect"
                     android:layout_margin="@dimen/lay_pad"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/while_light_grey"
-                    app:cardCornerRadius="@dimen/inner_pad"
-                    app:cardElevation="@dimen/inner_pad">
+                    app:cardCornerRadius="@dimen/inner_pad">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -215,6 +216,7 @@
                         android:id="@+id/profileVerify"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="Verify Profile"
@@ -240,6 +242,7 @@
                         android:id="@+id/profileFAQ"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="FAQ"
@@ -265,6 +268,7 @@
                         android:id="@+id/profileHelp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="Help"
@@ -290,6 +294,7 @@
                         android:id="@+id/profileAboutUs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="About Us"
@@ -314,6 +319,7 @@
                         android:id="@+id/profileSettings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="Settings"
@@ -339,6 +345,7 @@
                         android:id="@+id/profileLogOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/button_ripple_effect"
                         android:minWidth="150sp"
                         android:padding="@dimen/inner_pad"
                         android:text="Log out"

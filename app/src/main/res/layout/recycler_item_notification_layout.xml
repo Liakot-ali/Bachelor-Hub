@@ -14,16 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <!-- Image -->
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/userImageUrl"
-            android:layout_gravity="left|center_horizontal"
-            android:contentDescription="@string/nav_header_desc"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="left|center_horizontal"
+            android:contentDescription="@string/nav_header_desc"
             android:src="@mipmap/ic_launcher"
-            app:civ_border_width="1dp"
-            app:civ_border_color="@color/white"/>
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
 
         <LinearLayout
             android:layout_marginLeft="10dp"
