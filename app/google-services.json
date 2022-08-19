@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:359983574231:android:8e4295254ff8de391e1492",
         "android_client_info": {
-          "package_name": "com.nurnobishanto.bachelorhub"
+          "package_name": "com.bachelorhub.bytecode"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "359983574231-ehfvgvf4cl9lcira99s98q4cgg9j21h4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.nurnobishanto.bachelorhub",
+            "package_name": "com.bachelorhub.bytecode",
             "certificate_hash": "13f49ebeaddea0394ba66464032ed1520128177c"
           }
         },

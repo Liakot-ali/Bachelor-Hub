@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.nurnobishanto.bachelorhub">
+    package="com.bachelorhub.bytecode">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -34,7 +34,7 @@
         android:required="false" />
 
     <application
-        android:name=".MainApplication"
+        android:name="com.bachelorhub.bytecode.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -42,41 +42,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
-            android:name=".Activity.SettingsActivity"
+            android:name="com.bachelorhub.bytecode.Activity.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.FavouritesActivity"
+            android:name="com.bachelorhub.bytecode.Activity.FavouritesActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RejectedActivity"
+            android:name="com.bachelorhub.bytecode.Admin.RejectedActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.VerifiedActivity"
+            android:name="com.bachelorhub.bytecode.Admin.VerifiedActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.PendingVerifyActivity"
+            android:name="com.bachelorhub.bytecode.Admin.PendingVerifyActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.AdminHomeActivity"
+            android:name="com.bachelorhub.bytecode.Admin.AdminHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.ShowMapsActivity"
+            android:name="com.bachelorhub.bytecode.Activity.ShowMapsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AdminActivity"
+            android:name="com.bachelorhub.bytecode.Activity.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.ProfileDetailsActivity"
+            android:name="com.bachelorhub.bytecode.Activity.ProfileDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.VerificationActivity"
+            android:name="com.bachelorhub.bytecode.Activity.VerificationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activity.NotificationsActivity"
+            android:name="com.bachelorhub.bytecode.Activity.NotificationsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.MessageActivity"
+            android:name="com.bachelorhub.bytecode.Activity.MessageActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -88,11 +88,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activity.PhoneVerifyActivity"
+            android:name="com.bachelorhub.bytecode.Activity.PhoneVerifyActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".Activity.PhoneActivity"
+            android:name="com.bachelorhub.bytecode.Activity.PhoneActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -109,7 +109,7 @@
         </provider>
 
         <service
-            android:name=".Service.MyFirebaseMessagingService"
+            android:name="com.bachelorhub.bytecode.Service.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -117,21 +117,21 @@
         </service>
 
         <activity
-            android:name=".Activity.EditProfileActivity"
+            android:name="com.bachelorhub.bytecode.Activity.EditProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.PostAdActivity"
+            android:name="com.bachelorhub.bytecode.Activity.PostAdActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AuthActivity"
+            android:name="com.bachelorhub.bytecode.Activity.AuthActivity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".Activity.onBoardAtivity"
+            android:name="com.bachelorhub.bytecode.Activity.onBoardAtivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.bachelorhub.bytecode.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -141,7 +141,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.bachelorhub.bytecode.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
