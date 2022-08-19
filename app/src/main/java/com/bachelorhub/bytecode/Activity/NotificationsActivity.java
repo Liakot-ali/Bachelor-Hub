@@ -29,11 +29,11 @@ import java.util.ArrayList;
 
 public class NotificationsActivity extends AppCompatActivity {
 
+    TextView emptyText;
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
-    TextView emptyText;
     //private ArrayList<User> mArrayList = new ArrayList<>();
 
     @Override
