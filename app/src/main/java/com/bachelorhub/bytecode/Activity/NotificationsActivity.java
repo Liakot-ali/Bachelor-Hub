@@ -43,7 +43,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         mNetworkReceiver = new MyNetworkReceiver(this);
         User mUser = SharedPrefManager.getInstance(NotificationsActivity.this).getUser();
-        mProgress = Utility.showProgressDialog(NotificationsActivity.this, getResources().getString( R.string.progress), true);
+        mProgress = Utility.showProgressDialog(NotificationsActivity.this, getResources().getString(R.string.progress), true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.notification_recycler_view);
         emptyText = (TextView) findViewById(R.id.notification_empty_Text);

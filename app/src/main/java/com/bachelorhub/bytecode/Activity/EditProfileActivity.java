@@ -61,16 +61,16 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
 
     //Runtime Permissions
-    private String[] PERMISSIONS = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA };
+    private String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA};
     private PermissionUtility mPermissions;
 
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
 
     private String currentPhotoPath;
-    private String userVerify=null;
-    private String verifyMethod=null;
-    private String verifyKey=null;
+    private String userVerify = null;
+    private String verifyMethod = null;
+    private String verifyKey = null;
 
     private String mImageUrl = null;
     private String mPhone = null;
@@ -202,12 +202,12 @@ public class EditProfileActivity extends AppCompatActivity {
                     } else if (phone.length() != 11) {
                         layoutPhone.setError("length must be 11 digits");
                     } else if (mImageUrl == null) {
-                        Utility.alertDialog(EditProfileActivity.this, getResources().getString( R.string.upload_photo));
+                        Utility.alertDialog(EditProfileActivity.this, getResources().getString(R.string.upload_photo));
                     } else if (mAuthId == null) {
                         Utility.alertDialog(EditProfileActivity.this, "User did not exist");
                     }/*  else if (relation.equals("Marital Status")) {
                         Utility.alertDialog(EditProfileActivity.this, "Please change your marital status");
-                    } */else {
+                    } */ else {
                         if (Network.haveNetwork(EditProfileActivity.this)) {
 
                             mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
@@ -228,7 +228,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(mPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+        if (mPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             dispatchTakePictureIntent();
             Log.d(TAG, "Permission granted 2");
         }
@@ -236,14 +236,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
     //===============================================| Fetch/Get from Firebase Database
     private void getUserData(String mAuthId) {
-        mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString( R.string.progress), false);
+        mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
 
         mUserViewModel.getUser(mAuthId).observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
                     mImageUrl = user.getUserImageUrl();
-                    if(!mImageUrl.equals("")) {
+                    if (!mImageUrl.equals("")) {
                         Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
                     }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
@@ -272,7 +272,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     //===============================================| Insert into Firebase Database
     private void storeToDatabase(String mAuthId, String name, String relation, String occupation, String email, String phone, String birth, String address, String isUserOwner, String mImageUrl, String mToken) {
-        User obj = new User(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, mToken,userVerify,verifyMethod,verifyKey);
+        User obj = new User(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, mToken, userVerify, verifyMethod, verifyKey);
         SharedPrefManager.getInstance(EditProfileActivity.this).saveUser(obj);
         mUserViewModel.storeUser(obj);
         mUserViewModel.storeUser(obj).observe(this, new Observer<String>() {
@@ -345,7 +345,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 File photoFile = createImageFile();
                 if (photoFile != null) {
                     Uri photoURI = FileProvider.getUriForFile(this, "com.zaaibo.tolet", photoFile);
-                    Log.d(TAG, "Image Uri: "+photoURI);
+                    Log.d(TAG, "Image Uri: " + photoURI);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 }
@@ -354,6 +354,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     }
+
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -369,7 +370,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
- //           uploadImageToStorage(imageUri);
+            //           uploadImageToStorage(imageUri);
 //            Picasso.get()
 //                    .load(imageUri)
 //                    .into(userImageUrl);
@@ -397,7 +398,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     //===============================================| Save Image to Firebase Storage
     private void uploadImageToStorage(final Uri uri) {
-        mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString( R.string.progress), false);
+        mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
         mUserViewModel.storeUserImage(uri, ConstantKey.USER_NODE, mAuthId).observe(this, new Observer<String>() {
             @Override
             public void onChanged(String result) {
