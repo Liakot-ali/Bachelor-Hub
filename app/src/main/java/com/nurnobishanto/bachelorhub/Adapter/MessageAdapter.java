@@ -20,8 +20,8 @@ import java.util.List;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
-    public static final int MSG_TYPE_LEFT=0;
-    public static final int MSG_TYPE_RIGHT=1;
+    public static final int MSG_TYPE_LEFT = 0;
+    public static final int MSG_TYPE_RIGHT = 1;
     private Context mContext;
     private List<MessageModels> mChat;
     private String imageUrl;
@@ -31,7 +31,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public MessageAdapter(Context mContext, List<MessageModels> mChat, String imageUrl) {
         this.mContext = mContext;
         this.mChat = mChat;
-        this.imageUrl=imageUrl;
+        this.imageUrl = imageUrl;
 
     }
 
@@ -40,11 +40,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        if(viewType==MSG_TYPE_RIGHT) {
+        if (viewType == MSG_TYPE_RIGHT) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
 
             return new ViewHolder(view);
-        }else {
+        } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
 
             return new ViewHolder(view);
@@ -56,30 +56,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
-        MessageModels chat=mChat.get(position);
+        MessageModels chat = mChat.get(position);
         holder.show_message.setText(chat.getMessage());
 
-try {
-    Picasso.get()
-            .load(imageUrl)
-            .into(holder.profile_image);
-    if (position==mChat.size()-1)
-    {
-        if(chat.isIsseen())
-        {
-            holder.txt_seen.setText("Seen");
+        try {
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(holder.profile_image);
+            if (position == mChat.size() - 1) {
+                if (chat.isIsseen()) {
+                    holder.txt_seen.setText("Seen");
+                } else {
+                    holder.txt_seen.setText("Delivered");
+                }
+            } else {
+                holder.txt_seen.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else {
-            holder.txt_seen.setText("Delivered");
-        }
-    }
-    else {
-        holder.txt_seen.setVisibility(View.GONE);
-    }
-}catch (Exception e)
-{
-    e.printStackTrace();
-}
     }
 
 
@@ -88,7 +83,7 @@ try {
         return mChat.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView show_message;
         public TextView txt_seen;
         public ImageView profile_image;
@@ -96,23 +91,20 @@ try {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            show_message=itemView.findViewById(R.id.show_message);
-            txt_seen=itemView.findViewById(R.id.txt_seen);
-            profile_image=itemView.findViewById(R.id.profile_image);
-
+            show_message = itemView.findViewById(R.id.show_message);
+            txt_seen = itemView.findViewById(R.id.txt_seen);
+            profile_image = itemView.findViewById(R.id.profile_image);
 
 
         }
     }
+
     @Override
-    public int getItemViewType(int position)
-    {
-        fuser= FirebaseAuth.getInstance().getCurrentUser();
-        if(mChat.get(position).getSender().equals(fuser.getUid()))
-        {
+    public int getItemViewType(int position) {
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mChat.get(position).getSender().equals(fuser.getUid())) {
             return MSG_TYPE_RIGHT;
-        }
-        else {
+        } else {
             return MSG_TYPE_LEFT;
         }
 

@@ -47,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessageActivity extends AppCompatActivity {
 
     private CircleImageView profile_image;
-    private TextView username,status;
+    private TextView username, status;
     private FirebaseUser fuser;
     private DatabaseReference reference;
     private Intent intent;
@@ -58,11 +58,12 @@ public class MessageActivity extends AppCompatActivity {
     private List<MessageModels> mChat;
     private RecyclerView recyclerView;
     private ValueEventListener seenListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,39 +73,37 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
-        status =(TextView) findViewById(R.id.status);
-        call =(ImageButton) findViewById(R.id.call);
+        status = (TextView) findViewById(R.id.status);
+        call = (ImageButton) findViewById(R.id.call);
 
 
-        recyclerView= findViewById(R.id.recycler_view) ;
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        profile_image =(CircleImageView)findViewById(R.id.profile_image);
-        username=(TextView)findViewById(R.id.username);
-        text_send =(EditText) findViewById(R.id.text_send);
-        btn_send =(ImageButton) findViewById(R.id.btn_send);
-        intent=getIntent();
-        final String userid =intent.getStringExtra("userAuthId");
-        String ai=userid;
-        fuser= FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference("tolet_users").child(userid);
+        profile_image = (CircleImageView) findViewById(R.id.profile_image);
+        username = (TextView) findViewById(R.id.username);
+        text_send = (EditText) findViewById(R.id.text_send);
+        btn_send = (ImageButton) findViewById(R.id.btn_send);
+        intent = getIntent();
+        final String userid = intent.getStringExtra("userAuthId");
+        String ai = userid;
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(userid);
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message= text_send.getText().toString();
-                if(!message.equals("")){
-                    sendMessage (fuser.getUid(),userid ,message);
+                String message = text_send.getText().toString();
+                if (!message.equals("")) {
+                    sendMessage(fuser.getUid(), userid, message);
                     text_send.setText("");
 
-                }
-
-                else {
-                    Toast.makeText(MessageActivity.this,"You Can't Send Message!",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MessageActivity.this, "You Can't Send Message!", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -113,42 +112,34 @@ public class MessageActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0)
-                {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
 
-                    Map<String,Object> map =(Map<String, Object>)dataSnapshot.getValue();
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
 
 
-                    if(map.get("userFullName")!=null)
-                    {
+                    if (map.get("userFullName") != null) {
                         username.setText(map.get("userFullName").toString());
                     }
-                    if(map.get("status")!=null)
-                    {
+                    if (map.get("status") != null) {
                         status.setText(map.get("status").toString());
 
                     }
-                    if(map.get("userPhoneNumber")!=null)
-                    {
+                    if (map.get("userPhoneNumber") != null) {
                         call.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 final int REQUEST_PHONE_CALL = 1;
                                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     if (ContextCompat.checkSelfPermission(MessageActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                                        ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                                    }
-                                    else
-                                    {
+                                        ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                                    } else {
                                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                                        callIntent.setData(Uri.parse("tel:"+map.get("userPhoneNumber")));
+                                        callIntent.setData(Uri.parse("tel:" + map.get("userPhoneNumber")));
                                         startActivity(callIntent);
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                                    callIntent.setData(Uri.parse("tel:"+map.get("userPhoneNumber")));
+                                    callIntent.setData(Uri.parse("tel:" + map.get("userPhoneNumber")));
                                     startActivity(callIntent);
                                 }
 
@@ -163,7 +154,7 @@ public class MessageActivity extends AppCompatActivity {
                             .into(profile_image);
 
 
-                    readMessage(fuser.getUid(),userid,map.get("userImageUrl").toString());
+                    readMessage(fuser.getUid(), userid, map.get("userImageUrl").toString());
 
                 }
             }
@@ -178,20 +169,18 @@ public class MessageActivity extends AppCompatActivity {
         seenMessage(userid);
 
     }
-    private void  seenMessage(final String userid)
-    {
-        reference=FirebaseDatabase.getInstance().getReference("Chats");
+
+    private void seenMessage(final String userid) {
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot:dataSnapshot.getChildren())
-                {
-                    MessageModels chat =snapshot.getValue(MessageModels.class);
-                    if(chat.getReciever().equals(fuser.getUid()) && chat.getSender().equals(userid))
-                    {
-                        HashMap<String,Object> hashMap=new HashMap<>();
-                        hashMap.put("isseen",true);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MessageModels chat = snapshot.getValue(MessageModels.class);
+                    if (chat.getReciever().equals(fuser.getUid()) && chat.getSender().equals(userid)) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen", true);
                         snapshot.getRef().updateChildren(hashMap);
                     }
                 }
@@ -203,14 +192,14 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
-    public void sendMessage (String sender,String reciever ,String message)
-    {
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("sender",sender);
-        hashMap.put("reciever",reciever);
-        hashMap.put("message",message);
-        hashMap.put("isseen",false);
+
+    public void sendMessage(String sender, String reciever, String message) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender", sender);
+        hashMap.put("reciever", reciever);
+        hashMap.put("message", message);
+        hashMap.put("isseen", false);
         reference.child("Chats").push().setValue(hashMap);
 
         final String userid = intent.getStringExtra("userAuthId");
@@ -245,36 +234,32 @@ public class MessageActivity extends AppCompatActivity {
 //        });
 
 
-
-
     }
-    public void  readMessage (final String myid, final String userId, final String imageurl)
-    {
-        mChat =new ArrayList<>();
-        reference=FirebaseDatabase.getInstance().getReference("Chats");
+
+    public void readMessage(final String myid, final String userId, final String imageurl) {
+        mChat = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mChat.clear();
-                for (DataSnapshot snapshot:dataSnapshot.getChildren())
-                {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
 
                     try {
-                        MessageModels chat= snapshot.getValue(MessageModels.class);
-                        if(chat.getReciever().equals(myid) && chat.getSender().equals(userId) ||
-                                chat.getReciever().equals(userId) && chat.getSender().equals(myid) ) {
+                        MessageModels chat = snapshot.getValue(MessageModels.class);
+                        if (chat.getReciever().equals(myid) && chat.getSender().equals(userId) ||
+                                chat.getReciever().equals(userId) && chat.getSender().equals(myid)) {
                             mChat.add(chat);
 
                         }
 
 
-                        messageAdapter = new MessageAdapter(MessageActivity.this,mChat,imageurl);
+                        messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageurl);
                         recyclerView.setAdapter(messageAdapter);
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(MessageActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -287,11 +272,11 @@ public class MessageActivity extends AppCompatActivity {
         });
 
     }
-    private void status (String status)
-    {
-        reference=FirebaseDatabase.getInstance().getReference("tolet_users").child(fuser.getUid());
-        HashMap<String,Object>hashMap=new HashMap<>();
-        hashMap.put("status",status);
+
+    private void status(String status) {
+        reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(fuser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
         reference.updateChildren(hashMap);
     }
 
@@ -302,13 +287,12 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
         DateFormat df = new SimpleDateFormat("h:mm a, EEE, d MMM yyyy");
         String date = df.format(Calendar.getInstance().getTime());
-        status("Last Seen "+date);
+        status("Last Seen " + date);
     }
 
 }

@@ -263,7 +263,7 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:gravity="right"
-                android:layout_marginRight="1dp"
+                android:layout_marginRight="@dimen/inner_pad"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="50">
@@ -271,13 +271,14 @@
                     android:id="@+id/post_details_call"
                     android:text="@string/details_call"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/normal_text"
                     android:background="@drawable/shape_rectangle_corner_round_black"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp" />
+                    android:layout_height="48sp" />
             </LinearLayout>
             <LinearLayout
                 android:gravity="left"
-                android:layout_marginLeft="1dp"
+                android:layout_marginLeft="@dimen/inner_pad"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="50">
@@ -285,9 +286,10 @@
                     android:id="@+id/post_details_email"
                     android:text="@string/details_e_mail"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/normal_text"
                     android:background="@drawable/shape_rectangle_corner_round_black"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp" />
+                    android:layout_height="48sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -296,10 +298,11 @@
             android:id="@+id/post_details_interested"
             android:text="@string/post_details_interest"
             android:textColor="@color/white"
+            android:textSize="@dimen/normal_text"
             android:background="@drawable/shape_rectangle_corner_round_black"
             android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:layout_height="45dp" />
+            android:layout_height="48sp" />
 
         <!-- Reviews|Feedback -->
         <TextView
@@ -329,17 +332,18 @@
                 android:background="@drawable/shape_edit_text_border"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"/>
+
             <Button
                 android:id="@+id/post_feedback_btn"
-                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
-                android:text="@string/details_feedback"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/selector_button"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="@color/gray"
-                android:background="@drawable/selector_button"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp" />
+                android:text="@string/details_feedback"
+                android:textColor="@color/gray" />
         </RelativeLayout>
 
 

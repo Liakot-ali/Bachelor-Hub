@@ -6,4 +6,8 @@
         <item name="itemIconTint">@color/navigation_bar_txt_color</item>
         <item name="itemTextColor">@color/navigation_bar_txt_color</item>
     </style>
+
+    <style name="SpinnerTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
