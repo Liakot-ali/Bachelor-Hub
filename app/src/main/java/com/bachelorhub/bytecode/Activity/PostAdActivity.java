@@ -1,7 +1,6 @@
 package com.bachelorhub.bytecode.Activity;
 
 
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -54,14 +54,11 @@ public class PostAdActivity extends AppCompatActivity {
 
     private static final String TAG = "PostAdActivity";
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 515;
-
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private final ArrayList<String> postImageUri = new ArrayList<>();
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
-
-    private static final int RESULT_LOAD_IMAGE = 1;
     private int imageCounter = 0;
-    private final ArrayList<String> postImageUri = new ArrayList<>();
-
     private Button addPostImageBtn;
     private EditText name, email, mobile, price, size, addr, desc;
     private CheckBox isMobile;
@@ -89,7 +86,7 @@ public class PostAdActivity extends AppCompatActivity {
         mLatLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
 
         myAddress = Utility.getAddress(this, mLatLng);
-       // Utility.alertDialog(PostAdActivity.this, myAddress);
+        // Utility.alertDialog(PostAdActivity.this, myAddress);
 
         //====================================================| findViewById Initialing
         this.name = (EditText) findViewById(R.id.owner_name);
@@ -250,7 +247,6 @@ public class PostAdActivity extends AppCompatActivity {
     }
 
 
-
     //===============================================| Insert into Firebase Database
     private void storeToDatabase(PostAd post) {
 
@@ -270,7 +266,7 @@ public class PostAdActivity extends AppCompatActivity {
 
     //===============================================| Store Image into Firebase Storage
     private void storeImage(Uri uri, String mAuthId) {
-        mPostAdViewModel.storeImage( uri, ConstantKey.USER_POST_NODE, mAuthId+"_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) ).observe(this, new Observer<String>() {
+        mPostAdViewModel.storeImage(uri, ConstantKey.USER_POST_NODE, mAuthId + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date())).observe(this, new Observer<String>() {
             @Override
             public void onChanged(String result) {
                 if (result != null) {
