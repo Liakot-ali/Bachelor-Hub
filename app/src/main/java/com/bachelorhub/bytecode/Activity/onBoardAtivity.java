@@ -21,11 +21,44 @@ import com.bachelorhub.bytecode.Session.SharedPrefManager;
 
 public class onBoardAtivity extends AppCompatActivity {
 
+    boolean doubleBackToExitPressedOnce = false;
     private ViewPager viewPager;
     private Button skip, next;
     private ViewPagerAdapter adapter;
     private LinearLayout dotLayout;
     private TextView[] dots;
+    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            addDots(position);
+            if (position == 0) {
+                skip.setVisibility(View.VISIBLE);
+                skip.setEnabled(true);
+                next.setText("Next");
+
+            } else if (position == 1) {
+                skip.setVisibility(View.GONE);
+                skip.setEnabled(false);
+                next.setText("Next");
+            } else {
+                skip.setVisibility(View.GONE);
+                skip.setEnabled(false);
+                next.setText("Finish");
+
+            }
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,42 +111,6 @@ public class onBoardAtivity extends AppCompatActivity {
             dots[position].setTextColor(getResources().getColor(R.color.black));
         }
     }
-
-    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            addDots(position);
-            if (position == 0) {
-                skip.setVisibility(View.VISIBLE);
-                skip.setEnabled(true);
-                next.setText("Next");
-
-            } else if (position == 1) {
-                skip.setVisibility(View.GONE);
-                skip.setEnabled(false);
-                next.setText("Next");
-            } else {
-                skip.setVisibility(View.GONE);
-                skip.setEnabled(false);
-                next.setText("Finish");
-
-            }
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
-
-    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {

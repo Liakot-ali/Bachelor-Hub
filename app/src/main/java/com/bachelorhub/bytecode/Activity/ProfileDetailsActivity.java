@@ -25,14 +25,11 @@ import com.bachelorhub.bytecode.utils.Utility;
 import com.squareup.picasso.Picasso;
 
 public class ProfileDetailsActivity extends AppCompatActivity {
-    private String[] PERMISSIONS = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA };
+    private String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA};
     private PermissionUtility mPermissions;
 
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
-
-
-
     private String mImageUrl = null;
     private String mPhone = null;
     private String mAuthId = null;
@@ -80,7 +77,6 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         userAddress = (EditText) findViewById(R.id.userAddress);
 
 
-
         //===============================================| Getting SharedPreferences
         mAuthId = FirebaseAuth.getInstance().getCurrentUser().getUid(); //Get UUID from FirebaseAuth
         if (SharedPrefManager.getInstance(this).getUserAuthId() != null) {
@@ -96,16 +92,17 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             getUserData(mAuthId);
         }
     }
+
     //===============================================| Fetch/Get from Firebase Database
     private void getUserData(String mAuthId) {
-        mProgress = Utility.showProgressDialog(ProfileDetailsActivity.this, getResources().getString( R.string.progress), false);
+        mProgress = Utility.showProgressDialog(ProfileDetailsActivity.this, getResources().getString(R.string.progress), false);
 
         mUserViewModel.getUser(mAuthId).observe(ProfileDetailsActivity.this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
                     mImageUrl = user.getUserImageUrl();
-                    if(!mImageUrl.equals("")) {
+                    if (!mImageUrl.equals("")) {
                         Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
                     }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
