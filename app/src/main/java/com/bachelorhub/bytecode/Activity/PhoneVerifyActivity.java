@@ -51,6 +51,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             phoneNumber = getIntent().getStringExtra(ConstantKey.USER_PHONE_KEY);
-            phnNumber.setText(phoneNumber+"\n Change Number");
+            phnNumber.setText(phoneNumber + "\n Change Number");
             phnNumber.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,7 +92,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (phoneNumber != null) {
-            mProgress = Utility.showProgressDialog(PhoneVerifyActivity.this, getResources().getString( R.string.progress), true);
+            mProgress = Utility.showProgressDialog(PhoneVerifyActivity.this, getResources().getString(R.string.progress), true);
             startPhoneNumberVerification(phoneNumber); //Set verified code to firebase phone authentication
         }
     }
@@ -109,27 +110,6 @@ public class PhoneVerifyActivity extends AppCompatActivity {
             unregisterReceiver(mNetworkReceiver);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    //===============================================| Click Events
-    private class ActionHandler implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            if (view.getId() == R.id.verify_button) {
-                String code = editText.getText().toString().trim();
-                if (TextUtils.isEmpty(code) || code.length() < 6) {
-                    editText.setError("Enter code...");
-                    editText.requestFocus();
-                    return;
-                }
-                verifyPhoneNumberWithCode(code);
-            }
-            if (view.getId() == R.id.resend_button) {
-                if (phoneNumber != null && mResendToken != null) {
-                    resendVerificationCode(phoneNumber, mResendToken);
-                }
-            }
         }
     }
 
@@ -151,7 +131,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                 Utility.dismissProgressDialog(mProgress);
                 Log.e(TAG, e.getMessage());
                 //showLoginActivity();
-                Utility.alertDialog(PhoneVerifyActivity.this,e.getMessage());
+                Utility.alertDialog(PhoneVerifyActivity.this, e.getMessage());
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     Log.e(TAG, e.getMessage());
@@ -174,7 +154,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                 super.onCodeAutoRetrievalTimeOut(s);
                 Utility.dismissProgressDialog(mProgress);
                 //showLoginActivity();
-                Utility.alertDialog(PhoneVerifyActivity.this,"Your Phone Number Verification is failed.Retry again!");
+                Utility.alertDialog(PhoneVerifyActivity.this, "Your Phone Number Verification is failed.Retry again!");
             }
         };
     }
@@ -188,7 +168,6 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                 this,       // Activity (for callback binding)
                 mCallBack);        // OnVerificationStateChangedCallbacks
         Utility.dismissProgressDialog(mProgress);
-
 
 
     }
@@ -233,5 +212,26 @@ public class PhoneVerifyActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    //===============================================| Click Events
+    private class ActionHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.verify_button) {
+                String code = editText.getText().toString().trim();
+                if (TextUtils.isEmpty(code) || code.length() < 6) {
+                    editText.setError("Enter code...");
+                    editText.requestFocus();
+                    return;
+                }
+                verifyPhoneNumberWithCode(code);
+            }
+            if (view.getId() == R.id.resend_button) {
+                if (phoneNumber != null && mResendToken != null) {
+                    resendVerificationCode(phoneNumber, mResendToken);
+                }
+            }
+        }
     }
 }
