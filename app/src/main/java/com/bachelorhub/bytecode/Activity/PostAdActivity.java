@@ -86,7 +86,9 @@ public class PostAdActivity extends AppCompatActivity {
         mLatLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
 
         myAddress = Utility.getAddress(this, mLatLng);
-        // Utility.alertDialog(PostAdActivity.this, myAddress);
+//        Utility.alertDialog(PostAdActivity.this, myAddress);
+        Log.e("UserInfo", "onPostAdActivity: Address " + myAddress + "LatLang " + mLatLng + "Name " + mUser.getUserFullName() + "Email " + mUser.getUserEmail() + "Phone " + mUser.getUserPhoneNumber());
+
 
         //====================================================| findViewById Initialing
         this.name = (EditText) findViewById(R.id.owner_name);
@@ -107,7 +109,8 @@ public class PostAdActivity extends AppCompatActivity {
         this.addr = (EditText) findViewById(R.id.address);
         this.desc = (EditText) findViewById(R.id.description);
         this.imgGroup = (TableRow) findViewById(R.id.image_group);
-        addr.setText(myAddress);
+
+        this.addr.setText(myAddress);
         ((Button) findViewById(R.id.add_post_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -79,6 +79,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PostAd model = arrayList.get(position);
 
+
+        Log.e("UserInfo", "postAdapter: Address " + model.getAddress() + " " + model.getBedrooms() + " Beds, " + model.getBathrooms() + " Baths, " + model.getSquareFootage() + " (sq.ft)");
         String[] arr = model.getImageUrl().replaceAll("[\\[\\]]", "").split(",");
         //Picasso.get().load(arr[0]).into((holder.imageUrl));
         //Glide.with(mContext).asBitmap().load(arr[0]).into(holder.imageUrl);
