@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,13 @@ import com.bachelorhub.bytecode.MainActivity;
 import com.bachelorhub.bytecode.Models.User;
 import com.bachelorhub.bytecode.R;
 import com.bachelorhub.bytecode.Session.SharedPrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 
 public class SigninFragment extends Fragment {
@@ -133,17 +142,30 @@ public class SigninFragment extends Fragment {
                 passInput.setError(task.getException().getMessage());
                 dialog.dismiss();
             } else {
-                dialog.dismiss();
-                User obj = new User(mAuth.getUid(), "", "", "", emailInput.getText().toString(), "", "", "", "Owner", "", "","","","");
-                SharedPrefManager.getInstance(getActivity()).saveUser(obj);
-                SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("tolet_users").child(Objects.requireNonNull(mAuth.getUid()));
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dialog.dismiss();
+                        User obj = snapshot.getValue(User.class);
+//                        User obj = new User(mAuth.getUid(), "", "", "", emailInput.getText().toString(), "", "", "", "Owner", "", "","","","");
+                        SharedPrefManager.getInstance(getActivity()).saveUser(obj);
+                        SharedPrefManager.getInstance(getContext()).setUserIsLoggedIn(true);
 
-                if (emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
-                    startActivity(new Intent(getContext(), AdminHomeActivity.class));
-                } else {
-                    startActivity(new Intent(getContext(), MainActivity.class));
-                }
-                getActivity().finish();
+                        if (emailInput.getText().toString().equals("bachelorhub.info@gmail.com")) {
+                            startActivity(new Intent(getContext(), AdminHomeActivity.class));
+                        } else {
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                        }
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("SignInFragment ", "onCancelled: " + error.getMessage());
+
+                    }
+                });
             }
         });
 

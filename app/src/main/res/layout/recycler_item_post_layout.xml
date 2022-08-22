@@ -53,12 +53,12 @@
 
             <!-- Address -->
             <TextView
-
                 android:id="@+id/post_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="CB 13/2, Kachukhet, Dhaka Cantonment, Dhaka-1206"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
 
             <!-- Bed, Bath, Size -->
             <TextView

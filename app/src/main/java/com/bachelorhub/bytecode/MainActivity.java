@@ -139,11 +139,14 @@ public class MainActivity extends AppCompatActivity {
 
         mNetworkReceiver = new MyNetworkReceiver(this);
         mLocationReceiver = new MyLocationReceiver(this);
-//        mUser = SharedPrefManager.getInstance(MainActivity.this).getUser();
+        mUser = SharedPrefManager.getInstance(MainActivity.this).getUser();
 //
-//        //-----------------------------------------------| GPS/Location
-//        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        checkGpsEnabled(manager);
+        //-----------------------------------------------| GPS/Location
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        checkGpsEnabled(manager);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
 
 //        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 //            @Override
@@ -221,8 +224,7 @@ public class MainActivity extends AppCompatActivity {
 //        verify = headView.findViewById(R.id.userVerify);
 //        status = headView.findViewById(R.id.status);
 
-//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//        getLastLocation();
+
     }
 
     private void InitializeAll() {
