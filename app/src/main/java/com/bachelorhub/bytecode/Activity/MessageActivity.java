@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -145,14 +146,21 @@ public class MessageActivity extends AppCompatActivity {
                         });
 
                     }
-                    Picasso.get()
-                            .load(map.get("userImageUrl").toString())
-                            .placeholder(R.mipmap.ic_launcher)
-                            .error(R.mipmap.ic_launcher)
-                            .into(profile_image);
-
-
+                    if(!Objects.equals(map.get("userImageUrl"), "")) {
+                        Picasso.get()
+                                .load(map.get("userImageUrl").toString())
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .into(profile_image);
+                    }else{
+                        Picasso.get()
+                                .load(R.mipmap.ic_launcher)
+                                .placeholder(R.mipmap.ic_launcher)
+                                .error(R.mipmap.ic_launcher)
+                                .into(profile_image);
+                    }
                     readMessage(fuser.getUid(), userid, map.get("userImageUrl").toString());
+
 
                 }
             }

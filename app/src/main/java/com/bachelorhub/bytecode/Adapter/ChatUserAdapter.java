@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -91,9 +93,18 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
                         if (snapshot.child("status").getValue() != null) {
                             status.setText(snapshot.child("status").getValue().toString());
                         }
-                        if (snapshot.child("userImageUrl").getValue() != null) {
+                        String imageUrl = snapshot.child("userImageUrl").getValue().toString();
+                        if (imageUrl.isEmpty() || imageUrl.compareTo("") == 0) {
                             Picasso.get()
-                                    .load(snapshot.child("userImageUrl").getValue().toString())
+                                    .load(R.mipmap.ic_launcher)
+                                    .placeholder(R.mipmap.ic_launcher)
+                                    .error(R.mipmap.ic_launcher)
+                                    .into(image);
+                        }else{
+                            Log.e("ChatUserAdapter", "userImageUrl:" + "." + snapshot.child("userImageUrl").getValue() + ".");
+                            Picasso.get()
+//                                    .load(snapshot.child("userImageUrl").getValue().toString())
+                                    .load(imageUrl)
                                     .placeholder(R.mipmap.ic_launcher)
                                     .error(R.mipmap.ic_launcher)
                                     .into(image);
