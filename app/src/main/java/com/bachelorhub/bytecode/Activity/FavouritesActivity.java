@@ -38,6 +38,7 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
+        getSupportActionBar().hide();
         emptyText = findViewById(R.id.favouriteEmptyText);
         emptyText.setVisibility(View.GONE);
 

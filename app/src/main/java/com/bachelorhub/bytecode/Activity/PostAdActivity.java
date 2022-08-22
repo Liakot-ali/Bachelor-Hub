@@ -77,6 +77,7 @@ public class PostAdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_ad);
 
+        getSupportActionBar().hide();
         mNetworkReceiver = new MyNetworkReceiver(this);
 
         //===============================================| Receive the data and observe the data from view model

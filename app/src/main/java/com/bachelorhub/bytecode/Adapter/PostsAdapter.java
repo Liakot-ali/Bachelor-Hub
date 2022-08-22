@@ -151,24 +151,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         return arrayList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        RelativeLayout layout;
-        CircleImageView imageUrl;
-        TextView rentPrice, address, description;
-        ImageButton favorite;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            layout = (RelativeLayout) itemView.findViewById(R.id.post_item_id);
-            imageUrl = (CircleImageView) itemView.findViewById(R.id.post_image);
-            rentPrice = (TextView) itemView.findViewById(R.id.post_rent_price);
-            address = (TextView) itemView.findViewById(R.id.post_address);
-            description = (TextView) itemView.findViewById(R.id.post_bed_bath_size);
-            favorite = (ImageButton) itemView.findViewById(R.id.post_favorite);
-        }
-    }
-
     //====================================================| Show Details
     private void showListItem(PostAd model, String[] arr) {
         Dialog dialog = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen); //new Dialog(PostAdActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
@@ -200,15 +182,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString( R.string.progress), false);
+                mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString(R.string.progress), false);
                 imageViewerDialog(arr);
             }
         });
 
         ((TextView) dialog.findViewById(R.id.post_details_location)).setText(model.getLocation());
-        ((TextView) dialog.findViewById(R.id.post_details_price)).setText("TK "+model.getRentPrice()+" /monthly");
-        ((TextView) dialog.findViewById(R.id.post_details_owner)).setText("Posted by "+model.getOwnerName());
-        ((TextView) dialog.findViewById(R.id.post_details_date)).setText("Posted at "+Utility.getDateFromTimestamp(model.getCreatedAt()));
+        ((TextView) dialog.findViewById(R.id.post_details_price)).setText("TK " + model.getRentPrice() + " /monthly");
+        ((TextView) dialog.findViewById(R.id.post_details_owner)).setText("Posted by " + model.getOwnerName());
+        ((TextView) dialog.findViewById(R.id.post_details_date)).setText("Posted at " + Utility.getDateFromTimestamp(model.getCreatedAt()));
         ((TextView) dialog.findViewById(R.id.post_details_property)).setText(model.getPropertyType());
         ((TextView) dialog.findViewById(R.id.post_details_renter)).setText(model.getRenterType());
         ((TextView) dialog.findViewById(R.id.post_details_beds)).setText(model.getBedrooms());
@@ -221,8 +203,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         ((ImageButton) dialog.findViewById(R.id.post_favorite)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getPropertyId());
-               Toast.makeText(mContext, "You Saved "+model.getOwnerName()+"'s Property on Favorite", Toast.LENGTH_SHORT).show();
+                SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getPropertyId());
+                Toast.makeText(mContext, "You Saved " + model.getOwnerName() + "'s Property on Favorite", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -273,7 +255,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             @Override
             public void onClick(View v) {
 
-               intentEmail(model.getOwnerEmail());
+                intentEmail(model.getOwnerEmail());
             }
         });
 
@@ -298,10 +280,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             public void onCallback(ArrayList<Feedback> arrayList) {
                 if (arrayList != null) {
                     //list.addAll(arrayList);
-                    for(Feedback obj : arrayList){
-                        list.add(obj.getUserFullName()+" : "+obj.getMessage() +"\nPosted at "+Utility.getDateFromTimestamp(obj.getCreatedAt()));
+                    for (Feedback obj : arrayList) {
+                        list.add(obj.getUserFullName() + " : " + obj.getMessage() + "\nPosted at " + Utility.getDateFromTimestamp(obj.getCreatedAt()));
                     }
-                    Log.d(TAG, ""+new Gson().toJson(list));
+                    Log.d(TAG, "" + new Gson().toJson(list));
                     listView.setVisibility(View.VISIBLE);
                     listView.setAdapter(new ArrayAdapter<String>(mContext, R.layout.simple_list_item_custom, list));
                 }
@@ -358,7 +340,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         Intent intent = new Intent(Intent.ACTION_SEND);
         try {
             intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
             intent.putExtra(Intent.EXTRA_SUBJECT, "For Rent");
             mContext.startActivity(Intent.createChooser(intent, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -370,13 +352,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
     private void sendNotificationToUser(String mOwnerAuthId, String token) {
         RootModel rootModel = new RootModel(token, new NotificationModel("For Rent", "I am interested in this rental and would like to schedule a viewing"), new DataModel("Ali", "30"));
 
-        ApiInterface apiService =  ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendNotification(rootModel);
 
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.d(TAG,"Successfully notification send by using retrofit.");
+                Log.d(TAG, "Successfully notification send by using retrofit.");
                 storeNotification(mOwnerAuthId, mUser);
             }
 
@@ -424,5 +406,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
                 }
             }
         }, model);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout layout;
+        CircleImageView imageUrl;
+        TextView rentPrice, address, description;
+        ImageButton favorite;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            layout = (LinearLayout) itemView.findViewById(R.id.post_item_id);
+            imageUrl = (CircleImageView) itemView.findViewById(R.id.post_image);
+            rentPrice = (TextView) itemView.findViewById(R.id.post_rent_price);
+            address = (TextView) itemView.findViewById(R.id.post_address);
+            description = (TextView) itemView.findViewById(R.id.post_bed_bath_size);
+            favorite = (ImageButton) itemView.findViewById(R.id.post_favorite);
+        }
     }
 }

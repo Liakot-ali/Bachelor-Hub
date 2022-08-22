@@ -4,20 +4,25 @@
     android:layout_marginBottom="5dp"
     android:layout_width="match_parent"
     app:cardBackgroundColor="@color/white"
+    android:layout_margin="@dimen/lay_pad"
+    app:cardElevation="@dimen/inner_pad"
+    app:cardCornerRadius="@dimen/inner_pad"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/post_item_id"
-        android:padding="12dp"
+        android:padding="@dimen/inner_pad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <!-- Image -->
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/post_image"
             android:layout_width="@dimen/profile_picture"
             android:layout_height="@dimen/profile_picture"
-            android:layout_gravity="left|center_horizontal"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:layout_gravity="center"
             android:contentDescription="@string/nav_header_desc"
             android:src="@mipmap/ic_launcher"
             app:civ_border_color="@color/gray"
@@ -40,47 +45,37 @@
             android:orientation="vertical">
 
             <!-- Rent Price -->
-            <TextView
-                android:id="@+id/post_rent_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:background="@drawable/shape_round_right"
-                android:paddingRight="25dp"
-                android:text="Tk 15,000 /month"
-                android:textColor="@color/white"
-                android:textSize="15dp" />
-
-            <!-- Address -->
-            <TextView
-                android:id="@+id/post_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="CB 13/2, Kachukhet, Dhaka Cantonment, Dhaka-1206"
-                android:textSize="14dp"
-                android:textColor="@color/black"/>
-
-            <!-- Bed, Bath, Size -->
-            <TextView
-                android:id="@+id/post_bed_bath_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4 Beds, 3 Baths, 1200 (sq.ft)"
-                android:textColor="@color/gray"
-                android:textSize="16dp" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/post_favorite"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/ic_favorite_black_24dp" />
+                <TextView
+                    android:id="@+id/post_rent_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@drawable/shape_round_right"
+                    android:paddingRight="25dp"
+                    android:text="Tk 15,000 /month"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/normal_text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/post_favorite"
+                        android:layout_width="@dimen/medium_icon"
+                        android:layout_height="@dimen/medium_icon"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_favorite_black_24dp"
+                        android:background="@drawable/button_ripple_effect" />
+                </LinearLayout>
+
                 <!--<Button
                     android:layout_marginRight="@dimen/space_10dp"
                     android:id="@+id/post_share"
@@ -95,9 +90,32 @@
                     android:layout_width="34dp"
                     android:layout_height="35dp" />-->
             </LinearLayout>
+
+            <!-- Address -->
+            <TextView
+                android:id="@+id/post_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CB 13/2, Kachukhet, Dhaka Cantonment, Dhaka-1206"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/small_text"/>
+
+            <!-- Bed, Bath, Size -->
+            <TextView
+                android:id="@+id/post_bed_bath_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4 Beds, 3 Baths, 1200 (sq.ft)"
+                android:textColor="@color/gray"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/small_text" />
+
         </LinearLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

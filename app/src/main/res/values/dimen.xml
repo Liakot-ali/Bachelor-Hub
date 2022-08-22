@@ -2,6 +2,7 @@
 <resources>
     <dimen name="headline_text">23sp</dimen>
     <dimen name="normal_text">17sp</dimen>
+    <dimen name="small_text">16sp</dimen>
     <dimen name="inner_pad">5sp</dimen>
     <dimen name="lay_pad">10sp</dimen>
     <dimen name="item_picture">60sp</dimen>

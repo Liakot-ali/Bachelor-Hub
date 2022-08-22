@@ -173,7 +173,7 @@ public class Utility {
 
     public static String getDateFromTimestamp(String input) {
         java.sql.Timestamp ts = java.sql.Timestamp.valueOf(input);
-        return String.valueOf(new java.text.SimpleDateFormat("dd-MM-yyyy").format(ts)); //java.text.DateFormat.getDateTimeInstance().format(ts.getTime())
+        return new java.text.SimpleDateFormat("dd-MM-yyyy").format(ts); //java.text.DateFormat.getDateTimeInstance().format(ts.getTime())
     }
 
     //====================================================| Round a double to 2 decimal
