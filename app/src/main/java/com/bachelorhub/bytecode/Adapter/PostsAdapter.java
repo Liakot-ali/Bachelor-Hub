@@ -115,6 +115,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
                 Toast.makeText(mContext, "You Saved " + model.getOwnerName() + "'s Property on Favorite", Toast.LENGTH_SHORT).show();
             }
         });
+        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString(R.string.progress), false);
+                showListItem(model, arr);
+                Toast.makeText(mContext, "View Details Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Confirm Button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         String mAuthId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         if (model.getOwnerAuthId().equals(mAuthId)) {
             holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -411,18 +427,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout layout;
-        CircleImageView imageUrl;
-        TextView rentPrice, address, description;
+        ImageView imageUrl;
+        TextView rentPrice, address, description, title, confirm, viewDetails;
         ImageButton favorite;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = (LinearLayout) itemView.findViewById(R.id.post_item_id);
-            imageUrl = (CircleImageView) itemView.findViewById(R.id.post_image);
+            imageUrl = (ImageView) itemView.findViewById(R.id.post_image);
             rentPrice = (TextView) itemView.findViewById(R.id.post_rent_price);
             address = (TextView) itemView.findViewById(R.id.post_address);
             description = (TextView) itemView.findViewById(R.id.post_bed_bath_size);
             favorite = (ImageButton) itemView.findViewById(R.id.post_favorite);
+
+            title = (TextView) itemView.findViewById(R.id.post_rent_title);
+            confirm = (TextView) itemView.findViewById(R.id.post_confirm);
+            viewDetails = (TextView) itemView.findViewById(R.id.post_view_details);
         }
     }
 }
