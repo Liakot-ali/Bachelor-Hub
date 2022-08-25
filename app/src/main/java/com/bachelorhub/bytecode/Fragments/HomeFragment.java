@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.bachelorhub.bytecode.Activity.NotificationsActivity;
@@ -38,6 +40,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PostsAdapter mAdapter;
     private ImageView notification;
+    SwitchCompat maleFemaleSwitch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +53,17 @@ public class HomeFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         notification = (ImageView) view.findViewById(R.id.homeNotification);
+        maleFemaleSwitch = view.findViewById(R.id.homeSwitch);
+        maleFemaleSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(maleFemaleSwitch.isChecked()){
+                    Toast.makeText(getContext(), "Female selected", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), "Male Selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         notification.setOnClickListener(new View.OnClickListener() {
             @Override

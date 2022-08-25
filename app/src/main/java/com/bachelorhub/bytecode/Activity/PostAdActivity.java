@@ -1,6 +1,7 @@
 package com.bachelorhub.bytecode.Activity;
 
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +31,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.bachelorhub.bytecode.MainActivity;
@@ -44,13 +49,16 @@ import com.bachelorhub.bytecode.utils.Utility;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class PostAdActivity extends AppCompatActivity {
+public class PostAdActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private static final String TAG = "PostAdActivity";
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 515;
@@ -66,6 +74,11 @@ public class PostAdActivity extends AppCompatActivity {
     private LinearLayout checkboxGroup;
     private TableRow imgGroup;
 
+    TextView availableDate;
+    TextInputLayout titleLayout;
+    TextInputEditText title;
+    String availableDateSt, postTitleSt;
+
     private PostAdViewModel mPostAdViewModel;
     private User mUser;
     private LatLng mLatLng;
@@ -77,7 +90,7 @@ public class PostAdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_ad);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         mNetworkReceiver = new MyNetworkReceiver(this);
 
         //===============================================| Receive the data and observe the data from view model
@@ -110,8 +123,22 @@ public class PostAdActivity extends AppCompatActivity {
         this.addr = (EditText) findViewById(R.id.address);
         this.desc = (EditText) findViewById(R.id.description);
         this.imgGroup = (TableRow) findViewById(R.id.image_group);
+        title = findViewById(R.id.post_title);
+        titleLayout = findViewById(R.id.post_titleLayout);
+        availableDate = findViewById(R.id.available_date);
+
+        Calendar calendar = Calendar.getInstance();
+        availableDateSt = new SimpleDateFormat("d MMM yyyy").format(calendar.getTime());
+        availableDate.setText(availableDateSt);
 
         this.addr.setText(myAddress);
+        availableDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDatePicker();
+            }
+        });
+
         ((Button) findViewById(R.id.add_post_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +146,15 @@ public class PostAdActivity extends AppCompatActivity {
                 String ownerName = name.getText().toString().trim();
                 String ownerEmail = email.getText().toString().trim();
                 String ownerMobile = mobile.getText().toString().trim();
+                postTitleSt = title.getText().toString();
+                if(postTitleSt.equals("")){
+                    titleLayout.setHelperText("Write post title");
+                    titleLayout.requestFocus();
+                    return;
+                }else{
+                    titleLayout.setHelperText("");
+                    titleLayout.clearFocus();
+                }
                 String isOwnerMobileHide = "false";
                 if (isMobile.isChecked()) {
                     isOwnerMobileHide = "true";
@@ -183,6 +219,21 @@ public class PostAdActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void ShowDatePicker() {
+        DatePickerDialog dialog = new DatePickerDialog(this, this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+    }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
+        availableDateSt = new SimpleDateFormat("d MMM yyyy").format(calendar.getTime());
+        availableDate.setText(availableDateSt);
     }
 
 
@@ -287,22 +338,21 @@ public class PostAdActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+            } else {
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
             }
+            return;
 
             // other 'case' lines to check for other
             // permissions this app might request.
         }
     }
+
+
 }

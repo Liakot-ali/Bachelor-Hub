@@ -10,4 +10,15 @@
     <style name="SpinnerTheme" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="counterTextColor">@color/orange</item>
+        <item name="counterEnabled">true</item>
+        <item name="hintTextColor">@color/orange</item>
+        <item name="boxStrokeColor">@color/orange</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="helperTextTextColor">@color/red</item>
+
+    </style>
 </resources>
