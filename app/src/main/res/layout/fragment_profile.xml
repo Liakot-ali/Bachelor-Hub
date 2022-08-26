@@ -36,9 +36,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
+                        android:paddingRight="@dimen/lay_pad"
                         android:gravity="start"
                         android:maxLines="1"
                         android:text="User_Name"
+                        android:background="@drawable/button_ripple_effect"
                         android:textColor="@color/black"
                         android:textSize="@dimen/headline_text" />
 
@@ -74,6 +76,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/proDetailsPicture"
+                    android:background="@drawable/button_ripple_effect"
                     android:layout_width="@dimen/item_picture"
                     android:layout_height="@dimen/item_picture"
                     android:layout_gravity="center"

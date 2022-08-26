@@ -82,8 +82,6 @@
         <item>Apartments</item>
         <item>Houses</item>
         <item>Rooms</item>
-        <item>Garages</item>
-        <item>Commercial</item>
     </string-array>
     <string-array name="verify_type_array">
         <item>National ID</item>
@@ -94,34 +92,23 @@
 
     <string-array name="renter_type_array">
         <item>Renter Type</item>
-        <item>Family</item>
-        <item>Sublet</item>
-        <item>Boys</item>
-        <item>Girls</item>
-        <item>Office</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string-array name="bedrooms_array">
-        <item>Bedrooms</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
+        <item>Rooms</item>
+        <item>1 Seat</item>
+        <item>1 Room</item>
+        <item>2 Room</item>
+        <item>Full Flat</item>
     </string-array>
 
     <string-array name="bathrooms_array">
-        <item>Bathrooms</item>
+        <item>No of Bathrooms</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
 
     <string-array name="locations_array">

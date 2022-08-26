@@ -52,7 +52,7 @@
                     android:layout_width="@dimen/medium_icon"
                     android:layout_height="@dimen/medium_icon"
                     android:background="@drawable/button_ripple_effect"
-                    android:src="@drawable/ic_favorite_black_24dp" />
+                    android:src="@drawable/ic_favorite_border_black_24dp" />
             </LinearLayout>
 
         </LinearLayout>

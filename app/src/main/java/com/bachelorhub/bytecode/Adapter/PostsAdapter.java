@@ -79,6 +79,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PostAd model = arrayList.get(position);
 
+        String[] propertyType, renterType;
+        String title = "No Title", availDate = "No Date";
+        propertyType = model.getPropertyType().split("#");
+        int proLength = propertyType.length;
+        if(proLength>1) {
+            title = propertyType[1];
+        }
+        renterType = model.getRenterType().split("#");
+        int renLength = renterType.length;
+        if(renLength>1) {
+            availDate = renterType[1];
+        }
+//        if(title.equals("")){
+//            title = "No title";
+//        }
+//        if(availDate.equals("")){
+//            availDate = "No Date";
+//        }
 
         Log.e("UserInfo", "postAdapter: Address " + model.getAddress() + " " + model.getBedrooms() + " Beds, " + model.getBathrooms() + " Baths, " + model.getSquareFootage() + " (sq.ft)");
         String[] arr = model.getImageUrl().replaceAll("[\\[\\]]", "").split(",");
@@ -86,7 +104,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         //Glide.with(mContext).asBitmap().load(arr[0]).into(holder.imageUrl);
         holder.rentPrice.setText("TK " + model.getRentPrice() + " /monthly");
         holder.address.setText(model.getAddress());
-        holder.description.setText(model.getBedrooms() + " Beds, " + model.getBathrooms() + " Baths, " + model.getSquareFootage() + " (sq.ft)"); //4 Beds, 3 Baths, 1200 (sq.ft)
+        holder.description.setText(model.getBedrooms() + " Beds, " + model.getBathrooms() + " Baths"); //4 Beds, 3 Baths, 1200 (sq.ft)
+        holder.title.setText(title);
+        holder.availDate.setText(availDate);
+
 
         Picasso.get().load(arr[0]).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.mipmap.ic_launcher).into(holder.imageUrl, new com.squareup.picasso.Callback() {
             @Override
@@ -112,6 +133,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             @Override
             public void onClick(View v) {
                 SharedPrefManager.getInstance(mContext).saveFavoriteItem(model.getPropertyId());
+                holder.favorite.setBackground(mContext.getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
                 Toast.makeText(mContext, "You Saved " + model.getOwnerName() + "'s Property on Favorite", Toast.LENGTH_SHORT).show();
             }
         });
@@ -203,17 +225,34 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             }
         });
 
+        String[] propertyType, renterType;
+        String title = "No Title", availDate = "No Date";
+        propertyType = model.getPropertyType().split("#");
+        int proLength = propertyType.length;
+        if(proLength>1) {
+            title = propertyType[1];
+        }
+        renterType = model.getRenterType().split("#");
+        int renLength = renterType.length;
+        if(renLength>1) {
+            availDate = renterType[1];
+        }
+
         ((TextView) dialog.findViewById(R.id.post_details_location)).setText(model.getLocation());
         ((TextView) dialog.findViewById(R.id.post_details_price)).setText("TK " + model.getRentPrice() + " /monthly");
         ((TextView) dialog.findViewById(R.id.post_details_owner)).setText("Posted by " + model.getOwnerName());
         ((TextView) dialog.findViewById(R.id.post_details_date)).setText("Posted at " + Utility.getDateFromTimestamp(model.getCreatedAt()));
-        ((TextView) dialog.findViewById(R.id.post_details_property)).setText(model.getPropertyType());
-        ((TextView) dialog.findViewById(R.id.post_details_renter)).setText(model.getRenterType());
+        ((TextView) dialog.findViewById(R.id.post_details_property)).setText(propertyType[0]);
+        ((TextView) dialog.findViewById(R.id.post_details_renter)).setText(renterType[0]);
         ((TextView) dialog.findViewById(R.id.post_details_beds)).setText(model.getBedrooms());
         ((TextView) dialog.findViewById(R.id.post_details_baths)).setText(model.getBathrooms());
-        ((TextView) dialog.findViewById(R.id.post_details_size)).setText(model.getSquareFootage());
+//        ((TextView) dialog.findViewById(R.id.post_details_size)).setText(model.getSquareFootage());
         ((TextView) dialog.findViewById(R.id.post_details_amenities)).setText(model.getAmenities());
         ((TextView) dialog.findViewById(R.id.post_details_desc)).setText(model.getDescription());
+
+        ((TextView) dialog.findViewById(R.id.details_title)).setText(title);
+        ((TextView) dialog.findViewById(R.id.details_available_date)).setText(availDate);
+
 
         //-----------| Favorite
         ((ImageButton) dialog.findViewById(R.id.post_favorite)).setOnClickListener(new View.OnClickListener() {
@@ -428,7 +467,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
 
         LinearLayout layout;
         ImageView imageUrl;
-        TextView rentPrice, address, description, title, confirm, viewDetails;
+        TextView rentPrice, address, description, title, confirm, viewDetails, availDate;
         ImageButton favorite;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -443,6 +482,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             title = (TextView) itemView.findViewById(R.id.post_rent_title);
             confirm = (TextView) itemView.findViewById(R.id.post_confirm);
             viewDetails = (TextView) itemView.findViewById(R.id.post_view_details);
+            availDate = (TextView) itemView.findViewById(R.id.post_available_date);
         }
     }
 }

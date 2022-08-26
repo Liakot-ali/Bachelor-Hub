@@ -76,7 +76,7 @@
         <!-- Add Post Button -->
         <Button
             android:id="@+id/add_post_image_btn"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:text="@string/post_add_a_photo"
             android:textColor="@color/white"
             android:background="@drawable/shape_rectangle_corner_round_black"
@@ -86,61 +86,63 @@
 
         <!-- Owner Name -->
         <EditText
+            android:id="@+id/owner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:id="@+id/owner_name"
             android:hint="@string/post_owner_name"
             android:inputType="textPersonName"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
 
         <!-- Owner Email -->
         <EditText
+            android:id="@+id/owner_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:id="@+id/owner_email"
             android:hint="@string/post_owner_email"
             android:inputType="textEmailAddress"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
 
         <!-- Owner Mobile -->
         <EditText
+            android:id="@+id/owner_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:id="@+id/owner_mobile"
             android:hint="@string/post_owner_mobile"
             android:inputType="phone"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
         <CheckBox android:id="@+id/hide_mobile"
             android:text="@string/post_hide"
             android:textColor="@color/gray"
-            android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <View
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="@dimen/lay_pad"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:background="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
@@ -153,6 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterMaxLength="40"
+            app:helperText="*"
             android:layout_marginBottom="@dimen/lay_pad">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -166,76 +169,78 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
-            android:theme="@style/Theme.AppCompat.Light"
+            android:id="@+id/property_type"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:entries="@array/property_type_array"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
-            android:id="@+id/property_type"
-            android:entries="@array/property_type_array"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_marginBottom="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <!-- Renter Type -->
         <Spinner
-            android:theme="@style/Theme.AppCompat.Light"
             android:id="@+id/renter_type"
-            android:entries="@array/renter_type_array"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:entries="@array/renter_type_array"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <!-- Price Range -->
         <EditText
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
             android:id="@+id/rent_price"
-            android:hint="@string/post_price_rent"
-            android:layout_marginBottom="15dp"
-            android:inputType="number"
-            android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:hint="@string/post_price_rent"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
 
         <!-- Bedrooms -->
         <Spinner
-            android:theme="@style/Theme.AppCompat.Light"
             android:id="@+id/bedrooms"
-            android:entries="@array/bedrooms_array"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:entries="@array/bedrooms_array"
+            android:theme="@style/Theme.AppCompat.Light" />
 
 
         <!-- Bathrooms -->
         <Spinner
-            android:theme="@style/Theme.AppCompat.Light"
             android:id="@+id/bathrooms"
-            android:entries="@array/bathrooms_array"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:entries="@array/bathrooms_array"
+            android:theme="@style/Theme.AppCompat.Light" />
 
 
         <!-- Building Size/ Square Footage -->
-        <EditText
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:id="@+id/square_footage"
-            android:hint="@string/post_square_footage"
-            android:layout_marginBottom="15dp"
-            android:inputType="number"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+<!--        <EditText-->
+<!--            android:id="@+id/square_footage"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="@dimen/lay_pad"-->
+<!--            android:background="@drawable/shape_edit_text_border"-->
+<!--            android:hint="@string/post_square_footage"-->
+<!--            android:inputType="number"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHint="@color/gray" />-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Available Date"
+            android:text="Available Date"
             android:textSize="@dimen/normal_text"
             android:textColor="@color/black"
             />
@@ -243,10 +248,17 @@
             android:id="@+id/available_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inner_pad"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
             android:text="Date of availability"
-            android:background="@drawable/button_ripple_effect"
-            android:padding="@dimen/inner_pad"
-            android:textSize="@dimen/headline_text"
+            android:background="@drawable/text_button_background"
+            android:paddingTop="@dimen/inner_pad"
+            android:paddingBottom="@dimen/inner_pad"
+            android:paddingLeft="@dimen/lay_pad"
+            android:paddingRight="@dimen/lay_pad"
+            android:textSize="@dimen/normal_text"
             android:layout_gravity="center"
 
             />
@@ -267,73 +279,80 @@
             <CheckBox android:id="@+id/checkbox1"
                 android:text="@string/filter_wasa_connection"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox2"
                 android:text="@string/filter_desco_connection"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox3"
                 android:text="@string/filter_titas_gas_connection"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox4"
                 android:text="@string/filter_balcony"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox5"
                 android:text="@string/filter_roof_top_garden"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox6"
                 android:text="@string/filter_generator"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox7"
                 android:text="@string/filter_lift"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox8"
                 android:text="@string/filter_guard_s_rooms"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <CheckBox android:id="@+id/checkbox9"
                 android:text="@string/filter_additional_basement_carpark"
                 android:textColor="@color/gray"
+                android:buttonTint="@color/orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <!-- Location -->
         <Spinner
-            android:theme="@style/Theme.AppCompat.Light"
             android:id="@+id/location"
-            android:entries="@array/locations_array"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/lay_pad"
+            android:layout_marginBottom="@dimen/lay_pad"
+            android:background="@drawable/shape_edit_text_border"
+            android:entries="@array/locations_array"
+            android:theme="@style/Theme.AppCompat.Light" />
         <!-- Address -->
-        <EditText
+        <Button
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:id="@+id/address"
-            android:hint="@string/post_address"
-            android:gravity="top"
+            android:text="@string/post_address"
             android:visibility="visible"
-            android:layout_marginBottom="15dp"
-            android:inputType="textCapSentences|textAutoCorrect|text|textMultiLine"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="wrap_content" />
 
         <!-- Description -->
         <EditText
@@ -342,7 +361,7 @@
             android:id="@+id/description"
             android:gravity="top"
             android:hint="@string/post_description"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:inputType="textCapSentences|textAutoCorrect|text|textMultiLine"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
@@ -351,8 +370,8 @@
         <!-- Add Post Button -->
         <Button
             android:id="@+id/add_post_btn"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="@dimen/lay_pad"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:text="@string/post_add_post"
             android:textColor="@color/white"
             android:background="@drawable/shape_rectangle_corner_round_black"

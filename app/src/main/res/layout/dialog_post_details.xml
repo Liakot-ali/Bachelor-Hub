@@ -105,6 +105,26 @@
 
         <!-- Property Type -->
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Post Title: " />
+
+            <TextView
+                android:id="@+id/details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:text="Post Title" />
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -178,30 +198,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <!-- Square Footage -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="@string/details_square_footage"
+                android:text="Available From: "
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/post_details_size"
+                android:id="@+id/details_available_date"
                 android:textColor="@color/gray"
-                android:text="1200 (sq. ft)"
+                android:text="15 aug 2022"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+
+        <!-- Square Footage -->
+<!--        <LinearLayout-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <TextView-->
+<!--                android:text="@string/details_square_footage"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/post_details_size"-->
+<!--                android:textColor="@color/gray"-->
+<!--                android:text="1200 (sq. ft)"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--        </LinearLayout>-->
+
         <!-- ================================== -->
         <View
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginTop="@dimen/lay_pad"
+            android:layout_marginBottom="@dimen/lay_pad"
             android:background="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>

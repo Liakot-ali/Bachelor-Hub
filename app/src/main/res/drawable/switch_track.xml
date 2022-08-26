@@ -8,7 +8,6 @@
             <corners android:radius="@dimen/medium_icon"/>
             <stroke android:width="2sp" android:color="@color/black"/>
 
-
         </shape>
     </item>
 

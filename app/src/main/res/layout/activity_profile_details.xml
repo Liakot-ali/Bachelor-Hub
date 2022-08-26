@@ -162,6 +162,15 @@
                 android:layout_height="100dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/profileUpdateBtn"
+            android:text="Update"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_rectangle_corner_round_black"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

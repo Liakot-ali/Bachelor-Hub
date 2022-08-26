@@ -22,6 +22,7 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -231,6 +232,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Window window = MainActivity.this.getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.orange));
+
         floatingActionButton = findViewById(R.id.fab);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         assert fuser != null;
@@ -439,11 +443,17 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                     switch (item.getItemId()) {
-
                         case R.id.nav_home:
 //                            getSupportActionBar().setTitle("Home");
-                            selectedFragment = new HomeFragment();
+
+                            assert fragment != null;
+                            if(!(fragment instanceof HomeFragment)){
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                        new HomeFragment()).commit();
+                                selectedFragment = new HomeFragment();
+                            }
                             break;
 
 
@@ -455,13 +465,24 @@ public class MainActivity extends AppCompatActivity {
 
                         case R.id.nav_message:
 //                            getSupportActionBar().setTitle("Messages");
-                            selectedFragment = new MessagesFragment();
+                            assert fragment != null;
+                            if(!(fragment instanceof MessagesFragment)){
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                        new HomeFragment()).commit();
+                                selectedFragment = new MessagesFragment();
+                            }
+//                            selectedFragment = new MessagesFragment();
                             break;
 
                         case R.id.nav_profile:
 //                            getSupportActionBar().hide();
 //                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                            selectedFragment = new ProfileFragment();
+                            assert fragment != null;
+                            if(!(fragment instanceof ProfileFragment)){
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                                        new HomeFragment()).commit();
+                                selectedFragment = new ProfileFragment();
+                            }
 
                             break;
                     }
@@ -550,6 +571,7 @@ public class MainActivity extends AppCompatActivity {
         if(!(fragment instanceof HomeFragment)){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                     new HomeFragment()).commit();
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
         } else if (System.currentTimeMillis() - currentTime < 2000) {
             super.onBackPressed();
         } else {

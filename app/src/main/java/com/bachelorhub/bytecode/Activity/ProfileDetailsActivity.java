@@ -3,7 +3,10 @@ package com.bachelorhub.bytecode.Activity;
 import static com.google.gson.reflect.TypeToken.get;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -33,6 +36,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
     private String mImageUrl = null;
     private String mPhone = null;
     private String mAuthId = null;
+    Button updateBtn;
     //private String mToken =
 
 
@@ -75,6 +79,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         userEmail = (EditText) findViewById(R.id.userEmail);
         userBirthDate = (EditText) findViewById(R.id.userBirthDate);
         userAddress = (EditText) findViewById(R.id.userAddress);
+        updateBtn = (Button) findViewById(R.id.profileUpdateBtn);
 
 
         //===============================================| Getting SharedPreferences
@@ -91,6 +96,13 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         if (mAuthId != null) {
             getUserData(mAuthId);
         }
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileDetailsActivity.this, EditProfileActivity.class));
+            }
+        });
     }
 
     //===============================================| Fetch/Get from Firebase Database

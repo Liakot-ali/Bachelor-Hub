@@ -177,31 +177,19 @@
         <item>অ্যাপার্টমেন্ট</item>
         <item>ঘর</item>
         <item>রুম</item>
-        <item>গ্যারাজ</item>
-        <item>ব্যবসায়িক</item>
     </string-array>
 
     <string-array name="renter_type_array">
         <item>ভাড়াটের প্রকার</item>
-        <item>পরিবার</item>
-        <item>সাবলেট</item>
         <item>ছেলে</item>
         <item>মেয়ে</item>
-        <item>দপ্তর</item>
     </string-array>
 
     <string-array name="bedrooms_array">
-        <item>বেডরুম</item>
+        <item>রুম</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
     </string-array>
 
     <string-array name="bathrooms_array">
@@ -209,8 +197,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
 
     <string-array name="locations_array">
