@@ -68,7 +68,8 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
     private ProgressDialog mProgress = null;
     private int imageCounter = 0;
     private Button addPostImageBtn;
-    private EditText name, email, mobile, price, size, addr, desc;
+    private EditText name, email, mobile, price, size, desc;
+    Button addr;
     private CheckBox isMobile;
     private Spinner property, renter, beds, baths, location;
     private LinearLayout checkboxGroup;
@@ -117,10 +118,10 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
         this.price = (EditText) findViewById(R.id.rent_price);
         this.beds = (Spinner) findViewById(R.id.bedrooms);
         this.baths = (Spinner) findViewById(R.id.bathrooms);
-        this.size = (EditText) findViewById(R.id.square_footage);
+//        this.size = (EditText) findViewById(R.id.square_footage);
         this.checkboxGroup = (LinearLayout) findViewById(R.id.checkbox_group); //https://stackoverflow.com/questions/24322022/getting-multiple-value-of-checked-check-boxes-in-an-array
         this.location = (Spinner) findViewById(R.id.location);
-        this.addr = (EditText) findViewById(R.id.address);
+        this.addr = (Button) findViewById(R.id.address);
         this.desc = (EditText) findViewById(R.id.description);
         this.imgGroup = (TableRow) findViewById(R.id.image_group);
         title = findViewById(R.id.post_title);
@@ -164,16 +165,22 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
                 String rentPrice = price.getText().toString().trim();
                 String bedrooms = beds.getSelectedItem().toString();
                 String bathrooms = baths.getSelectedItem().toString();
-                String squareFootage = size.getText().toString().trim();
-                String amenities = "";
+//                String squareFootage = size.getText().toString().trim();
+                StringBuilder amenities = new StringBuilder();
                 for (int i = 0; i < checkboxGroup.getChildCount(); i++) {
                     CheckBox checkbox = (CheckBox) checkboxGroup.getChildAt(i);
                     if (checkbox.isChecked()) {
-                        amenities += checkbox.getText().toString() + ", ";
+                        amenities.append(checkbox.getText().toString()).append(", ");
                     }
+                }
+                int lastIndex = amenities.lastIndexOf(",");
+                if(lastIndex != -1) {
+                    amenities.deleteCharAt(lastIndex);
                 }
                 //Log.d(TAG, String.valueOf(getCheckboxText));
 
+                propertyType = propertyType + "#" + postTitleSt;
+                renterType = renterType + "#" + availableDateSt;
                 String selectLocation = location.getSelectedItem().toString();
                 String address = addr.getText().toString().trim();
                 String description = desc.getText().toString().trim();
@@ -188,7 +195,7 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
                             LatLng latLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
                             String latitude = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatitude();
                             String longitude = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLongitude();
-                            PostAd post = new PostAd(mUser.getUserAuthId(), mUser.getUserToken(), ownerName, ownerEmail, ownerMobile, isOwnerMobileHide, propertyType, renterType, rentPrice, bedrooms, bathrooms, squareFootage, amenities, selectLocation, address, latitude, longitude, description, Arrays.toString(postImageUri.toArray()), "", key);
+                            PostAd post = new PostAd(mUser.getUserAuthId(), mUser.getUserToken(), ownerName, ownerEmail, ownerMobile, isOwnerMobileHide, propertyType, renterType, rentPrice, bedrooms, bathrooms, "", amenities.toString(), selectLocation, address, latitude, longitude, description, Arrays.toString(postImageUri.toArray()), "", key);
                             mProgress = Utility.showProgressDialog(PostAdActivity.this, getResources().getString(R.string.progress), false);
                             storeToDatabase(post);
                         } else {
@@ -222,7 +229,7 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void ShowDatePicker() {
-        DatePickerDialog dialog = new DatePickerDialog(this, this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme, this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
     @Override
