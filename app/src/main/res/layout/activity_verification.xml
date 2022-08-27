@@ -236,10 +236,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/lay_pad"
+                android:layout_marginBottom="25sp"
                 android:text="Verify"
                 android:textSize="@dimen/normal_text"
                 android:textColor="@color/white"/>
 
+            <!--
             <TextView
                 android:id="@+id/method"
                 android:layout_width="match_parent"
@@ -316,7 +318,7 @@
                 android:background="@drawable/selector_button_round"
                 android:text="Verify"
                 android:textColor="@color/white" />
-
+                -->
         </LinearLayout>
 
     </ScrollView>

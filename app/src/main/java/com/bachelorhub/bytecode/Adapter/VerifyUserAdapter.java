@@ -35,7 +35,7 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(mContext).inflate(R.layout.verify_user_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.verify_user_item, parent, false);
 
 
         return new VerifyUserAdapter.ViewHolder(view);
@@ -44,19 +44,19 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final VerifyUserModels models  = modelsList.get(position);
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserId()).child("userVerify");
+        final VerifyUserModels models = modelsList.get(position);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserId()).child("userVerify");
         Picasso.get()
                 .load(models.getImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
                 .into(holder.profileImage);
         holder.fullName.setText(models.getFullName());
         holder.userId.setText(models.getUserId());
-        holder.dob.setText("Date of Birth : "+models.getBirthDate());
-        holder.method.setText("Verify Method : "+models.getVerifyMethod());
-        holder.method_key.setText("Key : "+models.getVerifyKey());
-        holder.phone.setText("Phone : "+models.getPhoneNumber());
-        holder.address.setText("Address : "+models.getAddress());
+        holder.dob.setText("Date of Birth : " + models.getBirthDate());
+        holder.method.setText("Verify Method : " + models.getVerifyMethod());
+        holder.method_key.setText("Key : " + models.getVerifyKey());
+        holder.phone.setText("Phone : " + models.getPhoneNumber());
+        holder.address.setText("Address : " + models.getAddress());
         switch (models.getUserVerify()) {
             case "Pending":
                 holder.pending.setVisibility(View.GONE);
@@ -100,18 +100,15 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
     }
 
 
-
-
     @Override
     public int getItemCount() {
         return modelsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView profileImage;
-        private TextView fullName,userId,dob,method,method_key,phone,address;
-        private Button pending,approve,reject;
-
+        private TextView fullName, userId, dob, method, method_key, phone, address;
+        private Button pending, approve, reject;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -127,7 +124,6 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
             reject = itemView.findViewById(R.id.reject);
             phone = itemView.findViewById(R.id.phone);
             address = itemView.findViewById(R.id.address);
-
 
 
         }

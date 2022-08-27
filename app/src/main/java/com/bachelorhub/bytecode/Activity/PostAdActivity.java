@@ -326,15 +326,14 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
 
     //===============================================| Store Image into Firebase Storage
     private void storeImage(Uri uri, String mAuthId) {
-        mPostAdViewModel.storeImage(uri, ConstantKey.USER_POST_NODE, mAuthId + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date())).observe(this, new Observer<String>() {
+        mPostAdViewModel.storeImage(uri, ConstantKey.USER_POST_NODE, mAuthId + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()))
+                .observe(this, new Observer<String>() {
             @Override
             public void onChanged(String result) {
                 if (result != null) {
                     postImageUri.add(result);
-                    Utility.dismissProgressDialog(mProgress);
-                } else {
-                    Utility.dismissProgressDialog(mProgress);
                 }
+                Utility.dismissProgressDialog(mProgress);
             }
         });
     }
