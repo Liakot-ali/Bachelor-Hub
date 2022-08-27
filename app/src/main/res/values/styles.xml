@@ -21,6 +21,7 @@
         <item name="helperTextEnabled">true</item>
         <item name="helperTextTextColor">@color/red</item>
     </style>
+
     <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
         <item name="colorAccent">@color/orange</item>
         <item name="android:buttonBarButtonStyle">@style/TextButton</item>

@@ -33,8 +33,8 @@ public class PendingVerifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Pending Verification");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Pending Verification");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_pending_verify);
         reference = FirebaseDatabase.getInstance().getReference("tolet_users");
         recyclerView = findViewById(R.id.recycler_view);
@@ -97,8 +97,6 @@ public class PendingVerifyActivity extends AppCompatActivity {
                         if (userVerify.equals("Pending"))
                             modelsList.add(obj);
                     }
-
-
                 }
 
                 adapter = new VerifyUserAdapter(PendingVerifyActivity.this, modelsList);

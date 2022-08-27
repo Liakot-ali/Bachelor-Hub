@@ -45,48 +45,53 @@
         </RelativeLayout>
 
         <!-- Address -->
-        <LinearLayout
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/details_location"
-                android:textStyle="bold"
-                android:layout_marginRight="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/post_details_location"
-                android:textColor="@color/gray"
-                android:text="Dhaka Cantonment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
 
         <!-- Rent Price -->
-        <TextView
-            android:id="@+id/post_details_price"
-            android:text="Tk 15,000 /month"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:paddingLeft="15dp"
-            android:paddingRight="25dp"
-            android:textColor="@color/white"
-            android:background="@drawable/shape_round_right"
-            android:layout_marginBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <!-- Owner Name -->
-        <TextView
-            android:id="@+id/post_details_owner"
-            android:text="@string/details_for_rent_by"
-            android:textSize="13sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Title: "
+                android:textSize="@dimen/headline_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Title"
+                android:textSize="@dimen/headline_text"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
         <!-- Posted Date -->
+        <TextView
+            android:id="@+id/post_details_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_round_right"
+            android:paddingLeft="15dp"
+            android:paddingRight="25dp"
+            android:text="Tk 15,000 /month"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/post_details_owner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/details_for_rent_by"
+            android:textSize="13sp" />
+
         <TextView
             android:id="@+id/post_details_date"
             android:text="@string/details_posted_at"
@@ -104,25 +109,6 @@
         <!-- ================================== -->
 
         <!-- Property Type -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="Post Title: " />
-
-            <TextView
-                android:id="@+id/details_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:text="Post Title" />
-        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -246,6 +232,7 @@
         <!-- ================================== -->
 
         <!-- Amenities -->
+
         <TextView
             android:text="@string/details_amenities"
             android:textStyle="bold"
@@ -274,6 +261,27 @@
             android:layout_height="wrap_content" />
 
         <!-- Google Maps Selection -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/details_location"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/post_details_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dhaka Cantonment"
+                android:textColor="@color/gray" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"

@@ -22,14 +22,15 @@ public class AdminHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
-        getSupportActionBar().setTitle("Admin Home");
+//        getSupportActionBar().setTitle("Admin Home");
 
 //        Toolbar toolbar = findViewById(R.id.adminToolbar);
 //        setSupportActionBar(toolbar);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.admin_logout:
                 new AlertDialog.Builder(AdminHomeActivity.this)
                         .setTitle(R.string.about_title)

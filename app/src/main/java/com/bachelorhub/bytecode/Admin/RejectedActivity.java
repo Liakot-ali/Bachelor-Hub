@@ -33,8 +33,8 @@ public class RejectedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Rejected User");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Rejected User");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_rejected);
 
         reference = FirebaseDatabase.getInstance().getReference("tolet_users");

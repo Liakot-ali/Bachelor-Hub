@@ -32,8 +32,8 @@ public class VerifiedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Verified User");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Verified User");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_verified);
         reference = FirebaseDatabase.getInstance().getReference("tolet_users");
         recyclerView = findViewById(R.id.recycler_view);

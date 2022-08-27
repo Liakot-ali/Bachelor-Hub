@@ -1,7 +1,7 @@
 package com.bachelorhub.bytecode.Models;
 
 public class VerifyUserModels {
-    String userId,fullName,birthDate,verifyMethod,verifyKey,userVerify,phoneNumber,imageUrl,address;
+    String userId, fullName, birthDate, verifyMethod, verifyKey, userVerify, phoneNumber, imageUrl, address;
 
     public String getUserId() {
         return userId;
