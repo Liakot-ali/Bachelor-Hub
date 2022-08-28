@@ -79,10 +79,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ArrayAdapter adapter;
     private ImageView userImageUrl;
-    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress;
-    private TextInputLayout layoutName, layoutPhone;
-    private RadioGroup userGroup;
-    private RadioButton userRender, userOwner;
+    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress, userReligion;
+    private TextInputLayout layoutName, layoutPhone, religionLay;
+    private RadioGroup userGroup, genderGroup;
+    private RadioButton userRender, userOwner, male, female;
     private Spinner userRelation;
 
     private UserViewModel mUserViewModel;
@@ -102,9 +102,15 @@ public class EditProfileActivity extends AppCompatActivity {
         userGroup = (RadioGroup) findViewById(R.id.userGroup);
         userRender = (RadioButton) findViewById(R.id.userRender);
         userOwner = (RadioButton) findViewById(R.id.userOwner);
+        genderGroup = (RadioGroup) findViewById(R.id.userGender);
+        male = (RadioButton) findViewById(R.id.userMale);
+        female = (RadioButton) findViewById(R.id.userFemale);
 
         userFullName = (EditText) findViewById(R.id.userFullName);
         layoutName = (TextInputLayout) findViewById(R.id.layoutUserFullName);
+
+        userReligion = (EditText) findViewById(R.id.userReligion);
+        religionLay = (TextInputLayout) findViewById(R.id.userReligionLay);
 
         userRelation = (Spinner) findViewById(R.id.userRelation);
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.relation_array));
@@ -172,58 +178,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }*/
 
-    //===============================================| Click Events
-    private class ActionHandler implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.userImageUrl:
-                    cameraGalleryAlertDialog();
-                    break;
-                case R.id.userBirthDate:
-                    birthDate();
-                    break;
-                case R.id.saveButton:
-                    String name = userFullName.getText().toString().trim();
-                    String relation = userRelation.getSelectedItem().toString();
-                    String occupation = userOccupation.getText().toString().trim();
-                    String email = userEmail.getText().toString().trim();
-                    String phone = userPhoneNumber.getText().toString().trim();
-                    String birth = userBirthDate.getText().toString().trim();
-                    String address = userAddress.getText().toString().trim();
-
-                    int selectedId = userGroup.getCheckedRadioButtonId();
-                    RadioButton radioButton = (RadioButton) findViewById(selectedId);
-                    final String isUserOwner = radioButton.getText().toString();
-
-                    if (TextUtils.isEmpty(name) && TextUtils.isEmpty(phone) && mPhone != null) {
-                        layoutName.setError("required!");
-                        layoutPhone.setError("required!");
-                    } else if (phone.length() != 11) {
-                        layoutPhone.setError("length must be 11 digits");
-                    } else if (mImageUrl == null) {
-                        Utility.alertDialog(EditProfileActivity.this, getResources().getString(R.string.upload_photo));
-                    } else if (mAuthId == null) {
-                        Utility.alertDialog(EditProfileActivity.this, "User did not exist");
-                    }/*  else if (relation.equals("Marital Status")) {
-                        Utility.alertDialog(EditProfileActivity.this, "Please change your marital status");
-                    } */ else {
-                        if (Network.haveNetwork(EditProfileActivity.this)) {
-
-                            mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
-                            SharedPrefManager.getInstance(EditProfileActivity.this).savePhoneAndLogInStatus(phone, true);
-                            storeToDatabase(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, "mToken");
-                        } else {
-                            Utility.alertDialog(EditProfileActivity.this, getString(R.string.network_unavailable));
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     //Runtime permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -242,6 +196,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
+                    String[] isOwnerSplit = user.getIsUserOwner().split("#");
+                    String[] occupationSplit = user.getUserOccupation().split("#");
+
                     mImageUrl = user.getUserImageUrl();
                     if (!mImageUrl.equals("")) {
                         Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
@@ -249,7 +206,12 @@ public class EditProfileActivity extends AppCompatActivity {
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userFullName.setText(user.getUserFullName());
                     userRelation.setSelection(adapter.getPosition(user.getUserRelation()));
-                    userOccupation.setText(user.getUserOccupation());
+                    if (occupationSplit.length > 0) {
+                        userOccupation.setText(occupationSplit[0]);
+                    }
+                    if (isOwnerSplit.length > 1) {
+                        userReligion.setText(occupationSplit[1]);
+                    }
                     userEmail.setText(user.getUserEmail());
                     userPhoneNumber.setText(user.getUserPhoneNumber());
                     userBirthDate.setText(user.getUserBirthDate());
@@ -257,10 +219,19 @@ public class EditProfileActivity extends AppCompatActivity {
                     userVerify = user.getUserVerify();
                     verifyMethod = user.getVerifyMethod();
                     verifyKey = user.getVerifyKey();
-                    if (user.getIsUserOwner().equals("Renter")) {
-                        userRender.setChecked(true);
-                    } else {
-                        userOwner.setChecked(true);
+                    if (isOwnerSplit.length > 0) {
+                        if (isOwnerSplit[0].equals("Renter")) {
+                            userRender.setChecked(true);
+                        } else {
+                            userOwner.setChecked(true);
+                        }
+                    }
+                    if (isOwnerSplit.length > 1) {
+                        if (isOwnerSplit[1].equals("Male")) {
+                            male.setChecked(true);
+                        } else {
+                            female.setChecked(true);
+                        }
                     }
                     Utility.dismissProgressDialog(mProgress);
                 } else {
@@ -411,5 +382,63 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //===============================================| Click Events
+    private class ActionHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.userImageUrl:
+                    cameraGalleryAlertDialog();
+                    break;
+                case R.id.userBirthDate:
+                    birthDate();
+                    break;
+                case R.id.saveButton:
+                    String name = userFullName.getText().toString().trim();
+                    String relation = userRelation.getSelectedItem().toString();
+                    String occupation = userOccupation.getText().toString().trim();
+                    String religion = userReligion.getText().toString().trim();
+                    String email = userEmail.getText().toString().trim();
+                    String phone = userPhoneNumber.getText().toString().trim();
+                    String birth = userBirthDate.getText().toString().trim();
+                    String address = userAddress.getText().toString().trim();
+
+                    int selectedId = userGroup.getCheckedRadioButtonId();
+                    RadioButton radioButton = (RadioButton) findViewById(selectedId);
+
+                    int genderId = genderGroup.getCheckedRadioButtonId();
+                    RadioButton genButton = findViewById(genderId);
+
+                    String gender = genButton.getText().toString();
+                    String isUserOwner = radioButton.getText().toString();
+                    if (TextUtils.isEmpty(name) && TextUtils.isEmpty(phone) && mPhone != null) {
+                        layoutName.setError("required!");
+                        layoutPhone.setError("required!");
+                    } else if (phone.length() != 11) {
+                        layoutPhone.setError("length must be 11 digits");
+                    } else if (mImageUrl == null) {
+                        Utility.alertDialog(EditProfileActivity.this, getResources().getString(R.string.upload_photo));
+                    } else if (mAuthId == null) {
+                        Utility.alertDialog(EditProfileActivity.this, "User did not exist");
+                    }/*  else if (relation.equals("Marital Status")) {
+                        Utility.alertDialog(EditProfileActivity.this, "Please change your marital status");
+                    } */ else {
+                        if (Network.haveNetwork(EditProfileActivity.this)) {
+                            isUserOwner = isUserOwner + "#" + gender;
+                            occupation = occupation + "#" + religion;
+                            mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
+                            SharedPrefManager.getInstance(EditProfileActivity.this).savePhoneAndLogInStatus(phone, true);
+                            storeToDatabase(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, "mToken");
+                        } else {
+                            Utility.alertDialog(EditProfileActivity.this, getString(R.string.network_unavailable));
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

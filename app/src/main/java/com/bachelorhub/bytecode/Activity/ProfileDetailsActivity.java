@@ -113,6 +113,8 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
+                    String[] isOwnerSplit = user.getIsUserOwner().split("#");
+                    String[] occupationSplit = user.getUserOccupation().split("#");
                     mImageUrl = user.getUserImageUrl();
                     if (!mImageUrl.equals("")) {
                         Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
@@ -121,12 +123,12 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                     userFullName.setText(user.getUserFullName());
 
                     userRelation.setText(user.getUserRelation());
-                    userOccupation.setText(user.getUserOccupation());
+                    userOccupation.setText(occupationSplit[0]);
                     userEmail.setText(user.getUserEmail());
                     userPhoneNumber.setText(user.getUserPhoneNumber());
                     userBirthDate.setText(user.getUserBirthDate());
                     userAddress.setText(user.getUserAddress());
-                    userGroup.setText(user.getIsUserOwner());
+                    userGroup.setText(isOwnerSplit[0]);
                 }
                 Utility.dismissProgressDialog(mProgress);
             }

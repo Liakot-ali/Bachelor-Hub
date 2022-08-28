@@ -90,10 +90,10 @@ public class VerificationActivity extends AppCompatActivity {
     Uri frontImageUri, backImageUri, userPicUri;
     String buttonIdc = "";
     StringBuilder allPicture = new StringBuilder("");
-//    private Spinner spinner;
+    //    private Spinner spinner;
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress;
-//    private EditText editText;
+    //    private EditText editText;
 //    private Button sentButton, goHome;
 //    private TextView status, method, key;
     private DatabaseReference reference;
@@ -370,28 +370,28 @@ public class VerificationActivity extends AppCompatActivity {
                         allPicture = new StringBuilder("");
                         for (int i = 0; i < 3; i++) {
                             Log.e(TAG, "userInformation, imageUri " + str.get(i).toString());
-                            if(!str.get(i).toString().contains("firebasestorage")) {
+                            if (!str.get(i).toString().contains("firebasestorage")) {
                                 Log.e(TAG, "userInformation, not contain Firebase " + str.get(i).toString());
                                 StorageReference imgRef = sRef.child(userid + "_" + System.currentTimeMillis() + ".jpg");
                                 imgRef.putFile(str.get(i)).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String imageUri = uri.toString();
-                                        storeFirebase(imageUri);
-                                        Utility.dismissProgressDialog(mProgress);
-                                    }
-                                })).addOnProgressListener(snapshot -> mProgress.show())
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                String imageUri = uri.toString();
+                                                storeFirebase(imageUri);
+                                                Utility.dismissProgressDialog(mProgress);
+                                            }
+                                        })).addOnProgressListener(snapshot -> mProgress.show())
                                         .addOnCanceledListener(new OnCanceledListener() {
-                                    @Override
-                                    public void onCanceled() {
-                                        Utility.dismissProgressDialog(mProgress);
-                                    }
-                                }).addOnFailureListener(e -> {
+                                            @Override
+                                            public void onCanceled() {
+                                                Utility.dismissProgressDialog(mProgress);
+                                            }
+                                        }).addOnFailureListener(e -> {
                                             Log.e(TAG, "userInformation: " + e.getMessage());
-                                    Toast.makeText(VerificationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Utility.dismissProgressDialog(mProgress);
-                                });
-                            }else{
+                                            Toast.makeText(VerificationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Utility.dismissProgressDialog(mProgress);
+                                        });
+                            } else {
                                 storeFirebase(str.get(i).toString());
                                 Utility.dismissProgressDialog(mProgress);
                             }
