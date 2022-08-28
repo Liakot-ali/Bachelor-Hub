@@ -14,6 +14,7 @@
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_notifications.xml" value="0.279" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_search.xml" value="0.279" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.279" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/ic_verified.xml" value="0.279" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/selector_button.xml" value="0.2585" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/selector_button_round.xml" value="0.2585" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/drawable/shape_button_border.xml" value="0.2585" />
@@ -33,7 +34,9 @@
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_message.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_notifications.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_on_board_ativity.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_pending_verify.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_phone.xml" value="0.27447916666666666" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_phone_verify.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_post_ad.xml" value="0.264" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_profile_details.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/activity_settings.xml" value="0.27447916666666666" />
@@ -55,6 +58,7 @@
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/nav_header_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/recycler_item_notification_layout.xml" value="0.264" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/recycler_item_post_layout.xml" value="0.264" />
+        <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/layout/verify_user_item.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/admin_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Out Sourcing/Android App/Bechalor Hub/app/src/main/res/menu/bottom_navigation.xml" value="0.27447916666666666" />

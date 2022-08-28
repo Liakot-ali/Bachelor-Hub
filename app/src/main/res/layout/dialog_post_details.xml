@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Post Title: "
-                android:textSize="@dimen/headline_text"
+                android:textSize="@dimen/normal_text"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Post Title"
-                android:textSize="@dimen/headline_text"
+                android:textSize="@dimen/normal_text"
                 android:textColor="@color/black" />
         </LinearLayout>
 

@@ -38,12 +38,12 @@
             <RadioButton
                 android:id="@+id/userRender"
                 android:textColor="@color/gray"
+                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reg_render"/>
             <RadioButton
                 android:id="@+id/userOwner"
-                android:checked="true"
                 android:textColor="@color/gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,6 +72,41 @@
             android:entries="@array/relation_array"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
+        <!-- Render and Owner -->
+        <RadioGroup
+            android:id="@+id/userGender"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/userMale"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Male"/>
+            <RadioButton
+                android:id="@+id/userFemale"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"/>
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userReligionLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/userReligion"
+                android:hint="Religion"
+                android:inputType="textWebEmailAddress"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <!-- Occupation -->
         <com.google.android.material.textfield.TextInputLayout
