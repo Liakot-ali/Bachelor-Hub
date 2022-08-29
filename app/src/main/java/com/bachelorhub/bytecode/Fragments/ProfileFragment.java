@@ -74,6 +74,12 @@ public class ProfileFragment extends Fragment {
         settings = view.findViewById(R.id.profileSettings);
         logout = view.findViewById(R.id.profileLogOut);
 
+        verifiedIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Verified", Toast.LENGTH_SHORT).show();
+            }
+        });
         userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

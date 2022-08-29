@@ -72,7 +72,9 @@
                     android:layout_height="@dimen/small_icon"
                     android:layout_marginLeft="@dimen/inner_pad"
                     android:src="@drawable/ic_verified"
-                    android:visibility="gone" />
+                    android:background="@drawable/button_ripple_effect"
+                    android:visibility="gone"
+                    />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/proDetailsPicture"

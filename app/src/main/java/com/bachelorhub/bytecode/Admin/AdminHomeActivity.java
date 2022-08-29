@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.bachelorhub.bytecode.Activity.AuthActivity;
@@ -18,20 +19,16 @@ import com.bachelorhub.bytecode.Session.SharedPrefManager;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
+    ImageView logOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
-//        getSupportActionBar().setTitle("Admin Home");
-
-//        Toolbar toolbar = findViewById(R.id.adminToolbar);
-//        setSupportActionBar(toolbar);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.admin_logout:
+        logOut = findViewById(R.id.adminHomeLogout);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 new AlertDialog.Builder(AdminHomeActivity.this)
                         .setTitle(R.string.about_title)
                         .setMessage(R.string.msg_sign_out)
@@ -53,17 +50,30 @@ public class AdminHomeActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+        });
+//        getSupportActionBar().setTitle("Admin Home");
+
+//        Toolbar toolbar = findViewById(R.id.adminToolbar);
+//        setSupportActionBar(toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.admin_logout:
+//
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.admin_menu, menu);
+//        return true;
+//    }
 
     @Override
     public void onBackPressed() {

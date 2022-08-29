@@ -174,12 +174,20 @@ public class VerificationActivity extends AppCompatActivity {
 //                        goHome.setVisibility(View.VISIBLE);
                         if (Objects.equals(map.get("userVerify"), "Verified")) {
                             verifyBtn.setVisibility(View.GONE);
+                            transIdET.setEnabled(false);
+                            takeFront.setEnabled(false);
+                            takeBack.setEnabled(false);
+                            takeUserPic.setEnabled(false);
 //                            sentButton.setVisibility(View.GONE);
 //                            editText.setVisibility(View.GONE);
 //                            method_key_layout.setVisibility(View.GONE);
 //                            spinner.setVisibility(View.GONE);
                         } else {
+                            transIdET.setEnabled(true);
                             verifyBtn.setVisibility(View.VISIBLE);
+                            takeFront.setEnabled(true);
+                            takeBack.setEnabled(true);
+                            takeUserPic.setEnabled(true);
 //                            sentButton.setVisibility(View.VISIBLE);
 //                            editText.setVisibility(View.VISIBLE);
 //                            method_key_layout.setVisibility(View.VISIBLE);

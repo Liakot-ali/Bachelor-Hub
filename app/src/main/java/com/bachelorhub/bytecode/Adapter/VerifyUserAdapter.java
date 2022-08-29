@@ -2,6 +2,7 @@ package com.bachelorhub.bytecode.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,28 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
 
         final VerifyUserModels models = modelsList.get(position);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserId()).child("userVerify");
-        Picasso.get()
-                .load(models.getImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
-                .into(holder.profileImage);
+        if (models.getImageUrl().isEmpty() || models.getImageUrl().compareTo("") == 0) {
+            Picasso.get()
+                    .load(R.mipmap.ic_launcher)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.profileImage);
+        }else{
+//            Log.e("ChatUserAdapter", "userImageUrl:" + "." + snapshot.child("userImageUrl").getValue() + ".");
+            Picasso.get()
+//                                    .load(snapshot.child("userImageUrl").getValue().toString())
+                    .load(models.getImageUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.profileImage);
+        }
+
+//        if(!models.getImageUrl().equals("")) {
+//            Picasso.get()
+//                    .load(models.getImageUrl())
+//                    .placeholder(R.mipmap.ic_launcher)
+//                    .into(holder.profileImage);
+//        }
         holder.fullName.setText(models.getFullName());
         holder.userId.setText(models.getUserId());
         holder.dob.setText("Date of Birth : " + models.getBirthDate());
