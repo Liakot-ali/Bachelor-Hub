@@ -193,7 +193,7 @@ public class ProfileFragment extends Fragment {
             public void onChanged(User user) {
                 if (user != null) {
                     if (!user.getUserImageUrl().equals("")) {
-                        Picasso.get().load(user.getUserImageUrl()).into(userPicture);
+                        Picasso.get().load(user.getUserImageUrl()).placeholder(R.mipmap.ic_launcher).into(userPicture);
                     }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userName.setText(user.getUserFullName());

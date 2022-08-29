@@ -79,8 +79,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ArrayAdapter adapter;
     private ImageView userImageUrl;
-    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress, userReligion;
-    private TextInputLayout layoutName, layoutPhone, religionLay;
+    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress, userReligion, userNidNumber;
+    private TextInputLayout layoutName, layoutPhone, religionLay, layoutNId;
     private RadioGroup userGroup, genderGroup;
     private RadioButton userRender, userOwner, male, female;
     private Spinner userRelation;
@@ -119,8 +119,12 @@ public class EditProfileActivity extends AppCompatActivity {
         userPhoneNumber = (EditText) findViewById(R.id.userPhoneNumber);
         layoutPhone = (TextInputLayout) findViewById(R.id.layoutUserPhoneNumber);
 
+        userNidNumber = (EditText) findViewById(R.id.userNidNumber);
+        layoutNId = (TextInputLayout) findViewById(R.id.layoutUserNidNumber);
+
         userOccupation = (EditText) findViewById(R.id.userOccupation);
         userEmail = (EditText) findViewById(R.id.userEmail);
+
         userBirthDate = (EditText) findViewById(R.id.userBirthDate);
         userAddress = (EditText) findViewById(R.id.userAddress);
         Button saveButton = (Button) findViewById(R.id.saveButton);
@@ -198,6 +202,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (user != null) {
                     String[] isOwnerSplit = user.getIsUserOwner().split("#");
                     String[] occupationSplit = user.getUserOccupation().split("#");
+                    String[] relationSplit = user.getUserRelation().split("#");
 
                     mImageUrl = user.getUserImageUrl();
                     if (!mImageUrl.equals("")) {
@@ -205,7 +210,12 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userFullName.setText(user.getUserFullName());
-                    userRelation.setSelection(adapter.getPosition(user.getUserRelation()));
+                    if(relationSplit.length > 0) {
+                        userRelation.setSelection(adapter.getPosition(relationSplit[0]));
+                    }
+                    if(relationSplit.length > 1){
+                        userNidNumber.setText(relationSplit[1]);
+                    }
                     if (occupationSplit.length > 0) {
                         userOccupation.setText(occupationSplit[0]);
                     }
@@ -403,6 +413,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String email = userEmail.getText().toString().trim();
                     String phone = userPhoneNumber.getText().toString().trim();
                     String birth = userBirthDate.getText().toString().trim();
+                    String nidNumber = userNidNumber.getText().toString().trim();
                     String address = userAddress.getText().toString().trim();
 
                     int selectedId = userGroup.getCheckedRadioButtonId();
@@ -424,10 +435,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         Utility.alertDialog(EditProfileActivity.this, "User did not exist");
                     }/*  else if (relation.equals("Marital Status")) {
                         Utility.alertDialog(EditProfileActivity.this, "Please change your marital status");
-                    } */ else {
+                    } */
+                    else if (nidNumber.equals("")){
+                        layoutNId.setError("required");
+                    }else {
                         if (Network.haveNetwork(EditProfileActivity.this)) {
                             isUserOwner = isUserOwner + "#" + gender;
                             occupation = occupation + "#" + religion;
+                            relation = relation + "#" + nidNumber;
                             mProgress = Utility.showProgressDialog(EditProfileActivity.this, getResources().getString(R.string.progress), false);
                             SharedPrefManager.getInstance(EditProfileActivity.this).savePhoneAndLogInStatus(phone, true);
                             storeToDatabase(mAuthId, name, relation, occupation, email, phone, birth, address, isUserOwner, mImageUrl, "mToken");
