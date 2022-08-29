@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.bachelorhub.bytecode.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,7 @@ public class PendingVerifyActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private DatabaseReference reference;
-    private List<VerifyUserModels> modelsList;
+    private List<User> modelsList;
     private VerifyUserAdapter adapter;
 
     @Override
@@ -66,36 +67,57 @@ public class PendingVerifyActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 modelsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User pendingUsr = snapshot.getValue(User.class);
                     VerifyUserModels obj = new VerifyUserModels();
+                    /*
                     if (snapshot.child("userAuthId").getValue() != null) {
                         obj.setUserId(snapshot.child("userAuthId").getValue().toString());
+                    }else{
+                        obj.setUserId("No Authentication ID");
                     }
                     if (snapshot.child("userImageUrl").getValue() != null) {
                         obj.setImageUrl(snapshot.child("userImageUrl").getValue().toString());
                     }
                     if (snapshot.child("userFullName").getValue() != null) {
                         obj.setFullName(snapshot.child("userFullName").getValue().toString());
+                    }else {
+                        obj.setFullName("No name");
                     }
                     if (snapshot.child("userBirthDate").getValue() != null) {
                         obj.setBirthDate(snapshot.child("userBirthDate").getValue().toString());
+                    }else{
+                        obj.setBirthDate("No Birth date given");
                     }
                     if (snapshot.child("verifyMethod").getValue() != null) {
-                        obj.setVerifyMethod(snapshot.child("verifyMethod").getValue().toString());
+//                        obj.setVerifyMethod(snapshot.child("verifyMethod").getValue().toString());
+                        obj.setVerifyMethod("National ID");
+                    }else{
+                        obj.setVerifyMethod("National ID");
                     }
                     if (snapshot.child("verifyKey").getValue() != null) {
                         obj.setVerifyKey(snapshot.child("verifyKey").getValue().toString());
+                    }else{
+                        obj.setVerifyKey("No verification key");
                     }
                     if (snapshot.child("userPhoneNumber").getValue() != null) {
                         obj.setPhoneNumber(snapshot.child("userPhoneNumber").getValue().toString());
+                    }else{
+                        obj.setPhoneNumber("No phone number");
                     }
                     if (snapshot.child("userAddress").getValue() != null) {
                         obj.setAddress(snapshot.child("userAddress").getValue().toString());
+                    }else{
+                        obj.setAddress("No address");
                     }
+                     */
+//                    if(snapshot.child("userVerify").getValue().toString().equals("Pending")){
+//                        modelsList.add(pendingUsr);
+//                    }
                     if (snapshot.child("userVerify").getValue() != null) {
                         String userVerify = snapshot.child("userVerify").getValue().toString();
                         obj.setUserVerify(userVerify);
                         if (userVerify.equals("Pending"))
-                            modelsList.add(obj);
+                            modelsList.add(pendingUsr);
                     }
                 }
 

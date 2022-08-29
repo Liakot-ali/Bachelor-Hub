@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.bachelorhub.bytecode.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,7 @@ public class RejectedActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private DatabaseReference reference;
-    private List<VerifyUserModels> modelsList;
+    private List<User> modelsList;
     private VerifyUserAdapter adapter;
 
     @Override
@@ -66,6 +67,8 @@ public class RejectedActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 modelsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User rejectedUser = snapshot.getValue(User.class);
+                    /*
                     VerifyUserModels obj = new VerifyUserModels();
                     if (snapshot.child("userAuthId").getValue() != null) {
                         obj.setUserId(snapshot.child("userAuthId").getValue().toString());
@@ -91,13 +94,19 @@ public class RejectedActivity extends AppCompatActivity {
                     if (snapshot.child("userAddress").getValue() != null) {
                         obj.setAddress(snapshot.child("userAddress").getValue().toString());
                     }
+
+                     */
                     if (snapshot.child("userVerify").getValue() != null) {
                         String userVerify = snapshot.child("userVerify").getValue().toString();
-                        obj.setUserVerify(userVerify);
+//                        obj.setUserVerify(userVerify);
                         if (userVerify.equals("Rejected"))
-                            modelsList.add(obj);
+                            modelsList.add(rejectedUser);
                     }
 
+
+//                    if(snapshot.child("userVerify").getValue().toString().equals("Rejected")){
+//                        modelsList.add(rejectedUser);
+//                    }
 
                 }
 

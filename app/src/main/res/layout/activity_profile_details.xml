@@ -125,6 +125,23 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layUserNid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:id="@+id/userNid"
+                android:hint="NID Card Number"
+                android:inputType="number"
+                android:maxLength="15"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <!-- NID | Passport | Birth Certificate -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutUserBirthDate"

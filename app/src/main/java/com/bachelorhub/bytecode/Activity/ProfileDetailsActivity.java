@@ -28,20 +28,17 @@ import com.bachelorhub.bytecode.utils.Utility;
 import com.squareup.picasso.Picasso;
 
 public class ProfileDetailsActivity extends AppCompatActivity {
+    Button updateBtn;
     private String[] PERMISSIONS = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA};
     private PermissionUtility mPermissions;
-
     private MyNetworkReceiver mNetworkReceiver;
     private ProgressDialog mProgress = null;
     private String mImageUrl = null;
     private String mPhone = null;
     private String mAuthId = null;
-    Button updateBtn;
     //private String mToken =
-
-
     private ImageView userImageUrl;
-    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress;
+    private EditText userFullName, userPhoneNumber, userOccupation, userEmail, userBirthDate, userAddress, userNid;
     private TextInputLayout layoutName, layoutPhone;
     private EditText userGroup;
     private RadioButton userRender, userOwner;
@@ -70,7 +67,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         layoutName = (TextInputLayout) findViewById(R.id.layoutUserFullName);
 
         userRelation = (EditText) findViewById(R.id.userRelation);
-
+        userNid = findViewById(R.id.userNid);
 
         userPhoneNumber = (EditText) findViewById(R.id.userPhoneNumber);
         layoutPhone = (TextInputLayout) findViewById(R.id.layoutUserPhoneNumber);
@@ -115,20 +112,29 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                 if (user != null) {
                     String[] isOwnerSplit = user.getIsUserOwner().split("#");
                     String[] occupationSplit = user.getUserOccupation().split("#");
+                    String[] relationSplit = user.getUserRelation().split("#");
                     mImageUrl = user.getUserImageUrl();
                     if (!mImageUrl.equals("")) {
                         Picasso.get().load(user.getUserImageUrl()).into((userImageUrl));
                     }
                     //Glide.with(ProfileActivity.this).asBitmap().load(user.getUserImageUrl()).into(userImageUrl);
                     userFullName.setText(user.getUserFullName());
-
-                    userRelation.setText(user.getUserRelation());
-                    userOccupation.setText(occupationSplit[0]);
+                    if (relationSplit.length > 0) {
+                        userRelation.setText(relationSplit[0]);
+                    }
+                    if(relationSplit.length > 1){
+                        userNid.setText(relationSplit[1]);
+                    }
+                    if (occupationSplit.length > 0) {
+                        userOccupation.setText(occupationSplit[0]);
+                    }
                     userEmail.setText(user.getUserEmail());
                     userPhoneNumber.setText(user.getUserPhoneNumber());
                     userBirthDate.setText(user.getUserBirthDate());
                     userAddress.setText(user.getUserAddress());
-                    userGroup.setText(isOwnerSplit[0]);
+                    if (isOwnerSplit.length > 0) {
+                        userGroup.setText(isOwnerSplit[0]);
+                    }
                 }
                 Utility.dismissProgressDialog(mProgress);
             }

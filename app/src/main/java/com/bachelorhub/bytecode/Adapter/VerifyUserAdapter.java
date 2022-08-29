@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bachelorhub.bytecode.Models.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.bachelorhub.bytecode.Models.VerifyUserModels;
@@ -26,9 +27,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.ViewHolder> {
 
     public Context mContext;
-    public List<VerifyUserModels> modelsList;
+    public List<User> modelsList;
 
-    public VerifyUserAdapter(Context mContext, List<VerifyUserModels> modelsList) {
+    public VerifyUserAdapter(Context mContext, List<User> modelsList) {
         this.mContext = mContext;
         this.modelsList = modelsList;
     }
@@ -45,9 +46,9 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final VerifyUserModels models = modelsList.get(position);
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserId()).child("userVerify");
-        if (models.getImageUrl().isEmpty() || models.getImageUrl().compareTo("") == 0) {
+        final User models = modelsList.get(position);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserAuthId()).child("userVerify");
+        if (models.getUserImageUrl().isEmpty() || models.getUserImageUrl().compareTo("") == 0) {
             Picasso.get()
                     .load(R.mipmap.ic_launcher)
                     .placeholder(R.mipmap.ic_launcher)
@@ -57,7 +58,7 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
 //            Log.e("ChatUserAdapter", "userImageUrl:" + "." + snapshot.child("userImageUrl").getValue() + ".");
             Picasso.get()
 //                                    .load(snapshot.child("userImageUrl").getValue().toString())
-                    .load(models.getImageUrl())
+                    .load(models.getUserImageUrl())
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(holder.profileImage);
@@ -69,19 +70,97 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
 //                    .placeholder(R.mipmap.ic_launcher)
 //                    .into(holder.profileImage);
 //        }
-        holder.fullName.setText(models.getFullName());
-        holder.userId.setText(models.getUserId());
-        holder.dob.setText("Date of Birth : " + models.getBirthDate());
-        holder.method.setText("Verify Method : " + models.getVerifyMethod());
-        holder.method_key.setText("Key : " + models.getVerifyKey());
-        holder.phone.setText("Phone : " + models.getPhoneNumber());
-        holder.address.setText("Address : " + models.getAddress());
+
+        String[] methodSplit = null;
+        String[] relationSplit = null;
+        if(models.getUserRelation() != null) {
+            relationSplit = models.getUserRelation().split("#");
+        }
+        if(models.getVerifyMethod() != null) {
+             methodSplit = models.getVerifyMethod().split("#");
+        }
+        String fullName, userId, birthDate, transId, verifyNumber, phone, address, method, nidFront, nidBack, userVerifyPic;
+
+        fullName = models.getUserFullName();
+        if(fullName.equals("")){
+            fullName = "No Name";
+        }
+        userId = models.getUserAuthId();
+
+        if(models.getUserBirthDate() != null){
+            birthDate = models.getUserBirthDate();
+            if(birthDate.equals("")){
+                birthDate = "No birth date";
+            }
+        }else{
+            birthDate = "No birth date";
+        }
+
+        if(models.getVerifyKey() != null){
+            transId = models.getVerifyKey();
+            if(transId.equals("")) {
+                transId = "No transaction Id";
+            }
+        }else{
+            transId = "No transaction Id";
+        }
+        method = "National ID";
+
+        int methodLength = 0;
+        if(methodSplit != null) {
+            methodLength = methodSplit.length;
+        }
+        if(methodLength > 0){
+            nidFront = methodSplit[0];
+        }
+        if(methodLength > 1){
+            nidBack = methodSplit[1];
+        }
+        if (methodLength > 2){
+            userVerifyPic = methodSplit[2];
+        }
+
+        int relationLength = 0;
+        if(relationSplit != null){
+            relationLength = relationSplit.length;
+        }
+        if(relationLength > 1) {
+            verifyNumber = relationSplit[1];
+        }else{
+            verifyNumber = "No verification number";
+            method = "Empty";
+        }
+
+        if(models.getUserPhoneNumber() != null){
+            phone = models.getUserPhoneNumber();
+            if(phone.equals("")) {
+                phone = "No phone number";
+            }
+        }else{
+            phone = "No phone number";
+        }
+
+        if(models.getUserAddress() != null){
+            address = models.getUserAddress();
+            if(address.equals("")){
+                address = "No address";
+            }
+        }else{
+            address = "No address";
+        }
+
+        holder.fullName.setText(fullName);
+        holder.userId.setText(userId);
+        holder.dob.setText("Date of Birth : " + birthDate);
+        holder.method.setText("Transaction ID : " + transId);
+        holder.method_key.setText("NID Number : " + verifyNumber);
+        holder.phone.setText("Phone : " + phone);
+        holder.address.setText("Address : " + address);
         switch (models.getUserVerify()) {
             case "Pending":
                 holder.pending.setVisibility(View.GONE);
                 holder.approve.setVisibility(View.VISIBLE);
                 holder.reject.setVisibility(View.VISIBLE);
-
 
                 break;
             case "Verified":
@@ -143,8 +222,6 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
             reject = itemView.findViewById(R.id.reject);
             phone = itemView.findViewById(R.id.phone);
             address = itemView.findViewById(R.id.address);
-
-
         }
     }
 
