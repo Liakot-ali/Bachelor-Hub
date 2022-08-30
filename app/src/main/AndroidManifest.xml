@@ -42,22 +42,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
+            android:name=".VeficationDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name="com.bachelorhub.bytecode.Activity.SettingsActivity"
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.FavouritesActivity"
             android:exported="false" />
         <activity
-            android:name="com.bachelorhub.bytecode.Admin.RejectedActivity"
+            android:name=".RejectedActivity"
             android:exported="false" />
         <activity
-            android:name="com.bachelorhub.bytecode.Admin.VerifiedActivity"
+            android:name=".VerifiedActivity"
             android:exported="false" />
         <activity
-            android:name="com.bachelorhub.bytecode.Admin.PendingVerifyActivity"
+            android:name=".PendingVerifyActivity"
             android:exported="false" />
         <activity
-            android:name="com.bachelorhub.bytecode.Admin.AdminHomeActivity"
+            android:name=".AdminHomeActivity"
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.ShowMapsActivity"
@@ -70,15 +73,13 @@
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.VerificationActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.NotificationsActivity"
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.MessageActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -92,8 +93,7 @@
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.PhoneActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- Start: To configure the FileProvider for Camera capture -->
@@ -123,8 +123,7 @@
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.AuthActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.onBoardAtivity"
             android:exported="false"
@@ -140,8 +139,7 @@
         </activity>
         <activity
             android:name="com.bachelorhub.bytecode.MainActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
     </application>
 
 </manifest>
