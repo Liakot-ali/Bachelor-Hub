@@ -15,53 +15,97 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/lay_pad"
+            android:paddingBottom="@dimen/lay_pad"
             android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/lay_pad"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/adminVerifyUserProfilePicture"
+                    android:layout_width="@dimen/profile_picture"
+                    android:layout_height="@dimen/profile_picture"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/adminVerifyUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/inner_pad"
+                        android:text="User Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                    <TextView
+                        android:id="@+id/adminVerifyUserId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/inner_pad"
+                        android:text="User ID"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/adminVerifyPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:textSize="@dimen/normal_text"
+                    android:padding="@dimen/inner_pad"
+                    android:textColor="@color/black"
+                    android:text="Phone Number" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/adminVerifyEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:textSize="@dimen/normal_text"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/inner_pad"
+                    android:text="User Email" />
+                <TextView
+                    android:id="@+id/adminVerifyAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:padding="@dimen/inner_pad"
+                    android:textColor="@color/black"
+                    android:text="User Address" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/adminVerifyBirthDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
-
+                    android:textSize="@dimen/normal_text"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/inner_pad"
+                    android:text="User Birth Date" />
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/adminVerifyNidCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:textSize="@dimen/normal_text"
+                    android:padding="@dimen/inner_pad"
+                    android:textColor="@color/black"
+                    android:text="NID card number" />
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
             </LinearLayout>
 
             <View
@@ -125,7 +169,7 @@
                     android:id="@+id/textVfiefw4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User pic"
+                    android:text="User verify pic"
                     android:textSize="@dimen/small_text"
                     android:textColor="@color/orange"/>
 
@@ -141,6 +185,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="@dimen/lay_pad"
                 android:orientation="horizontal">
 
                 <Button

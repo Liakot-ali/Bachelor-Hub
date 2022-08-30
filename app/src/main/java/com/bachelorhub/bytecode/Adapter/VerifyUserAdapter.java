@@ -2,6 +2,7 @@ package com.bachelorhub.bytecode.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bachelorhub.bytecode.Admin.VerificationDetailsActivity;
 import com.bachelorhub.bytecode.Models.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -174,6 +176,15 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
                 holder.reject.setVisibility(View.GONE);
                 break;
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, VerificationDetailsActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+
+
         holder.pending.setOnClickListener(v -> new AlertDialog.Builder(mContext)
                 .setTitle("Alert !")
                 .setMessage("Are you sure you want to change the verification status for this user?")

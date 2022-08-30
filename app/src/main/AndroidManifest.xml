@@ -42,7 +42,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BachelorHub">
         <activity
-            android:name=".VeficationDetailsActivity"
+            android:name="com.bachelorhub.bytecode.Admin.VerificationDetailsActivity"
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.SettingsActivity"
@@ -51,16 +51,16 @@
             android:name="com.bachelorhub.bytecode.Activity.FavouritesActivity"
             android:exported="false" />
         <activity
-            android:name=".RejectedActivity"
+            android:name=".Admin.RejectedActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifiedActivity"
+            android:name="com.bachelorhub.bytecode.Admin.AdminHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".PendingVerifyActivity"
+            android:name=".Admin.PendingVerifyActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminHomeActivity"
+            android:name=".Admin.VerifiedActivity"
             android:exported="false" />
         <activity
             android:name="com.bachelorhub.bytecode.Activity.ShowMapsActivity"
