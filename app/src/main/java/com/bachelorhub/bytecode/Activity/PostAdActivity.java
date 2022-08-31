@@ -189,7 +189,7 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
 
                 if (Network.haveNetwork(PostAdActivity.this)) {
                     if (postImageUri.size() > 0 && !address.isEmpty() && mUser != null) {
-                        if (mUser.getIsUserOwner().equals("Owner")) {
+//                        if (mUser.getIsUserOwner().equals("Owner")) {
                             mDatabaseRef = FirebaseDatabase.getInstance().getReference(ConstantKey.USER_POST_NODE);
                             String key = mDatabaseRef.push().getKey();
                             LatLng latLng = SharedPrefManager.getInstance(PostAdActivity.this).getCurrentLatLng();
@@ -198,9 +198,9 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
                             PostAd post = new PostAd(mUser.getUserAuthId(), mUser.getUserToken(), ownerName, ownerEmail, ownerMobile, isOwnerMobileHide, propertyType, renterType, rentPrice, bedrooms, bathrooms, "", amenities.toString(), selectLocation, address, latitude, longitude, description, Arrays.toString(postImageUri.toArray()), "", key);
                             mProgress = Utility.showProgressDialog(PostAdActivity.this, getResources().getString(R.string.progress), false);
                             storeToDatabase(post);
-                        } else {
-                            Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_register_user));
-                        }
+//                        } else {
+//                            Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_register_user));
+//                        }
                     } else {
                         Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_photo_add));
                     }
@@ -217,12 +217,12 @@ public class PostAdActivity extends AppCompatActivity implements DatePickerDialo
         addPostImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mUser.getIsUserOwner().equals("Owner")) {
+//                if (mUser.getIsUserOwner().equals("Owner")) {
                     Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                } else {
-                    Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_register_user));
-                }
+//                } else {
+//                    Utility.alertDialog(PostAdActivity.this, getResources().getString(R.string.msg_register_user));
+//                }
             }
         });
 
