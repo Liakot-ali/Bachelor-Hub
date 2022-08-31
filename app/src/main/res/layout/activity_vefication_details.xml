@@ -28,12 +28,15 @@
                     android:id="@+id/adminVerifyUserProfilePicture"
                     android:layout_width="@dimen/profile_picture"
                     android:layout_height="@dimen/profile_picture"
+                    app:civ_border_width="1sp"
+                    app:civ_border_color="@color/orange"
                     android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:paddingLeft="@dimen/inner_pad"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -41,7 +44,6 @@
                         android:id="@+id/adminVerifyUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/inner_pad"
                         android:text="User Name"
                         android:textColor="@color/black"
                         android:textSize="@dimen/normal_text" />
@@ -50,8 +52,9 @@
                         android:id="@+id/adminVerifyUserId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/inner_pad"
                         android:text="User ID"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/black"
                         android:textSize="@dimen/normal_text" />
 
@@ -105,6 +108,14 @@
                     android:padding="@dimen/inner_pad"
                     android:textColor="@color/black"
                     android:text="NID card number" />
+                <TextView
+                    android:id="@+id/adminVerifyTransId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:padding="@dimen/inner_pad"
+                    android:textColor="@color/black"
+                    android:text="Transaction Id" />
 
             </LinearLayout>
 

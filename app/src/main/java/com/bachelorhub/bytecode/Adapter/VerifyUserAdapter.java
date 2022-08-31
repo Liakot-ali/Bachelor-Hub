@@ -47,7 +47,7 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        String imageUrl = null;
         final User models = modelsList.get(position);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tolet_users").child(models.getUserAuthId()).child("userVerify");
         if (models.getUserImageUrl().isEmpty() || models.getUserImageUrl().compareTo("") == 0) {
@@ -56,7 +56,9 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
                     .placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(holder.profileImage);
+
         }else{
+            imageUrl = models.getUserImageUrl();
 //            Log.e("ChatUserAdapter", "userImageUrl:" + "." + snapshot.child("userImageUrl").getValue() + ".");
             Picasso.get()
 //                                    .load(snapshot.child("userImageUrl").getValue().toString())
@@ -81,7 +83,7 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
         if(models.getVerifyMethod() != null) {
              methodSplit = models.getVerifyMethod().split("#");
         }
-        String fullName, userId, birthDate, transId, verifyNumber, phone, address, method, nidFront, nidBack, userVerifyPic;
+        String fullName, userId, birthDate, transId, verifyNumber, phone, address, method, nidFront = null, nidBack = null, userVerifyPic = null;
 
         fullName = models.getUserFullName();
         if(fullName.equals("")){
@@ -163,7 +165,6 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
                 holder.pending.setVisibility(View.GONE);
                 holder.approve.setVisibility(View.VISIBLE);
                 holder.reject.setVisibility(View.VISIBLE);
-
                 break;
             case "Verified":
                 holder.pending.setVisibility(View.VISIBLE);
@@ -176,10 +177,34 @@ public class VerifyUserAdapter extends RecyclerView.Adapter<VerifyUserAdapter.Vi
                 holder.reject.setVisibility(View.GONE);
                 break;
         }
+        String finalFullName = fullName;
+        String finalPhone = phone;
+        String finalNidFront = nidFront;
+        String finalNidBack = nidBack;
+        String finalUserVerifyPic = userVerifyPic;
+        String finalAddress = address;
+        String finalBirthDate = birthDate;
+        String finalImageUrl = imageUrl;
+        String finalTransId = transId;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VerificationDetailsActivity.class);
+                intent.putExtra("userStatus", models.getUserVerify());
+                intent.putExtra("userName", finalFullName);
+                intent.putExtra("userId", userId);
+                intent.putExtra("userPhone", finalPhone);
+                intent.putExtra("userEmail", models.getUserEmail());
+
+                intent.putExtra("userNidFrontPic", finalNidFront);
+                intent.putExtra("userNidBackPic", finalNidBack);
+                intent.putExtra("userVerifyPic", finalUserVerifyPic);
+                intent.putExtra("userProfilePic", finalImageUrl);
+
+                intent.putExtra("userAddress", finalAddress);
+                intent.putExtra("userNidNumber", verifyNumber);
+                intent.putExtra("userBirthDate", finalBirthDate);
+                intent.putExtra("userTransId", finalTransId);
                 mContext.startActivity(intent);
             }
         });
