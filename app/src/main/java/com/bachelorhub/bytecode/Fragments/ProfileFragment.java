@@ -174,12 +174,10 @@ public class ProfileFragment extends Fragment {
         mUserViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class); //Initialize view model
 
         mAuthId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(); //Get UUID from FirebaseAuth
-        if (SharedPrefManager.getInstance(getContext()).getUserAuthId() != null) {
-            mAuthId = SharedPrefManager.getInstance(getContext()).getUserAuthId();
-        }
-        if (mAuthId != null) {
-            getUserData(mAuthId);
-        }
+//        if (SharedPrefManager.getInstance(getContext()).getUserAuthId() != null) {
+//            mAuthId = SharedPrefManager.getInstance(getContext()).getUserAuthId();
+//        }
+        getUserData(mAuthId);
         return view;
     }
 

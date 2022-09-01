@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -78,7 +79,7 @@ public class SigninFragment extends Fragment {
         forget.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new ForgotFragment()).commit());
         signin.setOnClickListener(v -> {
             if (Validate()) {
-                Login();
+                Login(v);
             }
         });
         emailInput.addTextChangedListener(new TextWatcher() {
@@ -95,7 +96,6 @@ public class SigninFragment extends Fragment {
                 } else {
                     emailInputLayout.setErrorEnabled(false);
                 }
-
             }
 
             @Override
@@ -117,7 +117,6 @@ public class SigninFragment extends Fragment {
                 } else {
                     passInputLayout.setErrorEnabled(false);
                 }
-
             }
 
             @Override
@@ -129,7 +128,12 @@ public class SigninFragment extends Fragment {
         return view;
     }
 
-    private void Login() {
+    private void Login(View v) {
+        //---Hide keyboard---
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        emailInput.clearFocus();
+        passInput.clearFocus();
         ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setTitle("Login");
         dialog.setMessage("Loading...");
@@ -175,20 +179,24 @@ public class SigninFragment extends Fragment {
         if (emailInput.getText().toString().isEmpty()) {
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Email is required!");
+            emailInput.requestFocus();
             return false;
         } else if (!emailInput.getText().toString().trim().matches(emailPattern)) {
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Valid email is required!");
+            emailInput.requestFocus();
             return false;
         } else if (passInput.getText().toString().isEmpty()) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password is required!");
+            passInput.requestFocus();
             return false;
         } else if (passInput.getText().toString().length() < 8) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password must be at least 8 Character!");
+            passInput.requestFocus();
             return false;
         } else {
             passInputLayout.setErrorEnabled(false);

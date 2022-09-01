@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,8 +78,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Validate()) {
-
-                    Register();
+                    Register(v);
                 }
             }
         });
@@ -187,7 +187,16 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
-    private void Register() {
+    private void Register(View v) {
+        //---Hide keyboard---
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        emailInput.clearFocus();
+        passInput.clearFocus();
+        nameInput.clearFocus();
+        passInput.clearFocus();
+        confirmPassInput.clearFocus();
+        editText.clearFocus();
 
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setMessage("Please wait..");
@@ -256,38 +265,43 @@ public class SignUpFragment extends Fragment {
         if (nameInput.getText().toString().isEmpty()) {
             nameInputLayout.setErrorEnabled(true);
             nameInputLayout.setError("Name is required!");
+            nameInput.requestFocus();
             return false;
         } else if (emailInput.getText().toString().isEmpty()) {
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Email is required!");
+            emailInput.requestFocus();
             return false;
         } else if (!emailInput.getText().toString().trim().matches(emailPattern)) {
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(true);
             emailInputLayout.setError("Valid email is required!");
+            emailInput.requestFocus();
             return false;
         } else if (passInput.getText().toString().isEmpty()) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password is required!");
+            passInput.requestFocus();
             return false;
         } else if (passInput.getText().toString().length() < 8) {
             emailInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(true);
             passInputLayout.setError("Password must be at least 8 Character!");
+            passInput.requestFocus();
             return false;
         } else if (!Objects.requireNonNull(passInput.getText()).toString().equals(confirmPassInput.getText().toString())) {
             passInputLayout.setErrorEnabled(false);
             confirmPassInputLayout.setErrorEnabled(true);
             confirmPassInputLayout.setError("Confirm Password Not Match!");
+            confirmPassInput.requestFocus();
             return false;
         } else {
             confirmPassInputLayout.setErrorEnabled(false);
             passInputLayout.setErrorEnabled(false);
             nameInputLayout.setErrorEnabled(false);
             emailInputLayout.setErrorEnabled(false);
-
             return true;
         }
 

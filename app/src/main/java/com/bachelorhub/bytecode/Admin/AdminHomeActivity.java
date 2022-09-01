@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.bachelorhub.bytecode.Activity.AuthActivity;
@@ -75,10 +76,17 @@ public class AdminHomeActivity extends AppCompatActivity {
 //        return true;
 //    }
 
+    long currentTime = 0;
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if(System.currentTimeMillis() - currentTime < 2000){
+            super.onBackPressed();
+            finish();
+        }
+        else {
+            currentTime = System.currentTimeMillis();
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void Pending(View view) {

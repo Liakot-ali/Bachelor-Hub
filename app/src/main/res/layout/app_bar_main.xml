@@ -47,11 +47,9 @@
             style="@style/BottomNavigation"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             app:menu="@menu/bottom_navigation">
-
         </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:backgroundTint="@color/white"

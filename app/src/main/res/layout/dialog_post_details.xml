@@ -11,9 +11,6 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
-
         <!-- Images -->
         <RelativeLayout
             android:layout_marginBottom="15dp"
@@ -370,14 +367,15 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/post_details_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_edit_text_border"
                 android:gravity="top"
                 android:hint="@string/details_feedback"
-                android:inputType="textCapSentences|textAutoCorrect|text|textMultiLine"
-                android:background="@drawable/shape_edit_text_border"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"/>
+                android:inputType="textCapSentences|textAutoCorrect|text|textMultiLine" />
 
             <Button
                 android:id="@+id/post_feedback_btn"

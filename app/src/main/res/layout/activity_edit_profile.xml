@@ -34,7 +34,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <RadioButton
                 android:id="@+id/userRender"
                 android:textColor="@color/gray"
@@ -54,7 +55,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutUserFullName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/lay_pad">
             <EditText
                 android:id="@+id/userFullName"
                 android:hint="@string/reg_full_name"
