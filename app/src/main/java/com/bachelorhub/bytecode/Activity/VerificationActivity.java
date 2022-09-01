@@ -204,17 +204,23 @@ public class VerificationActivity extends AppCompatActivity {
                             String verifyMethod = Objects.requireNonNull(map.get("verifyMethod")).toString();
                             String[] pictures = verifyMethod.split("#");
                             Log.e(TAG, "userInformation uri list" + Arrays.toString(pictures));
-                            if (pictures.length > 0) {
+                            if (pictures.length > 0 && !Objects.equals(pictures[0], "")) {
                                 frontImageUri = Uri.parse(pictures[0]);
-                                Picasso.get().load(pictures[0]).into(nidFront);
+                                Picasso.get().load(pictures[0]).placeholder(R.drawable.loading_nid).into(nidFront);
+                            }else{
+                                nidFront.setImageResource(R.drawable.no_photo);
                             }
-                            if (pictures.length > 1) {
+                            if (pictures.length > 1 && !Objects.equals(pictures[1], "")) {
                                 backImageUri = Uri.parse(pictures[1]);
-                                Picasso.get().load(pictures[1]).into(nidBack);
+                                Picasso.get().load(pictures[1]).placeholder(R.drawable.loading_nid).into(nidBack);
+                            }else{
+                                nidBack.setImageResource(R.drawable.no_photo);
                             }
-                            if (pictures.length > 2) {
+                            if (pictures.length > 2 && !Objects.equals(pictures[2], "")) {
                                 userPicUri = Uri.parse(pictures[2]);
-                                Picasso.get().load(pictures[2]).into(userPicture);
+                                Picasso.get().load(pictures[2]).placeholder(R.drawable.loading).into(userPicture);
+                            }else{
+                                userPicture.setImageResource(R.drawable.no_photo);
                             }
 //                            method.setVisibility(View.VISIBLE);
 //                            method.setText(Objects.requireNonNull(map.get("verifyMethod")).toString());

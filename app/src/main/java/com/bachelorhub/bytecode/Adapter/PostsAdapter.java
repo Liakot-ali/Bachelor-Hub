@@ -83,12 +83,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         String title = "No Title", availDate = "No Date";
         propertyType = model.getPropertyType().split("#");
         int proLength = propertyType.length;
-        if(proLength>1) {
+        if (proLength > 1) {
             title = propertyType[1];
         }
         renterType = model.getRenterType().split("#");
         int renLength = renterType.length;
-        if(renLength>1) {
+        if (renLength > 1) {
             availDate = renterType[1];
         }
 //        if(title.equals("")){
@@ -109,7 +109,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         holder.availDate.setText(availDate);
 
 
-        Picasso.get().load(arr[0]).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.mipmap.ic_launcher).into(holder.imageUrl, new com.squareup.picasso.Callback() {
+        Picasso.get().load(arr[0]).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.loading).into(holder.imageUrl, new com.squareup.picasso.Callback() {
             @Override
             public void onSuccess() {
 
@@ -117,7 +117,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
 
             @Override
             public void onError(Exception e) {
-                Picasso.get().load(arr[0]).placeholder(R.mipmap.ic_launcher).into((holder.imageUrl));
+                Picasso.get().load(arr[0]).placeholder(R.drawable.loading).into((holder.imageUrl));
             }
         });
 
@@ -142,13 +142,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
             public void onClick(View v) {
                 mProgress = Utility.showProgressDialog(mContext, mContext.getResources().getString(R.string.progress), false);
                 showListItem(model, arr);
-                Toast.makeText(mContext, "View Details Clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "View Details Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         holder.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Confirm Button Clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Confirm Button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -229,12 +229,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.MyViewHolder
         String title = "No Title", availDate = "No Date";
         propertyType = model.getPropertyType().split("#");
         int proLength = propertyType.length;
-        if(proLength>1) {
+        if (proLength > 1) {
             title = propertyType[1];
         }
         renterType = model.getRenterType().split("#");
         int renLength = renterType.length;
-        if(renLength>1) {
+        if (renLength > 1) {
             availDate = renterType[1];
         }
 
